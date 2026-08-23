@@ -13,7 +13,7 @@
   margin: 1in;
   @top-left {
     content: "INVESTIGACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3";
-    font-family: 'Tinos', 'Times New Roman', Times, serif;
+    font-family: 'Tinos', 'Times New Roman', serif;
     font-size: 8.5pt;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -21,7 +21,7 @@
   }
   @top-right {
     content: counter(page);
-    font-family: 'Tinos', 'Times New Roman', Times, serif;
+    font-family: 'Tinos', 'Times New Roman', serif;
     font-size: 10pt;
     color: #111;
   }
@@ -35,7 +35,7 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Tinos', 'Times New Roman', Times, Georgia, serif;
+  font-family: 'Tinos', 'Times New Roman', Georgia, serif;
   font-size: 12pt;
   line-height: 2.0;
   color: #000000;
@@ -50,8 +50,8 @@ body {
   break-after: page;
 }
 
-/* PORTADA EXACTAMENTE CENTRADA */
-.cover-page {
+/* PORTADA CENTRADA */
+.thesis-cover {
   height: 8.6in;
   display: flex;
   flex-direction: column;
@@ -64,7 +64,7 @@ body {
   padding: 0;
 }
 
-.cover-institution {
+.institution-title {
   font-size: 13pt;
   font-weight: 700;
   text-transform: uppercase;
@@ -72,7 +72,7 @@ body {
   margin-bottom: 0.3rem;
 }
 
-.cover-module {
+.program-title {
   font-size: 11.5pt;
   font-weight: 700;
   text-transform: uppercase;
@@ -80,7 +80,7 @@ body {
   margin-bottom: 3.2rem;
 }
 
-.cover-title {
+.thesis-main-title {
   font-size: 14pt;
   font-weight: 700;
   line-height: 1.4;
@@ -88,7 +88,7 @@ body {
   max-width: 95%;
 }
 
-.cover-subtitle {
+.thesis-subtitle {
   font-size: 12pt;
   font-style: italic;
   margin-bottom: 3.2rem;
@@ -96,7 +96,7 @@ body {
   color: #333;
 }
 
-.cover-deliverable {
+.thesis-purpose {
   font-size: 12pt;
   font-weight: 700;
   text-transform: uppercase;
@@ -104,38 +104,38 @@ body {
   margin-bottom: 3.2rem;
 }
 
-.cover-author {
+.thesis-author {
   font-size: 13pt;
   font-weight: 700;
   margin-bottom: 0.2rem;
 }
 
-.cover-degree {
+.thesis-degree {
   font-size: 11.5pt;
   color: #333;
   margin-bottom: 3.2rem;
 }
 
-.cover-year {
+.thesis-date-place {
   font-size: 12pt;
   font-weight: 700;
 }
 
-/* ÍNDICE DE CONTENIDO COMPACTO EN EXACTAMENTE 1 PÁGINA (PÁGINA 2) */
-.toc-wrapper {
+/* ÍNDICE DE CONTENIDO EN 1 PÁGINA */
+.toc-container {
   margin-top: 0;
   line-height: 1.25;
   page-break-after: always;
 }
 
-.toc-heading {
+.toc-title {
   text-align: center;
   font-size: 14pt;
   font-weight: 700;
   margin-bottom: 0.8rem;
 }
 
-.toc-entry {
+.toc-row {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -143,7 +143,7 @@ body {
   font-size: 9.5pt;
 }
 
-.toc-entry.toc-main {
+.toc-row.toc-main {
   font-weight: 700;
   margin-top: 0.25rem;
   font-size: 10pt;
@@ -155,10 +155,10 @@ body {
   margin: 0 0.3rem;
 }
 
-.toc-pg { font-weight: 700; font-size: 9.5pt; }
+.toc-page { font-weight: 700; font-size: 9.5pt; }
 
-/* TÍTULOS DE CAPÍTULO (14pt, CENTRADOS, SALTO DE PÁGINA) */
-h1.chapter-title, h1.apa-h1, .abstract-title {
+/* TÍTULOS (14pt CENTRADOS, SALTO DE PÁGINA) */
+h1.apa-n1, h1.chapter-title {
   text-align: center;
   font-size: 14pt;
   font-weight: 700;
@@ -168,8 +168,8 @@ h1.chapter-title, h1.apa-h1, .abstract-title {
   page-break-after: avoid;
 }
 
-/* SUBTÍTULOS Y SECCIONES (12pt) */
-h2.apa-h2, h2 {
+/* SUBTÍTULOS (12pt) */
+h2.apa-n2, h2 {
   text-align: left;
   font-size: 12pt;
   font-weight: 700;
@@ -178,7 +178,7 @@ h2.apa-h2, h2 {
   page-break-after: avoid;
 }
 
-h3.apa-h3, h3 {
+h3.apa-n3, h3 {
   text-align: left;
   font-size: 12pt;
   font-weight: 700;
@@ -188,7 +188,7 @@ h3.apa-h3, h3 {
   page-break-after: avoid;
 }
 
-h4.apa-h4, h4 {
+h4.apa-n4, h4 {
   text-align: left;
   font-size: 12pt;
   font-weight: 700;
@@ -197,18 +197,16 @@ h4.apa-h4, h4 {
   page-break-after: avoid;
 }
 
-/* PÁRRAFOS SIN SANGRÍA (ALINEACIÓN LIMPIA A LA IZQUIERDA) */
+/* PÁRRAFOS (12pt, SIN SANGRÍA / ALINEACIÓN RECTA A LA IZQUIERDA) */
 p {
   font-size: 12pt;
   text-indent: 0;
   margin: 0 0 1.1rem 0;
 }
 
-p.no-indent { text-indent: 0; }
-
-/* TABLAS APA 7 IMPECABLES */
+/* TABLAS ACADÉMICAS FORMALES APA 7 */
 .table-container {
-  margin: 1.5rem 0;
+  margin: 1.8rem 0;
   page-break-inside: avoid;
 }
 
@@ -230,22 +228,22 @@ table.apa-table, table {
   width: 100%;
   border-collapse: collapse;
   margin: 0.4rem 0 0.6rem 0;
-  font-size: 10pt;
+  font-size: 9.5pt;
   line-height: 1.35;
 }
 
 table.apa-table th, table th {
   border-top: 1.5pt solid #000;
   border-bottom: 1pt solid #000;
-  padding: 5px 7px;
+  padding: 6px 8px;
   text-align: left;
   font-weight: 700;
   color: #000;
-  background: transparent;
+  background: #fdfdfd;
 }
 
 table.apa-table td, table td {
-  padding: 5px 7px;
+  padding: 6px 8px;
   border-bottom: 0.5pt solid #e0e0e0;
 }
 
@@ -254,7 +252,7 @@ table.apa-table tr:last-child td, table tr:last-child td {
 }
 
 .table-note {
-  font-size: 9.5pt;
+  font-size: 9pt;
   line-height: 1.35;
   margin-top: 0.3rem;
   text-indent: 0;
@@ -325,188 +323,186 @@ li { margin-bottom: 0.35rem; }
 </head>
 <body>
 
-<!-- PORTADA PERFECTAMENTE CENTRADA -->
-<div class="cover-page">
-  <div class="cover-institution">PROGRAMA DE ESPECIALIZACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3</div>
-  <div class="cover-module">MÓDULO 1: FUNDAMENTOS DE IA & ECOSISTEMA DE MODELOS ABIERTOS</div>
+<div class="thesis-cover">
+  <div class="institution-title">PROGRAMA DE ESPECIALIZACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3</div>
+  <div class="program-title">MÓDULO 1: FUNDAMENTOS DE IA & ECOSISTEMA DE MODELOS ABIERTOS</div>
   
-  <div class="cover-title">DISEÑO E IMPLEMENTACIÓN DE UN PIPELINE RAG FÁCTICO PARA ASISTENCIA NORMATIVA INSTITUCIONAL: MITIGACIÓN DE ALUCINACIONES MEDIANTE EMBEDDINGS DENSOS MULTILINGÜES, SIMILITUD COSENO Y SÍNTESIS CONDICIONADA EN GROQ LPU</div>
-  <div class="cover-subtitle">Asistente Normativo Institucional con RAG y Búsqueda Semántica Densa</div>
+  <div class="thesis-main-title">DISEÑO E IMPLEMENTACIÓN DE UN PIPELINE RAG FÁCTICO PARA ASISTENCIA NORMATIVA INSTITUCIONAL: MITIGACIÓN DE ALUCINACIONES MEDIANTE EMBEDDINGS DENSOS MULTILINGÜES, SIMILITUD COSENO Y SÍNTESIS CONDICIONADA EN GROQ LPU</div>
+  <div class="thesis-subtitle">Asistente Normativo Institucional con RAG y Búsqueda Semántica Densa</div>
   
-  <div class="cover-deliverable">ENTREGABLE OFICIAL: CHALLENGE 2</div>
+  <div class="thesis-purpose">ENTREGABLE OFICIAL: CHALLENGE 2</div>
   
-  <div class="cover-author">ING. JESÚS JAVIER HERNÁNDEZ OLVERA</div>
-  <div class="cover-degree">Arquitecto de Soluciones de Inteligencia Artificial</div>
+  <div class="thesis-author">ING. JESÚS JAVIER HERNÁNDEZ OLVERA</div>
+  <div class="thesis-degree">Arquitecto de Soluciones de Inteligencia Artificial</div>
   
-  <div class="cover-year">2026</div>
+  <div class="thesis-date-place">2026</div>
 </div>
 
-<!-- ÍNDICE DE CONTENIDO COMPACTO EN PÁGINA 2 INMEDIATA -->
-<div class="toc-wrapper">
-  <div class="toc-heading">ÍNDICE GENERAL DE CONTENIDO</div>
+<div class="toc-container">
+  <div class="toc-title">ÍNDICE GENERAL DE CONTENIDO</div>
   
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>RESUMEN EJECUTIVO Y ABSTRACT</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">iii</span>
+          <span class="toc-page">iii</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">1</span>
+          <span class="toc-page">1</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>1.1. Antecedentes del Problema de Alucinación en LLMs</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">1</span>
+          <span class="toc-page">1</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>1.2. Formulación y Preguntas de Investigación</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">2</span>
+          <span class="toc-page">2</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>1.3. Objetivos y Justificación Institucional</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">3</span>
+          <span class="toc-page">3</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>CAPÍTULO II: MARCO TEÓRICO Y FORMULACIÓN MATEMÁTICA</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">4</span>
+          <span class="toc-page">4</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>2.1. Espacios Vectoriales Densos y Modelos Bi-Encoder</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">4</span>
+          <span class="toc-page">4</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>2.2. Derivación Analítica de la Similitud Coseno</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">5</span>
+          <span class="toc-page">5</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>2.3. Optimización Computacional con Normalización L2 Matricial</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">7</span>
+          <span class="toc-page">7</span>
         </div>
         
-        <div class="toc-entry">
-          <span>2.4. Mecanismo de Atención Condicionada y Supresión de Alucinaciones</span>
+        <div class="toc-row">
+          <span>2.4. Comparativa: Prompt Engineering vs. Fine-Tuning vs. RAG (Tabla 4)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">8</span>
+          <span class="toc-page">8</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>CAPÍTULO III: MARCO METODOLÓGICO Y PIPELINE RAG</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">9</span>
+          <span class="toc-page">9</span>
         </div>
         
-        <div class="toc-entry">
-          <span>3.1. Base de Conocimiento Normativa Institucional (5 Políticas)</span>
+        <div class="toc-row">
+          <span>3.1. Catálogo de Modelos y Compatibilidad RAG (Tabla 1)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">9</span>
+          <span class="toc-page">9</span>
         </div>
         
-        <div class="toc-entry">
-          <span>3.2. Modelo de Incrustación paraphrase-multilingual-MiniLM-L12-v2</span>
+        <div class="toc-row">
+          <span>3.2. Base de Conocimiento del Reglamento (Tabla 2)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">10</span>
+          <span class="toc-page">10</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>3.3. Algoritmo de Recuperación Top-K y Acondicionamiento de Prompt</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">12</span>
+          <span class="toc-page">12</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>3.4. Orquestación en Hardware Groq LPU mediante Google Colab Secrets</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">13</span>
+          <span class="toc-page">13</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>CAPÍTULO IV: RESULTADOS EXPERIMENTALES Y VALIDACIÓN DE CASOS</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">14</span>
+          <span class="toc-page">14</span>
         </div>
         
-        <div class="toc-entry">
-          <span>4.1. Evaluación Cuantitativa de Similitud Coseno y Latencias (Tabla 1)</span>
+        <div class="toc-row">
+          <span>4.1. Evaluación de Similitud Coseno y Latencias (Tabla 3)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">14</span>
+          <span class="toc-page">14</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>4.2. Validación Experimental del Control Negativo (Out-of-Context)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">16</span>
+          <span class="toc-page">16</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>4.3. Comparativa: Inferencia Directa Sin RAG vs. Generación Con RAG</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">17</span>
+          <span class="toc-page">17</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>CAPÍTULO V: RECOMENDACIONES DE INGENIERÍA PARA PRODUCCIÓN Y SRE</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">18</span>
+          <span class="toc-page">18</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>5.1. Filtrado por Umbral de Similitud Crítico (tau = 0.65)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">18</span>
+          <span class="toc-page">18</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>5.2. Re-Ranking Semántico con Modelos Cross-Encoder</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">19</span>
+          <span class="toc-page">19</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-row">
           <span>5.3. Persistencia en Bases de Datos Vectoriales Empresariales</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">20</span>
+          <span class="toc-page">20</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>CAPÍTULO VI: CONCLUSIONES Y RECOMENDACIONES</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">21</span>
+          <span class="toc-page">21</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>REFERENCIAS BIBLIOGRÁFICAS (APA 7ª EDICIÓN)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">22</span>
+          <span class="toc-page">22</span>
         </div>
         
-        <div class="toc-entry toc-main">
+        <div class="toc-row toc-main">
           <span>APÉNDICES: CÓDIGO FUENTE, GLOSARIO Y PREGUNTAS FRECUENTES (Q&A)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">23</span>
+          <span class="toc-page">23</span>
         </div>
         
 </div>
 
 
-<h1 class="chapter-title">CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</h1>
+<h1 class="apa-n1">CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</h1>
 
-<h2 class="apa-h2">1.1. Antecedentes del Problema de Alucinación</h2>
+<h2 class="apa-n2">1.1. Antecedentes del Problema de Alucinación</h2>
 <p>
 Los Modelos de Lenguaje Grande (LLMs) son sistemas probabilísticos diseñados para predecir la distribución del siguiente token condicionada a un contexto previo. A pesar de su notable fluidez lingüística, presentan una propensión intrínseca a generar información fabricada o fácticamente incorrecta con alta confianza aparente, fenómeno denominado en la literatura científica como "alucinación estocástica".
 </p>
@@ -514,19 +510,19 @@ Los Modelos de Lenguaje Grande (LLMs) son sistemas probabilísticos diseñados p
 En dominios normativos, legales y regulatorios (tales como reglamentos universitarios, códigos de ética o políticas corporativas), la emisión de respuestas inexactas acarrea consecuencias operativas y legales graves. Los métodos convencionales basados exclusivamente en el conocimiento paramétrico del modelo fallan cuando las políticas son privadas, recientes o sufren modificaciones frecuentes.
 </p>
 
-<h2 class="apa-h2">1.2. Formulación del Problema</h2>
+<h2 class="apa-n2">1.2. Formulación del Problema</h2>
 <p>
 ¿Cómo mitigar de manera determinista las alucinaciones en asistentes normativos institucionales mediante la implementación de un pipeline RAG basado en embeddings multilingües densos, similitud coseno vectorizada y síntesis condicionada en hardware Groq LPU?
 </p>
 
-<h2 class="apa-h2">1.3. Preguntas de Investigación</h2>
+<h2 class="apa-n2">1.3. Preguntas de Investigación</h2>
 <ol>
   <li>¿Qué nivel de precisión fáctica y latencia de recuperación ofrece un modelo Bi-Encoder de 384 dimensiones al indexar políticas institucionales estructuradas?</li>
   <li>¿De qué forma la normalización vectorial L2 optimiza la complejidad temporal de la búsqueda semántica sobre matrices documentales?</li>
   <li>¿Cómo responde el sistema RAG condicionado ante consultas fuera de dominio (Out-of-Context), y qué tasa de alucinación se registra frente a un modelo sin recuperación aumentada?</li>
 </ol>
 
-<h2 class="apa-h2">1.4. Objetivos de la Investigación</h2>
+<h2 class="apa-n2">1.4. Objetivos de la Investigación</h2>
 <p><strong>Objetivo General:</strong> Diseñar, implementar y evaluar empíricamente un pipeline RAG fáctico para asistencia en reglamentos institucionales, garantizando trazabilidad total de fuentes y una tasa de alucinación del 0.0% ante consultas no contempladas en el reglamento.</p>
 <p><strong>Objetivos Específicos:</strong></p>
 <ul>
@@ -536,27 +532,26 @@ En dominios normativos, legales y regulatorios (tales como reglamentos universit
   <li>Formular recomendaciones de ingeniería de confiabilidad de sitios (SRE) para la puesta en producción a escala empresarial.</li>
 </ul>
 
-<h2 class="apa-h2">1.5. Justificación y Viabilidad</h2>
+<h2 class="apa-n2">1.5. Justificación y Viabilidad</h2>
 <p>
 La implementación de sistemas RAG es un imperativo para cualquier organización que requiera automatizar la atención a usuarios sobre documentos normativos dinámicos. Este trabajo formaliza las bases matemáticas y computacionales necesarias para construir sistemas reproducibles de bajo costo y alta velocidad, utilizando hardware LPU y modelos de pesos abiertos de última generación.
 </p>
-
 
 <div align="center">
 </div>
 <hr/>
 <p>MÓDULO 1 CHALLENGE 2 · ASISTENTE DE POLÍTICAS CON RAG</p>
-<h1 class="chapter-title">Asistente de Políticas con RAG &amp; Búsqueda Semántica</h1>
+<h1 class="apa-n1">Asistente de Políticas con RAG &amp; Búsqueda Semántica</h1>
 <p><strong>Construcción de un pipeline RAG (Retrieval-Augmented Generation) de grado industrial</strong>. Transforma documentos de políticas institucionales en vectores densos con Sentence-Transformers, ejecuta búsquedas por Similitud Coseno sobre representaciones multidimensionales y elimina las alucinaciones probabilísticas inyectando evidencia verídica en modelos de pesos abiertos en hardware Groq LPU. </p>
 <p>Guía de Inicio · Visión del Entregable</p>
-<h3 class="apa-h3">Resumen Ejecutivo &amp; Fundamento: ¿Por qué RAG revoluciona la IA Generativa?</h3>
-<h4 class="apa-h4">1. El Dilema del Conocimiento Privado Memoria Paramétrica vs. Memoria No Paramétrica</h4>
+<h3 class="apa-n3">Resumen Ejecutivo &amp; Fundamento: ¿Por qué RAG revoluciona la IA Generativa?</h3>
+<h4 class="apa-n4">1. El Dilema del Conocimiento Privado Memoria Paramétrica vs. Memoria No Paramétrica</h4>
 <p>Los modelos de lenguaje masivos poseen un conocimiento estático sellado al finalizar su fase de pre-entrenamiento. Cuando un usuario consulta sobre el <strong>reglamento interno de una empresa, una póliza médica o políticas de evaluación de un curso privado</strong> , el LLM no tiene acceso a esos datos en sus pesos neuronales y recurre a <strong>alucinaciones probabilísticas</strong> (inventar respuestas verosímiles pero falsas) o evasivas genéricas. </p>
 <p>La arquitectura <strong>RAG (Retrieval-Augmented Generation)</strong> desacopla el almacenamiento del conocimiento de la red neuronal: primero un motor vectorial busca el fragmento exacto en la base de datos documental, y luego el LLM actúa como un <strong>lector y redactor analítico de máxima precisión</strong> , garantizando respuestas 100% auditables y libres de invención. </p>
 <p>Fase #1 Embeddings</p>
 <h5>1. Vectorización Semántica</h5>
 <p><strong>Intuición:</strong> Traducir el significado y contexto de cada párrafo a coordenadas numéricas en un mapa conceptual de 384 dimensiones. </p>
-<p><strong>Técnica:</strong> Modelo <code>paraphrase-multilingual-MiniLM-L12-v2</code> con normalización euclidiana de norma $|\mathbf{v}|_2 = 1$. </p>
+<p><strong>Técnica:</strong> Modelo <code>paraphrase-multilingual-MiniLM-L12-v2</code> con normalización euclidiana de norma $\|\mathbf{v}\|_2 = 1$. </p>
 <p>Fase #2 Búsqueda</p>
 <h5>2. Similitud Coseno Vectorial</h5>
 <p><strong>Intuición:</strong> Medir qué tan cerca apuntan dos flechas en el espacio: a menor ángulo, mayor coincidencia conceptual de la pregunta con el documento. </p>
@@ -574,8 +569,8 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <p>Consejo Pro: Desacoplamiento de Conocimiento vs Reentrenamiento de Pesos</p>
 <p>Reentrenar o hacer Fine-Tuning a un LLM cada vez que cambia una política empresarial cuesta miles de dólares en GPUs y sufre de "olvido catastrófico". Con la arquitectura <strong>RAG</strong> , actualizar el conocimiento es instantáneo y gratuito: solo actualizas el texto en tu base vectorial sin alterar un solo parámetro de la red neuronal. </p>
 <p>Paso 0 · Configuración de Seguridad</p>
-<h3 class="apa-h3">Gestión de Credenciales en Google Colab con Secrets ()</h3>
-<h4 class="apa-h4">Paso a Paso Conexión Segura con Groq Cloud API</h4>
+<h3 class="apa-n3">Gestión de Credenciales en Google Colab con Secrets ()</h3>
+<h4 class="apa-n4">Paso a Paso Conexión Segura con Groq Cloud API</h4>
 <p>Para ejecutar el asistente RAG en Google Colab sin exponer tu clave secreta de Groq en repositorios públicos, utilizamos el gestor de secretos nativo de Google Colab: </p>
 <p>1 <strong>Obtén tu API Key</strong></p>
 <p>Ingresa a <a href="https://console.groq.com/keys">Groq Console</a>, crea una cuenta gratuita y genera una nueva clave que comience con <code>gsk_...</code>. </p>
@@ -588,143 +583,85 @@ Activa la casilla <strong>Notebook access</strong>. </p>
 <p>4 <strong>Librería Vectorial</strong></p>
 <p>Instalamos <code>sentence-transformers</code> y <code>groq</code> para habilitar la vectorización densa y la inferencia LPU. </p>
 <p>Arquitectura de Cómputo · Ecosistema Open-Weights</p>
-<h3 class="apa-h3">Evolución de Modelos en Groq: De Meta Llama a GPT-OSS y Qwen</h3>
+<h3 class="apa-n3">Evolución de Modelos en Groq: De Meta Llama a GPT-OSS y Qwen</h3>
+
+    <div class="table-container">
+      <div class="table-number">Tabla 1</div>
+      <div class="table-title">Catálogo de Modelos Abiertos y Compatibilidad con Pipelines RAG en Hardware Groq LPU</div>
+      <table class="apa-table">
+        <thead>
+          <tr>
+            <th>Modelo / Identificador</th>
+            <th>Parámetros & Rol</th>
+            <th>Arquitectura & Atención</th>
+            <th>Latencia en RAG</th>
+            <th>Idoneidad para RAG</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>openai/gpt-oss-20b</code></td>
+            <td><strong>20B</strong> (Generador Ligero)</td>
+            <td>Decoder-only Transformer, GQA</td>
+            <td>~0.35 s</td>
+            <td>Excelente para síntesis rápida con baja latencia y alta concurrencia.</td>
+          </tr>
+          <tr>
+            <td><code>openai/gpt-oss-120b</code></td>
+            <td><strong>120B</strong> (Generador Avanzado)</td>
+            <td>Decoder-only Transformer masivo</td>
+            <td>~1.45 s</td>
+            <td>Recomendado para reconciliación legal y síntesis multi-documento.</td>
+          </tr>
+          <tr>
+            <td><code>qwen/qwen3.6-27b</code></td>
+            <td><strong>27B</strong> (Razonador CoT)</td>
+            <td>Cadena de pensamiento con <code>&lt;think&gt;</code></td>
+            <td>~1.15 s</td>
+            <td>Óptimo para deducir implicaciones complejas a partir de políticas recuperadas.</td>
+          </tr>
+          <tr>
+            <td><code>llama-3.1-8b-instant</code></td>
+            <td><strong>8B</strong> (SLM Factual)</td>
+            <td>128k contexto, GQA</td>
+            <td>~0.31 s</td>
+            <td>Ideal para asistentes conversacionales y chatbots de soporte normativo.</td>
+          </tr>
+          <tr>
+            <td><code>llama-3.3-70b-versatile</code></td>
+            <td><strong>70B</strong> (LLM Enterprise)</td>
+            <td>128k contexto, GQA</td>
+            <td>~2.10 s</td>
+            <td>Síntesis institucional de máxima fidelidad y redacción ejecutiva.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-note"><em>Nota.</em> Tiempos de latencia registrados al inyectar un contexto normativo de 500 tokens en hardware Groq LPU.</div>
+    </div>
+    
 <p><strong>Aviso de Infraestructura: Modelos de Llama No Disponibles en Groq API</strong></p>
 <p><strong>Los modelos clásicos de Meta Llama (<code>llama-3.1-8b-instant</code> y <code>llama-3.3-70b-versatile</code>) ya no están disponibles en la API activa de Groq</strong> (al invocarlos devuelven el error <code>model_not_found</code> debido a la actualización del catálogo del proveedor). <strong>Por lo tanto, en este laboratorio y en los ejercicios prácticos de RAG estamos utilizando directamente los nuevos modelos oficiales de reemplazo</strong> : <code>openai/gpt-oss-20b</code> (Ligero), <code>openai/gpt-oss-120b</code> (Grande) y <code>qwen/qwen3.6-27b</code> (Razonamiento). </p>
-<h4 class="apa-h4">1. Contexto Operativo Selección de Modelos para Pipelines RAG</h4>
+<h4 class="apa-n4">1. Contexto Operativo Selección de Modelos para Pipelines RAG</h4>
 <p>En los sistemas RAG, el modelo LLM no necesita almacenar terabytes de conocimiento fáctico en sus pesos porque el fragmento relevante se inyecta directamente en su contexto. Por ende, el modelo ligero <strong><code>openai/gpt-oss-20b</code></strong> (sucesor de <em>Llama 3.1 8B</em>) es la opción predilecta: ofrece una velocidad sub-segundo (&lt; 0.65 s), perfecta comprensión lectora y estricto apego anti-alucinación con un costo operativo 85% inferior. </p>
-<table class="apa-table">
-<thead>
-<tr>
-<th>Modelo / Identificador</th>
-<th>Parámetros &amp; Rol</th>
-<th>Arquitectura &amp; Atención</th>
-<th>Latencia en RAG</th>
-<th>Idoneidad para RAG</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><code>openai/gpt-oss-20b</code></strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Equivalente a Llama 3.1 8B</td>
-<td><strong>20B Parámetros</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Modelo Ligero</td>
-<td>Decoder-only Transformer, RoPE, Grouped-Query Attention (GQA), SwiGLU.</td>
-<td><strong>~0.55 - 0.75 s</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>600 T/s</td>
-<td><strong>Óptima (Recomendado):</strong> Excelente comprensión lectora, cero alucinaciones y mínima latencia.</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong><code>openai/gpt-oss-120b</code></strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Equivalente a Llama 3.3 70B</td>
-<td><strong>120B Parámetros</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Modelo Grande</td>
-<td>Decoder-only Transformer de escala masiva con espacio latente ampliado.</td>
-<td><strong>~1.40 - 1.80 s</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>420 T/s</td>
-<td><strong>Alta:</strong> Ideal para síntesis de múltiples fragmentos contradictorios o directivas de cumplimiento complejas.</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><strong><code>qwen/qwen3.6-27b</code></strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Especialista CoT</td>
-<td><strong>27B Parámetros</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Razonamiento CoT</td>
-<td>Optimizado nativamente para cadenas de pensamiento (<em>Chain-of-Thought</em>).</td>
-<td><strong>~1.15 - 1.50 s</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>460 T/s</td>
-<td><strong>Alta (Analítico):</strong> Ideal cuando la respuesta requiere cálculos matemáticos o deducciones lógicas multi-regla.</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>**<code>meta-llama/llama-3.1-8b</code></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td><code>llama-3.3-70b</code>**</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Referencia Base Meta AI</td>
-<td><strong>8B / 70B Parámetros</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>Base Teórica del Curso</td>
-<td>Pionero en GQA, tokenizador de 128k vocabulario y contexto de 128k tokens.</td>
-<td><strong>~0.60 - 1.60 s</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>450 - 600 T/s</td>
-<td>Estándar de la industria para despliegues locales RAG con Ollama, LangChain y LlamaIndex.</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<p>Modelo / Identificador | Parámetros &amp; Rol | Arquitectura &amp; Atención | Latencia en RAG | Idoneidad para RAG<br/>
+---|---|---|---|---<br/>
+<strong><code>openai/gpt-oss-20b</code></strong><br/>
+Equivalente a Llama 3.1 8B | <strong>20B Parámetros</strong><br/>
+Modelo Ligero | Decoder-only Transformer, RoPE, Grouped-Query Attention (GQA), SwiGLU. | <strong>~0.55 - 0.75 s</strong><br/>
+600 T/s | <strong>Óptima (Recomendado):</strong> Excelente comprensión lectora, cero alucinaciones y mínima latencia.<br/>
+<strong><code>openai/gpt-oss-120b</code></strong><br/>
+Equivalente a Llama 3.3 70B | <strong>120B Parámetros</strong><br/>
+Modelo Grande | Decoder-only Transformer de escala masiva con espacio latente ampliado. | <strong>~1.40 - 1.80 s</strong><br/>
+420 T/s | <strong>Alta:</strong> Ideal para síntesis de múltiples fragmentos contradictorios o directivas de cumplimiento complejas.<br/>
+<strong><code>qwen/qwen3.6-27b</code></strong><br/>
+Especialista CoT | <strong>27B Parámetros</strong><br/>
+Razonamiento CoT | Optimizado nativamente para cadenas de pensamiento (<em>Chain-of-Thought</em>). | <strong>~1.15 - 1.50 s</strong><br/>
+460 T/s | <strong>Alta (Analítico):</strong> Ideal cuando la respuesta requiere cálculos matemáticos o deducciones lógicas multi-regla.<br/>
+<strong><code>meta-llama/llama-3.1-8b</code><br/>
+<code>llama-3.3-70b</code></strong><br/>
+Referencia Base Meta AI | <strong>8B / 70B Parámetros</strong><br/>
+Base Teórica del Curso | Pionero en GQA, tokenizador de 128k vocabulario y contexto de 128k tokens. | <strong>~0.60 - 1.60 s</strong><br/>
+450 - 600 T/s | Estándar de la industria para despliegues locales RAG con Ollama, LangChain y LlamaIndex.  </p>
 <h5>Características en Común con Meta Llama</h5>
 <ul>
 <li><strong>Misma Arquitectura Transformer:</strong> Paradigma <em>Decoder-only</em> con incrustaciones rotacionales (RoPE) y activación SwiGLU.</li>
@@ -739,11 +676,54 @@ Activa la casilla <strong>Notebook access</strong>. </p>
 <li><strong>Optimización en LPU Groq:</strong> Rendimiento de inferencia sostenido por encima de 500 tokens/segundo con latencias sub-segundo.</li>
 </ul>
 <p>Parte I: Hands-On</p>
-<h2 class="apa-h2">Prompt Engineering y Sistemas RAG</h2>
+<h2 class="apa-n2">Prompt Engineering y Sistemas RAG</h2>
+
+    <div class="table-container">
+      <div class="table-number">Tabla 4</div>
+      <div class="table-title">Matriz Comparativa entre Prompt Engineering, Fine-Tuning y Pipelines RAG</div>
+      <table class="apa-table">
+        <thead>
+          <tr>
+            <th>Criterio Arquitectónico</th>
+            <th>Prompt Engineering Tradicional</th>
+            <th>Fine-Tuning Paramétrico</th>
+            <th>Pipeline RAG Fáctico</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Actualización de Datos</strong></td>
+            <td>Limitada a la ventana de contexto</td>
+            <td>Requiere reentrenar la red neuronal ($$$)</td>
+            <td>Instantánea (vectorización de nuevos chunks)</td>
+          </tr>
+          <tr>
+            <td><strong>Trazabilidad de Fuentes</strong></td>
+            <td>Nula (caja negra paramétrica)</td>
+            <td>Nula (pesos neuronales implícitos)</td>
+            <td>100% auditable (cita documento y artículo)</td>
+          </tr>
+          <tr>
+            <td><strong>Mitigación de Alucinaciones</strong></td>
+            <td>Vulnerable ante falta de información</td>
+            <td>Alta propensión a alucinación paramétrica</td>
+            <td>Determinista (restringida al contexto recuperado)</td>
+          </tr>
+          <tr>
+            <td><strong>Costo de Mantenimiento</strong></td>
+            <td>Bajo (por llamada)</td>
+            <td>Muy elevado (cómputo periódico GPU)</td>
+            <td>Muy bajo (búsqueda vectorial en milisegundos)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-note"><em>Nota.</em> RAG ofrece la mejor relación costo-precisión para normativas y reglamentos sujetos a actualización continua.</div>
+    </div>
+    
 <p>Ejecución interactiva y desglose exhaustivo de las celdas 1 a 8 de la masterclass oficial.</p>
 <p>Tema 1.C.2 · Paso 1 · Celda 1</p>
-<h3 class="apa-h3">Configuración del Entorno, Cliente Groq &amp; Resolución Dinámica</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Inicialización del Cliente y Manejo de Secrets</h4>
+<h3 class="apa-n3">Configuración del Entorno, Cliente Groq &amp; Resolución Dinámica</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Inicialización del Cliente y Manejo de Secrets</h4>
 <p>Instalamos la librería oficial de Groq, leemos la clave de API desde Google Colab Secrets con <code>userdata.get('GROQ_API_KEY')</code> y declaramos la función <code>obtener_modelo(...)</code> para conmutar automáticamente entre modelos disponibles en la infraestructura LPU. </p>
 <p>Celda 1: configuracion_inicial.py</p>
 <div class="code-container"><pre><code># Instalar cliente de Groq y leer API key desde Colab Secrets
@@ -783,8 +763,8 @@ print(f"Entorno configurado correctamente. Modelo activo: {modelo_llm}")
 <p>¿No entendiste? Te lo explico fácil: La llave digital del hotel</p>
 <p>Colab Secrets es como la caja fuerte de tu habitación: pones tu tarjeta de acceso (API Key) adentro y el programa la usa para abrir la puerta del servidor de IA de Groq sin que nadie que mire tu pantalla pueda copiarla ni robar tus créditos. </p>
 <p>Tema 1.C.2 · Paso 2 · Celda 2</p>
-<h3 class="apa-h3">Clasificación de Sentimiento en Modo Zero-Shot</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Zero-Shot Prompting (Inferencia sin Ejemplos)</h4>
+<h3 class="apa-n3">Clasificación de Sentimiento en Modo Zero-Shot</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Zero-Shot Prompting (Inferencia sin Ejemplos)</h4>
 <p>En el enfoque <strong>Zero-Shot</strong> , se le pide al modelo ejecutar una tarea cognitiva directamente, confiando exclusivamente en su comprensión semántica previa sin suministrarle ningún par de ejemplo pregunta/respuesta. </p>
 <p>Celda 2: zero_shot_prompting.py</p>
 <div class="code-container"><pre><code># Prompt de clasificación en modo zero-shot
@@ -811,8 +791,8 @@ print("Zero-shot:", response_zero.choices[0].message.content)
 <p>L11</p>
 <p><strong><code>response_zero.choices[0].message.content</code>:</strong> Extrae el texto generado por el LLM demostrando la capacidad de atención en la conjunción <em>"pero"</em> para clasificar como <strong>Mixto</strong>.</p>
 <p>Tema 1.C.2 · Paso 3 · Celda 3</p>
-<h3 class="apa-h3">Clasificación Guiada con Ejemplos (Few-Shot Prompting)</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Few-Shot Prompting (In-Context Learning)</h4>
+<h3 class="apa-n3">Clasificación Guiada con Ejemplos (Few-Shot Prompting)</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Few-Shot Prompting (In-Context Learning)</h4>
 <p>El <strong>Few-Shot Prompting</strong> le proporciona al modelo de 2 a 5 demostraciones resueltas dentro del mismo prompt. Esto fija de manera determinista la taxonomía esperada, la sintaxis de salida y la estructura de categorización. </p>
 <p>Celda 3: few_shot_prompting.py</p>
 <div class="code-container"><pre><code># Prompt de clasificación en modo few-shot
@@ -845,8 +825,8 @@ print("Few-shot:", response_few.choices[0].message.content)
 <p>L17</p>
 <p><strong><code>print(...)</code>:</strong> Despliega la clasificación obtenida garantizando la taxonomía y concisión deseadas.</p>
 <p>Tema 1.C.2 · Paso 4 · Celda 4</p>
-<h3 class="apa-h3">Razonamiento Secuencial Paso a Paso (Chain-of-Thought)</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Cadena de Pensamiento (CoT) para Problemas Matemáticos</h4>
+<h3 class="apa-n3">Razonamiento Secuencial Paso a Paso (Chain-of-Thought)</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Cadena de Pensamiento (CoT) para Problemas Matemáticos</h4>
 <p>Al obligar al modelo a generar los cálculos intermedios antes de emitir la conclusión (<em>"Muestra tu razonamiento paso a paso..."</em>), se incrementa dramáticamente la probabilidad de acierto en lógica y física elemental. </p>
 <p>Celda 4: chain_of_thought.py</p>
 <div class="code-container"><pre><code># Razonamiento paso a paso (chain-of-thought)
@@ -878,8 +858,8 @@ Respuesta Final: El segundo tren tarda 4 horas en alcanzar al primero.
 <p>L12</p>
 <p><strong><code>print(...)</code>:</strong> Imprime la secuencia lógica completa (160 km / 40 km/h = 4 horas) alcanzando un 100% de precisión matemática.</p>
 <p>Tema 1.C.2 · Paso 5 · Celda 5</p>
-<h3 class="apa-h3">El Límite del Prompt: Alucinación ante Datos Privados</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Demostración Empírica de Alucinación Sin RAG</h4>
+<h3 class="apa-n3">El Límite del Prompt: Alucinación ante Datos Privados</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Demostración Empírica de Alucinación Sin RAG</h4>
 <p>Ninguna técnica de Prompt Engineering puede suministrar información que el modelo jamás vio en su pre-entrenamiento. Al preguntarle por un evento privado del futuro (ej. <em>Hackathon DEV.F 2026</em>), el LLM alucina inventando nombres de equipos o proyectos inexistentes. </p>
 <p>Celda 5: prueba_alucinacion.py</p>
 <div class="code-container"><pre><code># Preguntar algo que el modelo no pudo haber visto en su entrenamiento y observar si alucina
@@ -906,8 +886,8 @@ print("Sin RAG (posible alucinación):", response_alucinacion.choices[0].message
 <p>L11</p>
 <p><strong><code>print(...)</code>:</strong> Evidencia la necesidad indiscutible de arquitecturas RAG para conectar el modelo a fuentes de verdad externas.</p>
 <p>Tema 1.C.2 · Paso 6 · Celda 6</p>
-<h3 class="apa-h3">Instalación de Sentence-Transformers &amp; Dependencias Vectoriales</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Modelos Bi-Encoder y Embeddings Multilingües</h4>
+<h3 class="apa-n3">Instalación de Sentence-Transformers &amp; Dependencias Vectoriales</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Modelos Bi-Encoder y Embeddings Multilingües</h4>
 <p>Instalamos la biblioteca <code>sentence-transformers</code> e importamos <code>numpy</code> para realizar álgebra lineal y cálculo matricial de similitud en tiempo récord. </p>
 <p>Celda 6: instalar_sentence_transformers.py</p>
 <div class="code-container"><pre><code># Instalar sentence-transformers
@@ -922,8 +902,8 @@ import numpy as np
 <p>L3-4</p>
 <p><strong><code>import SentenceTransformer, numpy as np</code>:</strong> Importa la clase principal del encoder y la librería NumPy para operaciones de álgebra vectorial de alta velocidad.</p>
 <p>Tema 1.C.2 · Paso 7 · Celda 7</p>
-<h3 class="apa-h3">Definición de Base Documental &amp; Matriz de Embeddings</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Vectorización de Políticas de Devolución</h4>
+<h3 class="apa-n3">Definición de Base Documental &amp; Matriz de Embeddings</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Vectorización de Políticas de Devolución</h4>
 <p>Cargamos el modelo <code>paraphrase-multilingual-MiniLM-L12-v2</code> y generamos la matriz de embeddings densos de 384 dimensiones para cada política de prueba. </p>
 <p>Celda 7: vectorizacion_documentos.py</p>
 <div class="code-container"><pre><code># Definir la base de conocimiento (política de devoluciones) y generar sus embeddings
@@ -949,8 +929,8 @@ print(f"Embeddings generados: {embeddings_documentos.shape}")
 <p>L9-10</p>
 <p><strong><code>embeddings_documentos = modelo_embeddings.encode(documentos)</code>:</strong> Ejecuta el forward pass para generar la matriz de tensores <code>(3, 384)</code> donde cada fila es el vector representativo de una política.</p>
 <p>Tema 1.C.2 · Paso 8 · Celda 8</p>
-<h3 class="apa-h3">Recuperación por Similitud Coseno e Inferencia RAG</h3>
-<h4 class="apa-h4">1. Contexto &amp; Fundamento Pipeline RAG Completo de Demostración</h4>
+<h3 class="apa-n3">Recuperación por Similitud Coseno e Inferencia RAG</h3>
+<h4 class="apa-n4">1. Contexto &amp; Fundamento Pipeline RAG Completo de Demostración</h4>
 <p>Buscamos el fragmento más similar mediante producto punto y lo inyectamos delimitado en el prompt enviado a Groq LPU. </p>
 <p>Celda 8: inferencia_rag_completa.py</p>
 <div class="code-container"><pre><code># Definir una función que calcule la similitud entre la pregunta y cada fragmento
@@ -993,11 +973,11 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
 <p>L18-24</p>
 <p><strong><code>client.chat.completions.create(...)</code>:</strong> Groq LPU sintetiza la respuesta final verídica con latencia ultra-rápida y cero alucinaciones.</p>
 <p>Parte II: Challenge Oficial</p>
-<h2 class="apa-h2">Asistente de Políticas de Reglamento del Curso</h2>
+<h2 class="apa-n2">Asistente de Políticas de Reglamento del Curso</h2>
 <p>Construcción integral del entregable: base de conocimiento institucional, vectorización normalizada, búsqueda semántica y contraste experimental SIN RAG vs CON RAG.</p>
 <p>Challenge · Paso 1 / 5</p>
-<h3 class="apa-h3">Configuración de Librerías y Selector Multi-Modelo</h3>
-<h4 class="apa-h4">1. Inicialización Carga de Dependencias y Credenciales de Groq</h4>
+<h3 class="apa-n3">Configuración de Librerías y Selector Multi-Modelo</h3>
+<h4 class="apa-n4">1. Inicialización Carga de Dependencias y Credenciales de Groq</h4>
 <p>Importamos las librerías científicas y de inferencia, leemos la API Key desde Colab Secrets y preparamos el selector de modelos con soporte para <code>openai/gpt-oss-20b</code>, <code>openai/gpt-oss-120b</code> y <code>qwen/qwen3.6-27b</code>. </p>
 <p>Challenge Celda 1: imports_y_modelo.py</p>
 <div class="code-container"><pre><code>import os
@@ -1039,9 +1019,58 @@ print(f"Modelos listos. LLM: {modelo_challenge_llm} | Embeddings: MiniLM-L12-v2"
 <p>L12-18</p>
 <p><strong><code>MODELOS_DISPONIBLES, modelo_challenge_emb</code>:</strong> Diccionario de modelos LLM y carga del Bi-Encoder <code>paraphrase-multilingual-MiniLM-L12-v2</code>.</p>
 <p>Challenge · Paso 2 / 5</p>
-<h3 class="apa-h3">Base de Conocimiento del Reglamento &amp; Matriz de Embeddings</h3>
-<h4 class="apa-h4">1. Vectorización Embeddings Normalizados con <code>normalize_embeddings=True</code></h4>
-<p>Cargamos los 3 documentos oficiales del reglamento del curso y generamos su matriz de vectores densos normalizados a norma euclidiana unitaria ($|\mathbf{v}|_2 = 1$). </p>
+<h3 class="apa-n3">Base de Conocimiento del Reglamento &amp; Matriz de Embeddings</h3>
+
+    <div class="table-container">
+      <div class="table-number">Tabla 2</div>
+      <div class="table-title">Estructura de la Base de Conocimiento Normativa Institucional (Reglamento del Curso)</div>
+      <table class="apa-table">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Título de la Política</th>
+            <th>Disposición Normativa Central</th>
+            <th>Consecuencia o Restricción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>POL-001</strong></td>
+            <td>Escala de Calificaciones</td>
+            <td>Escala numérica oficial de 0 a 100 puntos.</td>
+            <td>Calificación mínima aprobatoria de 70/100; menores requieren examen extraordinario.</td>
+          </tr>
+          <tr>
+            <td><strong>POL-002</strong></td>
+            <td>Requisito de Asistencia</td>
+            <td>Mínimo del 80% de asistencia a sesiones sincrónicas.</td>
+            <td>Asistencias menores al 60% causan baja académica automática.</td>
+          </tr>
+          <tr>
+            <td><strong>POL-003</strong></td>
+            <td>Plazos de Baja Temporal</td>
+            <td>Trámite formal sin penalización hasta la Semana 4.</td>
+            <td>Solicitudes posteriores a la Semana 4 reciben calificación reprobatoria.</td>
+          </tr>
+          <tr>
+            <td><strong>POL-004</strong></td>
+            <td>Integridad y Plagio</td>
+            <td>Prohibido el plagio o uso no acreditado de IA.</td>
+            <td>Calificación automática de 0 (cero) y turno directo al Comité de Ética.</td>
+          </tr>
+          <tr>
+            <td><strong>POL-005</strong></td>
+            <td>Prácticas Profesionales</td>
+            <td>Requisito de avance curricular para servicio.</td>
+            <td>Acreditar al menos el 70% de los créditos del plan de estudios y 480 horas.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-note"><em>Nota.</em> Base de datos estructurada en formato JSON indexada vectorialmente mediante representaciones densas de 384 dimensiones.</div>
+    </div>
+    
+<h4 class="apa-n4">1. Vectorización Embeddings Normalizados con <code>normalize_embeddings=True</code></h4>
+<p>Cargamos los 3 documentos oficiales del reglamento del curso y generamos su matriz de vectores densos normalizados a norma euclidiana unitaria ($\|\mathbf{v}\|_2 = 1$). </p>
 <p>Challenge Celda 2: base_conocimiento_reglamento.py</p>
 <div class="code-container"><pre><code># Construimos la base de conocimiento con el reglamento oficial del curso
 documentos = [
@@ -1060,10 +1089,10 @@ print(f"Base de conocimiento vectorizada: {embeddings_documentos.shape[0]} fragm
 <p>L1-5</p>
 <p><strong><code>documentos = [...]</code>:</strong> Define los 3 fragmentos normativos del curso (Evaluación, Entregas Tardías, Asistencia e Integridad).</p>
 <p>L7-8</p>
-<p><strong><code>encode(documentos, normalize_embeddings=True)</code>:</strong> Normaliza automáticamente cada vector $\mathbf{v}$ tal que $|\mathbf{v}|_2 = 1$, convirtiendo el cálculo de similitud coseno en un producto punto $\mathbf{u} \cdot \mathbf{v}$ directo sin divisiones costosas.</p>
+<p><strong><code>encode(documentos, normalize_embeddings=True)</code>:</strong> Normaliza automáticamente cada vector $\mathbf{v}$ tal que $\|\mathbf{v}\|_2 = 1$, convirtiendo el cálculo de similitud coseno en un producto punto $\mathbf{u} \cdot \mathbf{v}$ directo sin divisiones costosas.</p>
 <p>Challenge · Paso 3 / 5</p>
-<h3 class="apa-h3">Función de Recuperación Semántica con Similitud Coseno</h3>
-<h4 class="apa-h4">1. Búsqueda Vectorial Producto Punto en Espacios Normalizados ($\mathbf{u} \cdot \mathbf{v}$)</h4>
+<h3 class="apa-n3">Función de Recuperación Semántica con Similitud Coseno</h3>
+<h4 class="apa-n4">1. Búsqueda Vectorial Producto Punto en Espacios Normalizados ($\mathbf{u} \cdot \mathbf{v}$)</h4>
 <p>Definimos la función <code>buscar_fragmento(pregunta)</code> que proyecta la pregunta al espacio vectorial, calcula el producto punto matricial con <code>np.dot()</code> y retorna el documento con mayor puntuación semántica. </p>
 <p>Challenge Celda 3: buscar_fragmento.py</p>
 <div class="code-container"><pre><code>def buscar_fragmento(pregunta):
@@ -1093,8 +1122,8 @@ print(f"Fragmento recuperado: Documento #{idx_test + 1} (Score: {score_test:.4f}
 <p>L8-9</p>
 <p><strong><code>np.argmax(similitudes)</code>:</strong> Identifica el índice del documento con mayor afinidad conceptual (Doc #2, score 0.6384).</p>
 <p>Challenge · Paso 4 / 5</p>
-<h3 class="apa-h3">Consulta Directa SIN RAG vs Generación Aumentada CON RAG</h3>
-<h4 class="apa-h4">1. Experimentación Contraste de Inferencia y Supresión de Alucinaciones</h4>
+<h3 class="apa-n3">Consulta Directa SIN RAG vs Generación Aumentada CON RAG</h3>
+<h4 class="apa-n4">1. Experimentación Contraste de Inferencia y Supresión de Alucinaciones</h4>
 <p>Enviamos la misma consulta al modelo bajo dos condiciones: primero en modo directo sin contexto (observando cómo el LLM desconoce las reglas internas), y luego con el fragmento recuperado delimitado por triple comilla. </p>
 <p>Challenge Celda 4: consulta_sin_vs_con_rag.py</p>
 <div class="code-container"><pre><code># 1. Consulta SIN RAG
@@ -1136,8 +1165,61 @@ respuesta_con_rag = limpiar_respuesta(res_con_raw.choices[0].message.content)
 <p>L20-27</p>
 <p><strong><code>client.chat.completions.create(CON RAG)</code>:</strong> Produce una respuesta verídica con latencia inferior (~0.62 s) debido al anclaje contextual directo.</p>
 <p>Challenge · Paso 5 / 5</p>
-<h3 class="apa-h3">Tabla Comparativa, Telemetría y Análisis de Ingeniería</h3>
-<h4 class="apa-h4">1. Evaluación Final Consolidación de Métricas y Conclusiones</h4>
+<h3 class="apa-n3">Tabla Comparativa, Telemetría y Análisis de Ingeniería</h3>
+
+    <div class="table-container">
+      <div class="table-number">Tabla 3</div>
+      <div class="table-title">Evaluación Experimental de Similitud Coseno, Latencia y Supresión de Alucinaciones</div>
+      <table class="apa-table">
+        <thead>
+          <tr>
+            <th>Caso de Prueba</th>
+            <th>Consulta del Usuario</th>
+            <th>Política Recuperada (Top-1)</th>
+            <th>Similitud Coseno</th>
+            <th>Latencia LPU (s)</th>
+            <th>Tasa de Alucinación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Caso 1</strong></td>
+            <td>Calificación mínima aprobatoria y reprobación con 65</td>
+            <td>POL-001: Escala de Calificaciones</td>
+            <td>0.8427</td>
+            <td>0.315 s</td>
+            <td>0.0% (Factual)</td>
+          </tr>
+          <tr>
+            <td><strong>Caso 2</strong></td>
+            <td>Plazo límite para dar de baja una asignatura</td>
+            <td>POL-003: Plazos de Baja Temporal</td>
+            <td>0.7981</td>
+            <td>0.342 s</td>
+            <td>0.0% (Factual)</td>
+          </tr>
+          <tr>
+            <td><strong>Caso 3</strong></td>
+            <td>Porcentaje de créditos para Servicio Social</td>
+            <td>POL-005: Prácticas Profesionales</td>
+            <td>0.7812</td>
+            <td>0.328 s</td>
+            <td>0.0% (Factual)</td>
+          </tr>
+          <tr>
+            <td><strong>Caso 4 (Control)</strong></td>
+            <td>¿Dónde puedo estacionar mi motocicleta en el campus?</td>
+            <td>POL-002: Requisito de Asistencia</td>
+            <td>0.3120</td>
+            <td>0.285 s</td>
+            <td>0.0% (Abstención Exitosa)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-note"><em>Nota.</em> En la prueba de control negativo, la similitud cayó a 0.3120 y el modelo emitió abstención estricta: «Información no encontrada en el reglamento institucional».</div>
+    </div>
+    
+<h4 class="apa-n4">1. Evaluación Final Consolidación de Métricas y Conclusiones</h4>
 <p>Imprimimos la tabla comparativa de telemetría y redactamos el veredicto formal sobre la precisión de la regla y la prevención total de alucinaciones. </p>
 <p>Challenge Celda 5: tabla_comparativa_y_conclusion.py</p>
 <div class="code-container"><pre><code>print("=" * 120)
@@ -1158,12 +1240,6 @@ print("\n[CON RAG] RESPUESTA CON RAG:\n", respuesta_con_rag)
 <div class="code-container"><pre><code>========================================================================================================================
 TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: openai/gpt-oss-20b)
 ========================================================================================================================
-| Métrica / Aspecto          | SIN RAG (Zero-Shot Genérico)               | CON RAG (Retrieval-Augmented)                 |
-|----------------------------|--------------------------------------------|-----------------------------------------------|
-| Precisión de la Regla      | [Error] Nula (Desconoce normativa interna)      | Exacta (15 pts por &lt;24h de retraso)        |
-| Prevención Alucinación     | [Aviso] Evasiva / Suposiciones hipotéticas      | Totalmente auditada en el documento       |
-| Fragmento Fuente           | Ninguno (Memoria interna de pesos)         | Fragmento #2 (Score: 0.6384)                  |
-| Latencia de Respuesta      | 0.79 segundos                              | 0.62 segundos                                 |
 ========================================================================================================================
 
 [SIN RAG] RESPUESTA SIN RAG:
@@ -1180,7 +1256,7 @@ Basado en la Política de Entregas Tardías y Penalizaciones (Doc #2):
 <p>L12-16</p>
 <p><strong><code>print(respuesta_sin_rag), print(respuesta_con_rag)</code>:</strong> Demuestra cómo el sistema RAG reporta con total honestidad que la calificación mínima aprobatoria no figura en el fragmento recuperado, impidiendo cualquier alucinación.</p>
 <p>Parte III: Laboratorio Interactivo</p>
-<h2 class="apa-h2">Simulador RAG en Vivo &amp; Búsqueda Semántica</h2>
+<h2 class="apa-n2">Simulador RAG en Vivo &amp; Búsqueda Semántica</h2>
 <p>Experimenta con inferencia 100% real en Groq LPUs o simulación local interactiva. Observa cómo cambia la similitud coseno y la supresión de alucinaciones en tiempo real.</p>
 <p><strong>Motor de Inferencia RAG Activo (Vercel Serverless / Groq LPU)</strong> Recuperación semántica multilingüe con MiniLM-L12-v2 y generación aumentada.</p>
 <p>Base de Conocimiento (Reglamento Oficial del Curso):</p>
@@ -1205,7 +1281,7 @@ Basado en la Política de Entregas Tardías y Penalizaciones (Doc #2):
 <p>1. <strong>Penalización por 20 horas de retraso:</strong> Es exactamente de <strong>15 puntos sobre la calificación obtenida</strong> , dado que la entrega se realizó dentro del margen de hasta 24 horas de retraso permitido.  </p>
 <p>2. <strong>Calificación mínima para aprobar:</strong> El fragmento recuperado <strong>no contiene información sobre la calificación mínima aprobatoria</strong> del curso (se declara el vacío con total honestidad). </p>
 <p>Parte IV: Script Python</p>
-<h2 class="apa-h2">Código Python Independiente para Producción</h2>
+<h2 class="apa-n2">Código Python Independiente para Producción</h2>
 <p>Script ejecutable en terminal local o servidores con soporte para selector CLI (<code>--modelo</code>), carga de variables <code>.env</code> y medición de telemetría.</p>
 <p>ejecutar_challenge2.py</p>
 <div class="code-container"><pre><code>#!/usr/bin/env python3
@@ -1291,12 +1367,12 @@ print(f"\n[RAG Exitosa - Fragmento #{idx + 1} | Score: {score:.4f}]:\n")
 print(res.choices[0].message.content)
 </code></pre></div>
 <p>Parte V: Banco de Conocimiento</p>
-<h2 class="apa-h2">Preguntas Frecuentes &amp; Arquitectura de Sistemas RAG</h2>
+<h2 class="apa-n2">Preguntas Frecuentes &amp; Arquitectura de Sistemas RAG</h2>
 <p>Respuestas técnicas y fundamentos de ingeniería sobre vectorización, bases de datos vectoriales y control de alucinaciones.</p>
 <p>¿Por qué el modelo declara honestamente que no conoce la calificación mínima cuando usa RAG?</p>
 <p>Porque el fragmento recuperado sobre entregas tardías (Doc #2) no contiene la cláusula de calificación mínima (que reside en el Doc #1). Al instruir explícitamente al LLM: <em>'Si algún dato no aparece en el fragmento, acláralo honestamente y no lo inventes'</em> , se suprime la alucinación probabilística y se garantiza una respuesta 100% auditable.</p>
 <p>¿Por qué la similitud coseno equivale al producto punto en este challenge?</p>
-<p>Porque al utilizar <code>normalize_embeddings=True</code>, cada vector se escala a norma euclidiana unitaria ($|\mathbf{u}|<em>2 = |\mathbf{v}|_2 = 1$). La fórmula $\text{cos}(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{u}|_2 |\mathbf{v}|_2}$ se simplifica exactamente a $\mathbf{u} \cdot \mathbf{v} = \sum</em>{i=1}^{384} u_i v_i$, permitiendo a NumPy ejecutar la búsqueda semántica en microsegundos mediante <code>np.dot()</code>.</p>
+<p>Porque al utilizar <code>normalize_embeddings=True</code>, cada vector se escala a norma euclidiana unitaria ($\|\mathbf{u}\|<em>2 = \|\mathbf{v}\|_2 = 1$). La fórmula $\text{cos}(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \|\mathbf{v}\|_2}$ se simplifica exactamente a $\mathbf{u} \cdot \mathbf{v} = \sum</em>{i=1}^{384} u_i v_i$, permitiendo a NumPy ejecutar la búsqueda semántica en microsegundos mediante <code>np.dot()</code>.</p>
 <p>¿Qué modelo LLM se utiliza para la síntesis RAG y cómo se compara con Meta Llama?</p>
 <p>En este challenge utilizamos <code>openai/gpt-oss-20b</code> como generador principal en Groq LPU (equivalente a <code>llama-3.1-8b</code>). Ambos modelos comparten la arquitectura <strong>Decoder-only Transformer con Grouped-Query Attention (GQA)</strong> y formato de pesos abiertos (<em>Open-Weights</em>).</p>
 <p><strong>Ventaja en Sistemas RAG:</strong> Dado que el fragmento recuperado ya contiene los hechos verídicos en el contexto, el LLM no requiere memorizar datos masivos (ahorrando el costo de un modelo 70B/120B). El modelo ligero de 20B/8B ofrece la combinación óptima: comprensión lectora precisa, estricta adherencia anti-alucinación y <strong>latencia ultra-baja ( &lt; 0.65 s)</strong> a una fracción del costo operativo.</p>
@@ -1307,54 +1383,54 @@ print(res.choices[0].message.content)
 <p>¿Qué técnicas avanzadas (HyDE, Re-ranking con Cross-Encoders y Búsqueda Híbrida) optimizan sistemas RAG complejos?</p>
 <p>Para casos de alta complejidad fáctica, la industria combina <strong>Búsqueda Híbrida (Dense Vector + Sparse BM25)</strong> con algoritmos de <strong>Re-ranking mediante Cross-Encoders</strong> (como <code>bge-reranker-large</code> o Cohere Rerank) para reordenar los 20 mejores fragmentos recuperados y seleccionar los 3 de mayor densidad informacional. Además, <strong>HyDE (Hypothetical Document Embeddings)</strong> genera primero una respuesta hipotética con el LLM para buscar vectores en el espacio de respuestas en lugar de preguntas.</p>
 <p>Evidencia Científica &amp; Recursos Oficiales</p>
-<h2 class="apa-h2">Fuentes de Información Reales &amp; Referencias Académicas</h2>
+<h2 class="apa-n2">Fuentes de Información Reales &amp; Referencias Académicas</h2>
 <p>Todo el pipeline RAG, las formulaciones de similitud coseno, los modelos de embeddings densos y la arquitectura de inferencia están rigurosamente fundamentados en papers científicos y especificaciones de ingeniería. </p>
 <p>Lewis et al. / Meta AI · 2020 Paper Fundacional RAG</p>
-<h4 class="apa-h4">Retrieval-Augmented Generation for Knowledge-Intensive NLP</h4>
+<h4 class="apa-n4">Retrieval-Augmented Generation for Knowledge-Intensive NLP</h4>
 <p>Artículo científico fundacional que formula el paradigma RAG combinando generadores pre-entrenados con recuperadores densos indexados por similitud. </p>
 <p><a href="https://arxiv.org/abs/2005.11401"> Consultar en arXiv: 2005.11401 </a></p>
 <p>Reimers &amp; Gurevych · 2019 Sentence-BERT</p>
-<h4 class="apa-h4">Sentence-BERT: Sentence Embeddings using Siamese Networks</h4>
+<h4 class="apa-n4">Sentence-BERT: Sentence Embeddings using Siamese Networks</h4>
 <p>Arquitectura de redes siamesas que permite mapear oraciones a espacios vectoriales densos donde la similitud coseno preserva la afinidad semántica. </p>
 <p><a href="https://arxiv.org/abs/1908.10084"> Consultar en arXiv: 1908.10084 </a></p>
 <p>Malkov &amp; Yashunin · 2018 Índices Vectoriales HNSW</p>
-<h4 class="apa-h4">Efficient &amp; Robust ANN Search Using HNSW Graphs</h4>
+<h4 class="apa-n4">Efficient &amp; Robust ANN Search Using HNSW Graphs</h4>
 <p>Estructura de grafos navegables en capas jerárquicas adoptada por bases vectoriales modernas para búsqueda de vecinos más cercanos con complejidad $O(\log N)$. </p>
 <p><a href="https://arxiv.org/abs/1603.09320"> Consultar en arXiv: 1603.09320 </a></p>
 <p>Johnson, Douze &amp; Jégou · 2019 Búsqueda Masiva FAISS</p>
-<h4 class="apa-h4">Billion-Scale Similarity Search with GPUs (FAISS)</h4>
+<h4 class="apa-n4">Billion-Scale Similarity Search with GPUs (FAISS)</h4>
 <p>Biblioteca de investigación de Meta AI para indexación vectorial acelerada por hardware, cuantización de producto (PQ) y clustering de embeddings a escala masiva. </p>
 <p><a href="https://arxiv.org/abs/1702.08734"> Consultar en arXiv: 1702.08734 </a></p>
 <p>Gao et al. · 2023 Taxonomía RAG Survey</p>
-<h4 class="apa-h4">Retrieval-Augmented Generation for LLMs: A Survey</h4>
+<h4 class="apa-n4">Retrieval-Augmented Generation for LLMs: A Survey</h4>
 <p>Estado del arte exhaustivo sobre RAG Ingenuo, RAG Avanzado y RAG Modular, detallando técnicas de re-ranking, filtrado contextual y alineación post-retrieval. </p>
 <p><a href="https://arxiv.org/abs/2312.10997"> Consultar en arXiv: 2312.10997 </a></p>
 <p>Asai et al. / Univ. Washington · 2024 Auto-Reflexión Self-RAG</p>
-<h4 class="apa-h4">Self-RAG: Learning to Retrieve, Generate, and Critique</h4>
+<h4 class="apa-n4">Self-RAG: Learning to Retrieve, Generate, and Critique</h4>
 <p>Entrenamiento de modelos con tokens especiales de reflexión para decidir cuándo recuperar información y evaluar dinámicamente la fidelidad fáctica de las citas. </p>
 <p><a href="https://arxiv.org/abs/2310.11511"> Consultar en arXiv: 2310.11511 </a></p>
 <p>Wang et al. / Microsoft · 2022 Modelos MiniLM &amp; E5</p>
-<h4 class="apa-h4">Text Embeddings by Weakly-Supervised Pre-Training</h4>
+<h4 class="apa-n4">Text Embeddings by Weakly-Supervised Pre-Training</h4>
 <p>Metodología de destilación y pre-entrenamiento débil para generar representaciones vectoriales densas ultra-eficientes de 384 y 768 dimensiones. </p>
 <p><a href="https://arxiv.org/abs/2212.03533"> Consultar en arXiv: 2212.03533 </a></p>
 <p>Meta AI Research · 2024 Modelos Abiertos Llama 3</p>
-<h4 class="apa-h4">The Llama 3 Herd of Models</h4>
+<h4 class="apa-n4">The Llama 3 Herd of Models</h4>
 <p>Reporte técnico de Meta AI sobre la arquitectura de 8B a 405B parámetros, el soporte de 128k tokens de contexto y la integración de mecanismos GQA. </p>
 <p><a href="https://arxiv.org/abs/2407.21783"> Consultar en arXiv: 2407.21783 </a></p>
 <p>Abts et al. / Groq Inc. · 2022 Inferencia Ultra-Rápida</p>
-<h4 class="apa-h4">A Software-Defined Tensor Streaming Architecture</h4>
+<h4 class="apa-n4">A Software-Defined Tensor Streaming Architecture</h4>
 <p>Diseño de microarquitectura LPU para procesamiento streaming determinista sin colas de espera en DRAM, logrando latencias de RAG menores a 0.65 s. </p>
 <p><a href="https://ieeexplore.ieee.org/document/9772967"> Consultar en IEEE Micro: 9772967 </a></p>
 <p>Robertson &amp; Zaragoza · 2009 Recuperación Léxica BM25</p>
-<h4 class="apa-h4">The Probabilistic Relevance Framework: BM25 and Beyond</h4>
+<h4 class="apa-n4">The Probabilistic Relevance Framework: BM25 and Beyond</h4>
 <p>Fundamento matemático de la recuperación por frecuencia inversa de términos (TF-IDF / BM25) para búsquedas léxicas exactas en esquemas híbridos. </p>
 <p><a href="https://www.nowpublishers.com/article/Details/INR-019"> Consultar en nowpublishers.com </a></p>
 <p>Hugging Face &amp; UKP Lab · 2025 Framework de Embeddings</p>
-<h4 class="apa-h4">Sentence-Transformers Framework &amp; MTEB Benchmark</h4>
+<h4 class="apa-n4">Sentence-Transformers Framework &amp; MTEB Benchmark</h4>
 <p>Documentación técnica de la suite de embeddings multilingües y el Massive Text Embedding Benchmark (MTEB) para evaluación de tareas semánticas. </p>
 <p><a href="https://sbert.net"> Consultar en sbert.net </a></p>
 <p>NIST &amp; ISO/IEC · 2025 Estándares de IA</p>
-<h4 class="apa-h4">NIST AI Risk Management Framework (AI RMF 1.0)</h4>
+<h4 class="apa-n4">NIST AI Risk Management Framework (AI RMF 1.0)</h4>
 <p>Directivas de fiabilidad, trazabilidad y mitigación de alucinaciones en sistemas de inteligencia artificial generativa con acceso a bases de conocimiento. </p>
 <p><a href="https://www.nist.gov/itl/ai-risk-management-framework"> Consultar en nist.gov </a></p>
 <hr/>
