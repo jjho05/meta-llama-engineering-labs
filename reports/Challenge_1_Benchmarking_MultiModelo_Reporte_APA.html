@@ -5,7 +5,7 @@
 <title>Evaluación Empírica de Rendimiento, Latencia, Throughput y Eficiencia Computacional en Modelos Abiertos de Lenguaje: Benchmarking Comparativo entre Arquitecturas SLM, CoT Reasoning y LLM Masivo en Hardware Groq LPU</title>
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
 
 @page {
@@ -13,17 +13,17 @@
   margin: 1in;
   @top-left {
     content: "INVESTIGACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3";
-    font-family: 'Tinos', 'Times New Roman', serif;
-    font-size: 8.5pt;
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-size: 9pt;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #444;
+    color: #333;
   }
   @top-right {
     content: counter(page);
-    font-family: 'Tinos', 'Times New Roman', serif;
-    font-size: 10pt;
-    color: #111;
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-size: 10.5pt;
+    color: #000;
   }
 }
 
@@ -35,9 +35,9 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Tinos', 'Times New Roman', Georgia, serif;
+  font-family: 'Times New Roman', Times, Georgia, serif;
   font-size: 12pt;
-  line-height: 1.8;
+  line-height: 2.0;
   color: #000000;
   background: #ffffff;
   margin: 0;
@@ -50,7 +50,7 @@ body {
   break-after: page;
 }
 
-/* PORTADA CENTRADA */
+/* PORTADA OFICIAL CENTRADA */
 .thesis-cover {
   height: 8.6in;
   display: flex;
@@ -59,29 +59,29 @@ body {
   align-items: center;
   text-align: center;
   page-break-after: always;
-  line-height: 1.4;
+  line-height: 1.45;
   margin: 0 auto;
   padding: 0;
 }
 
 .institution-title {
-  font-size: 13pt;
+  font-size: 13.5pt;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .program-title {
-  font-size: 11.5pt;
+  font-size: 12pt;
   font-weight: 700;
   text-transform: uppercase;
-  color: #222;
+  color: #111;
   margin-bottom: 3.2rem;
 }
 
 .thesis-main-title {
-  font-size: 14pt;
+  font-size: 14.5pt;
   font-weight: 700;
   line-height: 1.35;
   margin-bottom: 1.2rem;
@@ -89,15 +89,15 @@ body {
 }
 
 .thesis-subtitle {
-  font-size: 12pt;
+  font-size: 12.5pt;
   font-style: italic;
   margin-bottom: 3.2rem;
   max-width: 90%;
-  color: #333;
+  color: #222;
 }
 
 .thesis-purpose {
-  font-size: 12pt;
+  font-size: 12.5pt;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -105,31 +105,31 @@ body {
 }
 
 .thesis-author {
-  font-size: 13pt;
+  font-size: 13.5pt;
   font-weight: 700;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .thesis-degree {
-  font-size: 11.5pt;
-  color: #333;
+  font-size: 12pt;
+  color: #222;
   margin-bottom: 3.2rem;
 }
 
 .thesis-date-place {
-  font-size: 12pt;
+  font-size: 12.5pt;
   font-weight: 700;
 }
 
-/* ÍNDICE DE CONTENIDO EN 1 PÁGINA (PÁGINA 2) */
+/* ÍNDICE DE CONTENIDO EN 1 PÁGINA */
 .toc-container {
   margin-top: 0;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .toc-title {
   text-align: center;
-  font-size: 14pt;
+  font-size: 14.5pt;
   font-weight: 700;
   margin-bottom: 0.8rem;
 }
@@ -138,42 +138,42 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.12rem;
-  font-size: 9.5pt;
+  margin-bottom: 0.15rem;
+  font-size: 10pt;
 }
 
 .toc-row.toc-main {
   font-weight: 700;
-  margin-top: 0.2rem;
-  font-size: 10pt;
+  margin-top: 0.25rem;
+  font-size: 10.5pt;
 }
 
 .toc-dots {
   flex-grow: 1;
-  border-bottom: 1px dotted #666;
-  margin: 0 0.3rem;
+  border-bottom: 1px dotted #555;
+  margin: 0 0.35rem;
 }
 
-.toc-page { font-weight: 700; font-size: 9.5pt; }
+.toc-page { font-weight: 700; font-size: 10pt; }
 
-/* TÍTULOS (14pt CENTRADOS, SALTO DE PÁGINA) */
+/* TÍTULOS (14pt - 14.5pt CENTRADOS, SALTO DE PÁGINA) */
 h1.apa-n1, h1.chapter-title {
   text-align: center;
-  font-size: 14pt;
+  font-size: 14.5pt;
   font-weight: 700;
-  margin-top: 1.8rem;
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1.1rem;
   page-break-before: always;
   page-break-after: avoid;
 }
 
-/* SUBTÍTULOS (12pt) */
+/* SUBTÍTULOS (12.5pt - 12pt) */
 h2.apa-n2, h2 {
   text-align: left;
-  font-size: 12pt;
+  font-size: 12.5pt;
   font-weight: 700;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1.6rem;
+  margin-bottom: 0.6rem;
   page-break-after: avoid;
 }
 
@@ -182,8 +182,8 @@ h3.apa-n3, h3 {
   font-size: 12pt;
   font-weight: 700;
   font-style: italic;
-  margin-top: 1.3rem;
-  margin-bottom: 0.4rem;
+  margin-top: 1.4rem;
+  margin-bottom: 0.5rem;
   page-break-after: avoid;
 }
 
@@ -191,35 +191,35 @@ h4.apa-n4, h4 {
   text-align: left;
   font-size: 12pt;
   font-weight: 700;
-  margin-top: 1.1rem;
-  margin-bottom: 0.3rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
   page-break-after: avoid;
 }
 
-/* PÁRRAFOS (12pt, SIN SANGRÍA / ALINEACIÓN RECTA) */
+/* PÁRRAFOS (12pt, INTERLINEADO 2.0, SIN SANGRÍA) */
 p {
   font-size: 12pt;
   text-indent: 0;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.2rem 0;
 }
 
-/* TABLAS ACADÉMICAS FORMALES APA 7 */
+/* TABLAS FORMALES APA 7 */
 .table-container {
-  margin: 1.8rem 0;
+  margin: 2rem 0;
   page-break-inside: avoid;
 }
 
 .table-number {
   font-weight: 700;
-  font-size: 11pt;
-  margin-bottom: 0.1rem;
+  font-size: 11.5pt;
+  margin-bottom: 0.15rem;
   text-indent: 0;
 }
 
 .table-title {
   font-style: italic;
-  font-size: 11pt;
-  margin-bottom: 0.4rem;
+  font-size: 11.5pt;
+  margin-bottom: 0.5rem;
   text-indent: 0;
 }
 
@@ -227,22 +227,23 @@ table.apa-table, table {
   width: 100%;
   border-collapse: collapse;
   margin: 0.4rem 0 0.6rem 0;
-  font-size: 10pt;
-  line-height: 1.35;
+  font-size: 10.5pt;
+  line-height: 1.4;
 }
 
 table.apa-table th, table th {
   border-top: 1.5pt solid #000;
   border-bottom: 1pt solid #000;
-  padding: 6px 8px;
+  padding: 7px 9px;
   text-align: left;
   font-weight: 700;
   color: #000;
   background: #fdfdfd;
+  font-size: 11pt;
 }
 
 table.apa-table td, table td {
-  padding: 6px 8px;
+  padding: 7px 9px;
   border-bottom: 0.5pt solid #e0e0e0;
 }
 
@@ -251,36 +252,36 @@ table.apa-table tr:last-child td, table tr:last-child td {
 }
 
 .table-note {
-  font-size: 9.5pt;
-  line-height: 1.35;
-  margin-top: 0.3rem;
+  font-size: 10pt;
+  line-height: 1.4;
+  margin-top: 0.4rem;
   text-indent: 0;
 }
 
 /* CAJA ELEGANTE PARA DESGLOSE TÉCNICO */
 .breakdown-box {
-  background: #fcfcfc;
-  border: 1pt solid #d1d5db;
-  border-left: 3.5pt solid #1e40af;
+  background: #fafafa;
+  border: 1pt solid #cbd5e1;
+  border-left: 3.5pt solid #1e3a8a;
   border-radius: 4px;
-  padding: 0.9rem 1.1rem;
-  margin: 1.3rem 0;
+  padding: 1rem 1.2rem;
+  margin: 1.4rem 0;
   page-break-inside: avoid;
 }
 
 .breakdown-title {
-  font-size: 11pt;
+  font-size: 11.5pt;
   font-weight: 700;
   color: #1e3a8a;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .breakdown-item {
-  margin-bottom: 0.45rem;
-  font-size: 11pt;
-  line-height: 1.45;
+  margin-bottom: 0.55rem;
+  font-size: 11.5pt;
+  line-height: 1.5;
 }
 
 .line-tag {
@@ -289,7 +290,7 @@ table.apa-table tr:last-child td, table tr:last-child td {
   color: #0f172a;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
-  font-size: 9pt;
+  font-size: 9.5pt;
   padding: 1px 6px;
   border-radius: 3px;
   margin-right: 6px;
@@ -298,9 +299,9 @@ table.apa-table tr:last-child td, table tr:last-child td {
 /* FÓRMULAS MATEMÁTICAS */
 .math-eq {
   text-align: center;
-  margin: 1.2rem 0;
-  padding: 0.3rem;
-  font-size: 12pt;
+  margin: 1.4rem 0;
+  padding: 0.4rem;
+  font-size: 12.5pt;
   page-break-inside: avoid;
 }
 
@@ -310,11 +311,11 @@ table.apa-table tr:last-child td, table tr:last-child td {
   border: 1pt solid #ccc;
   border-left: 3pt solid #000;
   border-radius: 4px;
-  padding: 0.8rem 1rem;
-  margin: 1.2rem 0;
+  padding: 0.9rem 1.1rem;
+  margin: 1.3rem 0;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5pt;
-  line-height: 1.45;
+  font-size: 10pt;
+  line-height: 1.5;
   overflow-x: hidden;
   page-break-inside: avoid;
 }
@@ -328,30 +329,30 @@ pre {
 
 code {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 9.5pt;
+  font-size: 10pt;
 }
 
 p code, li code {
   background: #f4f4f4;
-  padding: 0.1rem 0.3rem;
+  padding: 0.15rem 0.35rem;
   border-radius: 3px;
-  font-size: 9.5pt;
+  font-size: 10pt;
 }
 
 ul, ol {
-  margin: 0 0 1rem 1.5rem;
+  margin: 0 0 1.2rem 1.8rem;
   padding-left: 0.5in;
   font-size: 12pt;
 }
 
-li { margin-bottom: 0.35rem; }
+li { margin-bottom: 0.4rem; }
 
 .ref-item {
   padding-left: 0.5in;
   text-indent: -0.5in;
-  margin-bottom: 1rem;
-  font-size: 11pt;
-  line-height: 1.5;
+  margin-bottom: 1.1rem;
+  font-size: 11.5pt;
+  line-height: 1.6;
 }
 
 </style>
