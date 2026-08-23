@@ -121,7 +121,7 @@ body {
   font-weight: 700;
 }
 
-/* ÍNDICE DE CONTENIDO EN 1 PÁGINA */
+/* ÍNDICE DE CONTENIDO EN 1 PÁGINA (PÁGINA 2) */
 .toc-container {
   margin-top: 0;
   line-height: 1.25;
@@ -156,7 +156,7 @@ body {
 
 .toc-page { font-weight: 700; font-size: 10pt; }
 
-/* TÍTULOS (14pt - 14.5pt CENTRADOS, SALTO DE PÁGINA) */
+/* TÍTULOS (14.5pt CENTRADOS, SALTO DE PÁGINA) */
 h1.apa-n1, h1.chapter-title {
   text-align: center;
   font-size: 14.5pt;
@@ -1154,117 +1154,6 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
               <div class="breakdown-item"><span class="line-tag">L1-10</span> <strong><code>print("=" * 120), format strings</code>:</strong> Genera la matriz comparativa en formato tabular ASCII para contrastar precisión, prevención de alucinación y tiempos de respuesta.</div><div class="breakdown-item"><span class="line-tag">L12-16</span> <strong><code>print(respuesta_sin_rag), print(respuesta_con_rag)</code>:</strong> Demuestra cómo el sistema RAG reporta con total honestidad que la calificación mínima aprobatoria no figura en el fragmento recuperado, impidiendo cualquier alucinación.</div>
             </div>
             
-<h1 class="apa-n1">Simulador RAG en Vivo & Búsqueda Semántica</h1>
-<p>Experimenta con inferencia 100% real en Groq LPUs o simulación local interactiva. Observa cómo cambia la similitud coseno y la supresión de alucinaciones en tiempo real.</p>
-<p><strong>Motor de Inferencia RAG Activo (Vercel Serverless / Groq LPU)</strong> Recuperación semántica multilingüe con MiniLM-L12-v2 y generación aumentada.</p>
-<p>Base de Conocimiento (Reglamento Oficial del Curso):</p>
-<p><strong>Doc #1: Criterios de Evaluación</strong> Challenges 40%, Proyecto 50%, Masterclasses 10%. Mínimo aprobatorio: 80/100 pts.</p>
-<p><strong>Doc #2: Entregas Tardías y Penalizaciones</strong> Límite domingo 23:59 hrs. Hasta 24h: -15 pts. Entre 24-48h: -30 pts. >48h: Calificación 0.</p>
-<p><strong>Doc #3: Integridad Académica y Asistencia</strong> 80% asistencia mínima sincrónica. Código de autoría propia; plagio causa baja definitiva.</p>
-<p>Selecciona una consulta oficial de prueba o cambia a Modo Libre:</p>
-<p>Pregunta del Estudiante:  Preset 1 (Fijado)</p>
-<p>¿Cuál es la penalización por entregar un challenge con 20 horas de retraso y cuál es la calificación mínima para aprobar el curso?</p>
-<p>Modelo LLM Generador:  openai/gpt-oss-20b (Ligero 20B) openai/gpt-oss-120b (Grande 120B) qwen/qwen3.6-27b (Razonamiento 27B)</p>
-<p>Listo para recuperar fragmentos y comparar</p>
-<p>Ranking de Similitud Coseno de Fragmentos (Vector Dot Product $\mathbf{u} \cdot \mathbf{v}$):</p>
-<p>Documento #1 (Criterios de Evaluación y Calificación Mínima) 0.3120</p>
-<p>Documento #2 (Entregas Tardías y Penalizaciones) ← FRAGMENTO RECUPERADO 0.6384</p>
-<p>Documento #3 (Integridad Académica y Asistencia) 0.2240</p>
-<p><strong>1\. Inferencia Directa SIN RAG</strong> Alucinación / Evasiva</p>
-<p>Latencia: <strong>0.79 s</strong> Tokens: <strong>510 tok</strong></p>
-<p>La respuesta depende del curso o plataforma específica a la que te refieras, ya que cada institución establece sus propias políticas. Por lo general, algunas aplican una penalización del 10% al 20%, y la calificación mínima suele ser 70 o 75 puntos. Te sugiero consultar el programa de estudios oficial o preguntar a tu profesor.</p>
-<p><strong>2\. Inferencia Aumentada CON RAG</strong> 100% Verídico & Auditado</p>
-<p>Latencia: <strong>0.62 s</strong> Tokens: <strong>576 tok</strong></p>
-<p>Basado en el <strong>Reglamento Oficial del Curso (Doc #2 - Entregas Tardías)</strong> :</p>
-<p>1\. <strong>Penalización por 20 horas de retraso:</strong> Es exactamente de <strong>15 puntos sobre la calificación obtenida</strong> , dado que la entrega se realizó dentro del margen de hasta 24 horas de retraso permitido.</p>
-<p>2\. <strong>Calificación mínima para aprobar:</strong> El fragmento recuperado <strong>no contiene información sobre la calificación mínima aprobatoria</strong> del curso (se declara el vacío con total honestidad).</p>
-<p>Parte IV: Script Python</p>
-<h1 class="apa-n1">Código Python Independiente para Producción</h1>
-<p>Script ejecutable en terminal local o servidores con soporte para selector CLI (<code>--modelo</code>), carga de variables <code>.env</code> y medición de telemetría.</p>
-<p>ejecutar_challenge2.py</p>
-<p>!/usr/bin/env python3</p>
-<p>"""</p>
-<p>Módulo: IA Aplicada con Modelos Abiertos</p>
-<p>Challenge 2: Asistente de Políticas con RAG</p>
-<p>Alumno: Ing. Jesús Javier Hernández Olvera</p>
-<p>"""</p>
-<p>import os</p>
-<p>import re</p>
-<p>import sys</p>
-<p>import time</p>
-<p>import argparse</p>
-<p>import warnings</p>
-<p>from pathlib import Path</p>
-<p>from dotenv import load_dotenv</p>
-<p>import numpy as np</p>
-<p>from sentence_transformers import SentenceTransformer</p>
-<p>from groq import Groq</p>
-<p>warnings.filterwarnings("ignore")</p>
-<p>os.environ["TOKENIZERS_PARALLELISM"] = "false"</p>
-<h1 class="apa-n1">1. Cargar variables de entorno desde .env</h1>
-<p>env_path = Path(__file__).parent / ".env"</p>
-<p>load_dotenv(dotenv_path=env_path)</p>
-<p>API_KEY = os.environ.get("GROQ_API_KEY")</p>
-<p>if not API_KEY:</p>
-<p>print("[Error] Error: Se requiere la variable GROQ_API_KEY en .env")</p>
-<p>sys.exit(1)</p>
-<p>client = Groq(api_key=API_KEY)</p>
-<h1 class="apa-n1">2. Selector de modelo mediante argumentos CLI</h1>
-<p>parser = argparse.ArgumentParser(description="Asistente RAG con selector de modelo")</p>
-<p>parser.add_argument(</p>
-<p>"--modelo",</p>
-<p>type=str,</p>
-<p>default="openai/gpt-oss-20b",</p>
-<p>choices=["openai/gpt-oss-20b", "openai/gpt-oss-120b", "qwen/qwen3.6-27b"],</p>
-<p>help="Modelo a utilizar en Groq LPU"</p>
-<p>)</p>
-<p>args, _ = parser.parse_known_args()</p>
-<p>MODELO_LLM = args.modelo</p>
-<p>print("Cargando modelo de embeddings (paraphrase-multilingual-MiniLM-L12-v2)...")</p>
-<p>modelo_embeddings = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')</p>
-<h1 class="apa-n1">3. Base de Conocimiento</h1>
-<p>documentos = [</p>
-<p>"Criterios de Evaluación y Calificación Mínima: La calificación final del curso se compone de Challenges prácticos semanales (40%), Proyecto Integrador con Llama y RAG (50%), y Participación en masterclasses (10%). La calificación mínima aprobatoria para acreditar el curso y obtener la certificación es de 80 sobre 100 puntos.",</p>
-<p>"Política de Entregas Tardías y Penalizaciones: La fecha límite de entrega de cada Challenge es el domingo a las 23:59 hrs (hora CDMX). Las entregas realizadas con hasta 24 horas de retraso tienen una penalización de 15 puntos sobre la calificación obtenida. Las entregas entre 24 y 48 horas de retraso tienen una penalización de 30 puntos. Pasadas las 48 horas no se aceptan entregas y la calificación asignada será 0.",</p>
-<p>"Integridad Académica y Asistencia: Se exige un mínimo de 80% de asistencia a las sesiones sincrónicas para mantener el derecho a evaluación. Todo código entregado en Colab debe ser de autoría propia y funcional; cualquier copia no autorizada o plagio entre alumnos resultará en la baja definitiva del programa."</p>
-<p>]</p>
-<p>embeddings_documentos = modelo_embeddings.encode(documentos, normalize_embeddings=True)</p>
-<p>def buscar_fragmento(pregunta: str):</p>
-<p>emb_p = modelo_embeddings.encode([pregunta], normalize_embeddings=True)</p>
-<p>sims = np.dot(embeddings_documentos, emb_p.T).flatten()</p>
-<p>idx = int(np.argmax(sims))</p>
-<p>return documentos[idx], float(sims[idx]), idx</p>
-<p>pregunta = "¿Cuál es la penalización por entregar un challenge con 20 horas de retraso y cuál es la calificación mínima para aprobar el curso?"</p>
-<h1 class="apa-n1">Ejecución RAG</h1>
-<p>frag, score, idx = buscar_fragmento(pregunta)</p>
-<p>prompt_rag = f"""Responde la pregunta basándote ÚNICAMENTE en el siguiente fragmento del reglamento oficial:</p>
-<p>\"\"\"{frag}\"\"\"</p>
-<p>Pregunta: {pregunta}</p>
-<p>Respuesta:"""</p>
-<p>res = client.chat.completions.create(</p>
-<p>model=MODELO_LLM,</p>
-<p>messages=[{"role": "user", "content": prompt_rag}],</p>
-<p>max_tokens=800</p>
-<p>)</p>
-<p>print(f"\n[RAG Exitosa - Fragmento #{idx + 1} | Score: {score:.4f}]:\n")</p>
-<p>print(res.choices[0].message.content)</p>
-<p>Parte V: Banco de Conocimiento</p>
-<h1 class="apa-n1">Preguntas Frecuentes & Arquitectura de Sistemas RAG</h1>
-<p>Respuestas técnicas y fundamentos de ingeniería sobre vectorización, bases de datos vectoriales y control de alucinaciones.</p>
-<p>¿Por qué el modelo declara honestamente que no conoce la calificación mínima cuando usa RAG?</p>
-<p>Porque el fragmento recuperado sobre entregas tardías (Doc #2) no contiene la cláusula de calificación mínima (que reside en el Doc #1). Al instruir explícitamente al LLM: _'Si algún dato no aparece en el fragmento, acláralo honestamente y no lo inventes'_ , se suprime la alucinación probabilística y se garantiza una respuesta 100% auditable.</p>
-<p>¿Por qué la similitud coseno equivale al producto punto en este challenge?</p>
-<p>Porque al utilizar <code>normalize_embeddings=True</code>, cada vector se escala a norma euclidiana unitaria ($\|\mathbf{u}\|_2 = \|\mathbf{v}\|_2 = 1$). La fórmula $\text{cos}(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \|\mathbf{v}\|_2}$ se simplifica exactamente a $\mathbf{u} \cdot \mathbf{v} = \sum_{i=1}^{384} u_i v_i$, permitiendo a NumPy ejecutar la búsqueda semántica en microsegundos mediante <code>np.dot()</code>.</p>
-<p>¿Qué modelo LLM se utiliza para la síntesis RAG y cómo se compara con Meta Llama?</p>
-<p>En este challenge utilizamos <code>openai/gpt-oss-20b</code> como generador principal en Groq LPU (equivalente a <code>llama-3.1-8b</code>). Ambos modelos comparten la arquitectura <strong>Decoder-only Transformer con Grouped-Query Attention (GQA)</strong> y formato de pesos abiertos (_Open-Weights_).</p>
-<p><strong>Ventaja en Sistemas RAG:</strong> Dado que el fragmento recuperado ya contiene los hechos verídicos en el contexto, el LLM no requiere memorizar datos masivos (ahorrando el costo de un modelo 70B/120B). El modelo ligero de 20B/8B ofrece la combinación óptima: comprensión lectora precisa, estricta adherencia anti-alucinación y <strong>latencia ultra-baja ( < 0.65 s)</strong> a una fracción del costo operativo.</p>
-<p>¿Cómo escalar este pipeline a millones de documentos corporativos?</p>
-<p>Para más de 10,000 documentos se reemplaza NumPy por una Base de Datos Vectorial especializada (ChromaDB, Pinecone, FAISS, Milvus o Qdrant) que utiliza índices de grafos <strong>HNSW (Hierarchical Navigable Small World)</strong> o <strong>IVF-PQ (Inverted File with Product Quantization)</strong> para buscar entre millones de vectores en menos de 15 milisegundos con complejidad $O(\log N)$.</p>
-<p>¿Qué estrategias de Chunking (segmentación) se aplican en producción?</p>
-<p>En documentos extensos se utilizan segmentaciones semánticas con solapamiento (ej. trozos de 500 tokens con 50 tokens de overlap) o _Parent-Document Retrieval_ (donde se busca en fragmentos pequeños pero se inyecta el documento padre completo al LLM para preservar la coherencia contextual).</p>
-<p>¿Qué técnicas avanzadas (HyDE, Re-ranking con Cross-Encoders y Búsqueda Híbrida) optimizan sistemas RAG complejos?</p>
-<p>Para casos de alta complejidad fáctica, la industria combina <strong>Búsqueda Híbrida (Dense Vector + Sparse BM25)</strong> con algoritmos de <strong>Re-ranking mediante Cross-Encoders</strong> (como <code>bge-reranker-large</code> o Cohere Rerank) para reordenar los 20 mejores fragmentos recuperados y seleccionar los 3 de mayor densidad informacional. Además, <strong>HyDE (Hypothetical Document Embeddings)</strong> genera primero una respuesta hipotética con el LLM para buscar vectores en el espacio de respuestas en lugar de preguntas.</p>
-<p>Evidencia Científica & Recursos Oficiales</p>
 <h1 class="apa-n1">Fuentes de Información Reales & Referencias Académicas</h1>
 <p>Todo el pipeline RAG, las formulaciones de similitud coseno, los modelos de embeddings densos y la arquitectura de inferencia están rigurosamente fundamentados en papers científicos y especificaciones de ingeniería.</p>
 <p>Lewis et al. / Meta AI · 2020 Paper Fundacional RAG</p>

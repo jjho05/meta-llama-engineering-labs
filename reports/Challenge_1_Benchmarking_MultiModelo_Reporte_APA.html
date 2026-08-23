@@ -121,7 +121,7 @@ body {
   font-weight: 700;
 }
 
-/* ÍNDICE DE CONTENIDO EN 1 PÁGINA */
+/* ÍNDICE DE CONTENIDO EN 1 PÁGINA (PÁGINA 2) */
 .toc-container {
   margin-top: 0;
   line-height: 1.25;
@@ -156,7 +156,7 @@ body {
 
 .toc-page { font-weight: 700; font-size: 10pt; }
 
-/* TÍTULOS (14pt - 14.5pt CENTRADOS, SALTO DE PÁGINA) */
+/* TÍTULOS (14.5pt CENTRADOS, SALTO DE PÁGINA) */
 h1.apa-n1, h1.chapter-title {
   text-align: center;
   font-size: 14.5pt;
@@ -1249,128 +1249,6 @@ La presente investigación aporta datos empíricos sobre la inferencia en silici
 <p>En sistemas industriales de IA, destina el 80% del tráfico rutinario (FAQs, validaciones, resúmenes cortos) al modelo ligero (8B/20B) y utiliza un enrutador semántico para reservar el 20% de alta complejidad para modelos masivos (70B/120B/Qwen).</p>
 <p>Autoevaluación 1.C.12</p>
 <p>¿Cuál es la estrategia recomendada por el dictamen de arquitectura para optimizar tanto la experiencia del usuario como los costos operativos?</p>
-<p>Laboratorio en Vivo: Benchmark Studio Multi-Modelo en LPU</p>
-<p>Telemetría Paralela en Vivo</p>
-<p><strong>Laboratorio de Experimentación Libre:</strong> Escribe cualquier consulta o selecciona un preset. El motor ejecutará inferencia simultánea sobre los 3 modelos, cronometrando en tiempo real la latencia digital ($s$), el throughput ($T/s$) y el costo en tokens.</p>
-<p>Motor de Inferencia: Vercel Serverless / Groq LPU</p>
-<p>Procesamiento en tiempo real sobre hardware LPU en servidores seguros de Vercel.</p>
-<p>Seleccionar Consulta de Negocio:</p>
-<p>MODO ACTIVO: PRESET 1 (CONSULTA FIJA) Preset prediseñado. Pulsa «Modo Libre» para escribir una pregunta propia.</p>
-<p>¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?</p>
-<p>max_tokens 600</p>
-<p>temperature 0.3</p>
-<p>openai/gpt-oss-20b</p>
-<p>Equivalente: llama-3.1-8b-instant</p>
-<p>Alta Velocidad</p>
-<p>1.29 s</p>
-<p>Latencia</p>
-<p>786</p>
-<p>Tokens Totales</p>
-<p>609 t/s</p>
-<p>Throughput</p>
-<p>¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional: 1\. Accede a la página de inicio de sesión institucional (https://portal.tuinstitucion.edu). 2\. Busca el enlace «Olvidé mi contraseña» o «Restablecer contraseña». 3\. Proporciona tu nombre de usuario o correo electrónico institucional. 4\. Revisa tu bandeja de entrada y pulsa el enlace de restablecimiento seguro. 5\. Establece una nueva contraseña segura (mínimo 8 caracteres, números y símbolos). 6\. Regresa a la página de inicio de sesión e inicia sesión con tus credenciales actualizadas.</p>
-<p>openai/gpt-oss-120b</p>
-<p>Equivalente: llama-3.3-70b-versatile</p>
-<p>Alta Capacidad</p>
-<p>1.82 s</p>
-<p>Latencia</p>
-<p>786</p>
-<p>Tokens Totales</p>
-<p>431 t/s</p>
-<p>Throughput</p>
-<p>Guía Integral de Seguridad para la Recuperación de Credenciales: 1\. Verificación de Identidad: • Ingresa a https://portal.institucion.edu con cifrado TLS 1.3 activo. • Introduce tu ID de usuario o correo corporativo. 2\. Factor de Doble Autenticación (2FA): • Se enviará un token criptográfico OTP a tu dispositivo móvil verificado. 3\. Actualización de Clave: • Longitud mínima: 12 caracteres alfanuméricos. • No reutilizar las últimas 5 contraseñas previas. 4\. Auditoría y Logs: • El cambio será registrado en el sistema SIEM con IP y timestamp.</p>
-<p>qwen/qwen3.6-27b</p>
-<p>Arquitectura: Reasoning MoE / Dense</p>
-<p>Razonamiento</p>
-<p>1.66 s</p>
-<p>Latencia</p>
-<p>726</p>
-<p>Tokens Totales</p>
-<p>437 t/s</p>
-<p>Throughput</p>
-<h1 class="apa-n1">Guía de Restablecimiento Seguro de Contraseña 1\. Accede al portal oficial con protocolo seguro HTTPS. 2\. Selecciona la opción de recuperación de credenciales. 3\. Ingresa tu número de matrícula o correo institucional. 4\. Valida tu identidad y actualiza la clave respetando las directivas institucionales.</h1>
-<p>Dictamen de Telemetría en Tiempo Real</p>
-<p><strong>Modelo Ligero (20B)</strong> es <strong>52% más rápido</strong> en TTFT frente a Modelo Grande (120B). Recomendado para esta consulta frecuente.</p>
-<p>Entregable Autónomo de Producción · Python Standalone</p>
-<h2 class="apa-n2">Script Completo de Inferencia: `ejecutar_challenge.py`</h2>
-<p>Este script en Python contiene la implementación consolidada de extremo a extremo lista para ejecutarse en tu terminal local o en Google Colab:</p>
-<p>ejecutar_challenge.py (Código Completo y Verificado)</p>
-<h1 class="apa-n1">==============================================================================</h1>
-<h1 class="apa-n1">Meta AI - Módulo 1: Challenge 1 - Comparador Multi-Modelo de Lenguaje</h1>
-<h1 class="apa-n1">Alumno: Ing. Jesús Javier Hernández Olvera</h1>
-<h1 class="apa-n1">Módulo: IA Aplicada con Modelos Abiertos</h1>
-<h1 class="apa-n1">==============================================================================</h1>
-<p>import os</p>
-<p>import re</p>
-<p>import time</p>
-<p>from groq import Groq</p>
-<h1 class="apa-n1">1. Conexión a Groq API</h1>
-<p>api_key = os.environ.get("GROQ_API_KEY")</p>
-<p>if not api_key:</p>
-<p>try:</p>
-<p>from google.colab import userdata</p>
-<p>api_key = userdata.get("GROQ_API_KEY")</p>
-<p>except Exception:</p>
-<p>pass</p>
-<p>client = Groq(api_key=api_key)</p>
-<h1 class="apa-n1">Modelos Evaluados</h1>
-<p>MODELO_LIGERO = "openai/gpt-oss-20b"     # Fallback para llama-3.1-8b-instant</p>
-<p>MODELO_GRANDE = "openai/gpt-oss-120b"    # Fallback para llama-3.3-70b-versatile</p>
-<p>MODELO_QWEN   = "qwen/qwen3.6-27b"       # Modelo de razonamiento analítico</p>
-<p>def limpiar_respuesta(texto: str) -> str:</p>
-<p>if not texto: return ""</p>
-<p>return re.sub(r"<think>.*?</think>", "", texto, flags=re.DOTALL).strip()</p>
-<h1 class="apa-n1">2. Definición del banco de 3 preguntas</h1>
-<p>preguntas = [</p>
-<p>"¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?",</p>
-<p>"¿Cuál es el horario de atención y los canales oficiales para soporte técnico?",</p>
-<p>"¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"</p>
-<p>]</p>
-<h1 class="apa-n1">3. Función de inferencia comparativa</h1>
-<p>def consultar_pregunta(pregunta: str, num: int):</p>
-<p>print(f"\nProcesando Pregunta {num} en los 3 modelos...")</p>
-<h1 class="apa-n1">Modelo Ligero (20B)</h1>
-<p>t0 = time.time()</p>
-<p>r_lig = client.chat.completions.create(model=MODELO_LIGERO, messages=[{"role":"user", "content":pregunta}], max_tokens=600)</p>
-<p>dt_lig = time.time() - t0</p>
-<h1 class="apa-n1">Modelo Masivo (120B)</h1>
-<p>t1 = time.time()</p>
-<p>r_grd = client.chat.completions.create(model=MODELO_GRANDE, messages=[{"role":"user", "content":pregunta}], max_tokens=600)</p>
-<p>dt_grd = time.time() - t1</p>
-<h1 class="apa-n1">Modelo Qwen (27B)</h1>
-<p>t2 = time.time()</p>
-<p>r_qwn = client.chat.completions.create(model=MODELO_QWEN, messages=[{"role":"user", "content":pregunta}], max_tokens=600)</p>
-<p>dt_qwn = time.time() - t2</p>
-<p>return {</p>
-<p>"pregunta": pregunta,</p>
-<p>"modelo": MODELO_LIGERO,</p>
-<p>"respuesta": limpiar_respuesta(r_lig.choices[0].message.content),</p>
-<p>"tiempo_segundos": round(dt_lig, 2),</p>
-<p>"tokens_prompt": r_lig.usage.prompt_tokens,</p>
-<p>"tokens_respuesta": r_lig.usage.completion_tokens,</p>
-<p>"tokens_totales": r_lig.usage.total_tokens,</p>
-<p>"modelo_grande": MODELO_GRANDE,</p>
-<p>"respuesta_grande": limpiar_respuesta(r_grd.choices[0].message.content),</p>
-<p>"tiempo_grande": round(dt_grd, 2),</p>
-<p>"tokens_grande": r_grd.usage.total_tokens,</p>
-<p>"modelo_qwen": MODELO_QWEN,</p>
-<p>"respuesta_qwen": limpiar_respuesta(r_qwn.choices[0].message.content),</p>
-<p>"tiempo_qwen": round(dt_qwn, 2),</p>
-<p>"tokens_qwen": r_qwn.usage.total_tokens</p>
-<p>}</p>
-<h1 class="apa-n1">4. Ejecución y consolidación</h1>
-<p>resultado_1 = consultar_pregunta(preguntas[0], 1)</p>
-<p>resultado_2 = consultar_pregunta(preguntas[1], 2)</p>
-<p>resultado_3 = consultar_pregunta(preguntas[2], 3)</p>
-<p>resultados = [resultado_1, resultado_2, resultado_3]</p>
-<h1 class="apa-n1">5. Despliegue de Resultados</h1>
-<p>print("\n" + "=" * 120)</p>
-<p>print("TABLA COMPARATIVA CONSOLIDADA (SALIDA DEL CHALLENGE 1):")</p>
-<p>print("=" * 120)</p>
-<p>for i, r in enumerate(resultados, 1):</p>
-<p>print(f"{i}. {r['pregunta'][:35]}... | Ligero: {r['tiempo_segundos']}s ({r['tokens_totales']} tok) | Grande: {r['tiempo_grande']}s ({r['tokens_grande']} tok) | Qwen: {r['tiempo_qwen']}s ({r['tokens_qwen']} tok)")</p>
-<p>print("=" * 120)</p>
-<p>Terminología & Benchmarking</p>
 <h1 class="apa-n1">Glosario Técnico del Comparador</h1>
 <p>Conceptos fundamentales de inferencia, métricas de hardware LPU y arquitectura de Model Routing.</p>
 <p>Concepto #01</p>
