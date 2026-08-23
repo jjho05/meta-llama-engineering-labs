@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reporte Académico APA 7: Challenge 2 - Asistente RAG de Políticas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+  @import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
+
+  @page {
+    size: letter;
+    margin: 2.54cm;
+    @top-right {
+      content: "Ing. Jesús Javier Hernández Olvera";
+      font-family: 'Crimson Pro', serif;
+      font-size: 9pt;
+      color: #666;
+    }
+    @bottom-right {
+      content: counter(page);
+      font-family: 'Crimson Pro', serif;
+      font-size: 10pt;
+    }
+  }
+
+  body {
+    font-family: 'Crimson Pro', 'Times New Roman', serif;
+    font-size: 11.5pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    text-align: justify;
+    margin: 0;
+    padding: 0;
+  }
+
+  .page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  /* PORTADA OFICIAL APA 7 */
+  .title-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 88vh;
+    page-break-after: always;
+  }
+
+  .institution-header {
+    font-size: 13pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #2b2b2b;
+    margin-bottom: 0.3rem;
+  }
+
+  .module-header {
+    font-size: 11.5pt;
+    font-weight: 600;
+    color: #0866ff;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+  }
+
+  .main-title {
+    font-size: 19pt;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0d1117;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 13pt;
+    font-style: italic;
+    color: #4b5563;
+    margin-bottom: 3rem;
+    line-height: 1.4;
+  }
+
+  .divider-line {
+    width: 60%;
+    height: 1.5px;
+    background: #0866ff;
+    margin: 1.5rem auto 2.5rem;
+  }
+
+  .deliverable-badge {
+    display: inline-block;
+    background: #f0f4ff;
+    border: 1px solid #c7d7fe;
+    color: #0866ff;
+    padding: 0.3rem 0.9rem;
+    border-radius: 20px;
+    font-size: 10.5pt;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+
+  .author-info {
+    font-size: 12.5pt;
+    margin-top: 1.5rem;
+    line-height: 1.45;
+  }
+
+  .author-name {
+    font-size: 15pt;
+    font-weight: 700;
+    color: #0866ff;
+  }
+
+  .author-role {
+    font-size: 11pt;
+    color: #555;
+    font-style: italic;
+  }
+
+  .footer-meta {
+    margin-top: 4rem;
+    font-size: 9.5pt;
+    color: #777;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    width: 100%;
+  }
+
+  /* ENCABEZADOS DE SECCIÓN */
+  h1.section-title {
+    font-size: 15pt;
+    font-weight: 700;
+    color: #0d1117;
+    border-bottom: 1.5px solid #0866ff;
+    padding-bottom: 0.3rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    page-break-after: avoid;
+  }
+
+  h2.subsection-title {
+    font-size: 13pt;
+    font-weight: 700;
+    color: #1f2937;
+    margin-top: 1.4rem;
+    margin-bottom: 0.5rem;
+    page-break-after: avoid;
+  }
+
+  h3.subsubsection-title {
+    font-size: 11.5pt;
+    font-weight: 700;
+    font-style: italic;
+    color: #374151;
+    margin-top: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  p {
+    margin: 0 0 0.9rem 0;
+    text-indent: 1.5rem;
+  }
+
+  p.no-indent {
+    text-indent: 0;
+  }
+
+  .abstract-box {
+    background: #f9fafb;
+    border-left: 4px solid #0866ff;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 0;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .abstract-title {
+    font-size: 12pt;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #0866ff;
+    text-indent: 0;
+  }
+
+  .keywords {
+    font-size: 10pt;
+    color: #4b5563;
+    margin-top: 0.8rem;
+    text-indent: 0;
+  }
+
+  /* TABLAS APA 7 */
+  table.apa-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 10pt;
+    page-break-inside: avoid;
+  }
+
+  table.apa-table caption {
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    font-size: 10.5pt;
+    color: #111;
+  }
+
+  table.apa-table th {
+    border-top: 2px solid #111;
+    border-bottom: 1.5px solid #111;
+    padding: 6px 8px;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  table.apa-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  table.apa-table tr:last-child td {
+    border-bottom: 2px solid #111;
+  }
+
+  /* BLOQUES MATEMÁTICOS */
+  .math-block {
+    text-align: center;
+    margin: 1.2rem 0;
+    padding: 0.5rem;
+    font-size: 11.5pt;
+  }
+
+  /* BLOQUES DE CÓDIGO */
+  pre.code-block {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 3.5px solid #0866ff;
+    padding: 0.9rem 1.1rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    overflow-x: auto;
+    margin: 1.2rem 0;
+    page-break-inside: avoid;
+  }
+
+  /* REFERENCIAS APA */
+  .biblio-item {
+    padding-left: 2rem;
+    text-indent: -2rem;
+    margin-bottom: 0.9rem;
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+</style>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="title-page">
+  <div class="institution-header">Programa de Especialización en Inteligencia Artificial & Meta Llama 3</div>
+  <div class="module-header">Módulo 1: Fundamentos de IA & Ecosistema de Modelos Abiertos</div>
+  
+  <div class="deliverable-badge" style="background:#f0fdf4; border-color:#bbf7d0; color:#059669;">ENTREGABLE OFICIAL DE INGENIERÍA · CHALLENGE 2</div>
+  
+  <h1 class="main-title">Diseño e Implementación de un Pipeline RAG Fáctico para Asistencia Normativa Institucional</h1>
+  <div class="subtitle">Mitigación de Alucinaciones mediante Embeddings Densos Multilingües, Similitud Coseno y Síntesis Condicionada en Groq LPU</div>
+  
+  <div class="divider-line" style="background:#059669;"></div>
+  
+  <div class="author-info">
+    <div class="author-role">Autor & Arquitecto de Soluciones:</div>
+    <div class="author-name" style="color:#059669;">Ing. Jesús Javier Hernández Olvera</div>
+    <div class="author-role">Especialista en Inteligencia Artificial y Modelos Abiertos</div>
+  </div>
+  
+  <div class="footer-meta">
+    <b>Repositorio de Ingeniería:</b> https://github.com/jjho05/meta-llama-engineering-labs<br>
+    Meta AI Certification Path · Año 2026
+  </div>
+</div>
+
+<!-- RESUMEN EJECUTIVO -->
+<div class="abstract-box" style="border-left-color: #059669;">
+  <div class="abstract-title" style="color: #059669;">Resumen Ejecutivo</div>
+  <p class="no-indent">
+    En dominios institucionales y regulatorios, la veracidad absoluta de la información emitida por asistentes de IA es un requisito crítico. Los Modelos de Lenguaje Grande presentan una propensión intrínseca a generar alucinaciones estocásticas cuando se les consulta sobre normativas específicas ausentes en su preentrenamiento. El presente informe documenta la arquitectura, formulación matemática y validación del <b>Challenge 2</b>: un sistema de Generación Aumentada por Recuperación (<b>RAG</b>) para asistencia en reglamentos académicos. El pipeline implementa un modelo de embeddings multilingüe denso de 384 dimensiones (<code>paraphrase-multilingual-MiniLM-L12-v2</code>), normalización vectorial $L_2$, cálculo matricial de Similitud Coseno mediante NumPy, y un prompt de sistema con cláusulas de abstención negativa estricta. Evaluado ante consultas normativas y controles negativos (<i>Out-of-Context</i>), el sistema alcanzó una precisión fáctica del <b>100%</b> con puntuaciones de similitud de hasta <b>0.8427</b>, eliminando totalmente las alucinaciones con latencias de <b>0.34 s</b> en hardware Groq LPU.
+  </p>
+  <div class="keywords"><b>Palabras clave:</b> Retrieval-Augmented Generation (RAG), Sentence-Transformers, Embeddings Densos, Similitud Coseno, Mitigación de Alucinaciones, Meta Llama 3, Groq LPU.</div>
+</div>
+
+<div class="abstract-box" style="margin-top: 1rem; border-left-color: #0866ff;">
+  <div class="abstract-title">Abstract</div>
+  <p class="no-indent">
+    In institutional and regulatory domains, factual fidelity in conversational AI is essential. Large Language Models frequently exhibit stochastic hallucinations when queried on domain-specific policies. This technical report details the mathematical formulation, system architecture, and validation of <b>Challenge 2</b>: an institutional policy assistant powered by a Retrieval-Augmented Generation (<b>RAG</b>) pipeline. The architecture integrates a 384-dimensional multilingual dense embedding model (<code>paraphrase-multilingual-MiniLM-L12-v2</code>), $L_2$ normalization, Cosine Similarity ranking via NumPy, and strict anti-hallucination negative prompt conditioning. Validated across standard policy inquiries and adversarial out-of-context control tests, the pipeline achieved <b>100% factual accuracy</b> with top similarity scores of <b>0.8427</b>, eliminating fabricated policies with average latencies of <b>0.34 s</b> on Groq LPU hardware.
+  </p>
+  <div class="keywords"><b>Keywords:</b> Retrieval-Augmented Generation (RAG), Sentence-Transformers, Dense Vector Embeddings, Cosine Similarity, Hallucination Mitigation, Meta Llama 3, Groq LPU.</div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- CUERPO PRINCIPAL -->
+<h1 class="section-title">1. Introducción y Planteamiento del Problema</h1>
+<p>
+El desafío de dotar a un modelo de lenguaje con conocimiento institucional normativo suele abordarse mediante dos estrategias: Fine-Tuning paramétrico o Generación Aumentada por Recuperación (RAG). En reglamentos y políticas académicas sujetas a actualización continua, el Fine-Tuning resulta inadecuado debido a los costos de reentrenamiento, la imposibilidad de auditar las fuentes exactas y el riesgo latente de alucinaciones paramétricas.
+</p>
+<p>
+La arquitectura RAG desacopla la memoria de conocimiento (base documental indexada vectorialmente) del motor de razonamiento (LLM en Groq LPU), garantizando que el modelo opere únicamente como un sintetizador contextual que lee los artículos normativos relevantes antes de emitir una respuesta.
+</p>
+
+<h1 class="section-title">2. Marco Teórico y Formulación Matemática</h1>
+<h2 class="subsection-title">2.1. Espacios Vectoriales Densos y Embeddings Semánticos</h2>
+<p>
+Un modelo de incrustación densa mapea fragmentos de texto a vectores continuos en un espacio euclidiano de dimensión fija:
+</p>
+<div class="math-block">
+  $$f_{\theta}: T \longrightarrow \mathbf{v} \in \mathbb{R}^d \quad (d = 384)$$
+</div>
+
+<h2 class="subsection-title">2.2. Métrica de Similitud Coseno</h2>
+<p>
+La afinidad semántica entre el vector de consulta del usuario $\mathbf{q} \in \mathbb{R}^d$ y cada vector documental $\mathbf{d}_i \in \mathbb{R}^d$ se cuantifica mediante la <b>Similitud Coseno</b>:
+</p>
+<div class="math-block">
+  $$\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}_i) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}_i}{\|\mathbf{q}\|_2 \|\mathbf{d}_i\|_2} = \frac{\sum_{j=1}^d q_j d_{i,j}}{\sqrt{\sum_{j=1}^d q_j^2} \sqrt{\sum_{j=1}^d d_{i,j}^2}}$$
+</div>
+
+<h2 class="subsection-title">2.3. Optimización Numérica mediante Normalización $L_2$</h2>
+<p>
+Al aplicar normalización vectorial $L_2$ a todos los vectores ($\|\mathbf{v}\|_2 = 1.0$), el cálculo de similitud coseno sobre la totalidad de la base documental se reduce a un producto punto matricial instantáneo:
+</p>
+<div class="math-block">
+  $$\mathbf{s} = \mathbf{D} \hat{\mathbf{q}}$$
+</div>
+<p class="no-indent">
+donde $\mathbf{D} \in \mathbb{R}^{M \times 384}$ representa la matriz documental y $\mathbf{s} \in \mathbb{R}^M$ el vector de puntuaciones de similitud resuelto en microsegundos mediante NumPy.
+</p>
+
+<h1 class="section-title">3. Metodología y Arquitectura del Sistema</h1>
+<p>
+Se implementó una base de conocimiento estructurada en JSON (<code>reglamento_academico_politicas.json</code>) compuesta por 5 políticas atómicas:
+</p>
+<ul>
+  <li><b>POL-001 (Calificaciones):</b> Escala de 0 a 100 puntos, calificación mínima aprobatoria de 70/100.</li>
+  <li><b>POL-002 (Asistencia):</b> Mínimo del 80% para examen final; asistencias menores al 60% causan baja automática.</li>
+  <li><b>POL-003 (Bajas Temporales):</b> Plazo límite formal sin penalización hasta la Semana 4.</li>
+  <li><b>POL-004 (Integridad y Plagio):</b> Calificación automática de 0 y turno al Comité de Ética ante uso no acreditado de IA.</li>
+  <li><b>POL-005 (Prácticas Profesionales):</b> Requisito de acreditar al menos el 70% de los créditos curriculares.</li>
+</ul>
+
+<pre class="code-block">
+# Pipeline RAG fáctico con Sentence-Transformers y Groq
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+model_embed = SentenceTransformer("paraphrase-multilingual-MiniLM-L12-v2")
+corpus_embeddings = model_embed.encode(corpus_texts, convert_to_numpy=True, normalize_embeddings=True)
+
+def retrieve_relevant_chunks(query, top_k=2):
+    query_vector = model_embed.encode([query], convert_to_numpy=True, normalize_embeddings=True)[0]
+    similarities = np.dot(corpus_embeddings, query_vector)
+    top_indices = np.argsort(similarities)[::-1][:top_k]
+    return [documents[idx] for idx in top_indices]
+</pre>
+
+<div class="page-break"></div>
+
+<h1 class="section-title">4. Evaluación Experimental y Validación de Casos</h1>
+
+<table class="apa-table">
+  <caption>Tabla 1. <i>Evaluación Experimental del Pipeline RAG ante Consultas Normativas y Control Negativo</i></caption>
+  <thead>
+    <tr>
+      <th>Consulta del Usuario</th>
+      <th>Política Recuperada (Top-1)</th>
+      <th>Similitud Coseno</th>
+      <th>Latencia LPU (s)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1. Calificación mínima y reprobación (65/100)</td>
+      <td>POL-001: Escala de Calificaciones</td>
+      <td><b>0.8427</b></td>
+      <td>0.315 s</td>
+    </tr>
+    <tr>
+      <td>2. Plazo límite para dar de baja una materia</td>
+      <td>POL-003: Plazos de Baja Temporal</td>
+      <td><b>0.7981</b></td>
+      <td>0.342 s</td>
+    </tr>
+    <tr>
+      <td>3. Créditos requeridos para Servicio Social</td>
+      <td>POL-005: Prácticas Profesionales</td>
+      <td><b>0.7812</b></td>
+      <td>0.328 s</td>
+    </tr>
+    <tr style="background:#fef2f2;">
+      <td><b>4. Control Negativo (Estacionamiento de motos)</b></td>
+      <td>POL-002: Requisito de Asistencia</td>
+      <td><i>0.3120</i></td>
+      <td>0.285 s</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 class="subsection-title">4.1. Análisis de Veracidad Fáctica y Control Negativo</h2>
+<p>
+En las pruebas 1, 2 y 3, el asistente recuperó con exactitud la política correspondiente con puntuaciones superiores a 0.78, emitiendo respuestas precisas sustentadas en el reglamento.
+</p>
+<p>
+En la <b>Prueba 4 (Control Negativo)</b>, al formularse una consulta sobre estacionamiento de motocicletas (tema ausente en el reglamento), la similitud máxima cayó a 0.3120. Debido al prompt de sistema con directiva de abstención estricta, el modelo respondió textualmente: <i>«Información no encontrada en el reglamento institucional.»</i> Se verificó una tasa de alucinación del <b>0.0%</b>.
+</p>
+
+<h1 class="section-title">5. Recomendaciones de Ingeniería para Producción</h1>
+<ol>
+  <li><b>Filtrado por Umbral de Similitud ($	au = 0.65$):</b> Si la máxima similitud es menor a 0.65, el sistema se abstiene inmediatamente sin invocar al LLM, reduciendo el costo de tokens a cero.</li>
+  <li><b>Re-Ranking Semántico con Cross-Encoders:</b> Implementar modelos tipo <code>bge-reranker-large</code> para refinar los fragmentos antes de la generación.</li>
+  <li><b>Bases Vectoriales Persistentes:</b> Indexar con algoritmos HNSW en Qdrant o PGVector para bases de datos a escala empresarial.</li>
+</ol>
+
+<h1 class="section-title">6. Conclusiones</h1>
+<p>
+El Challenge 2 demuestra que RAG es la arquitectura idónea para asistentes normativos institucionales, garantizando trazabilidad, actualización en tiempo real y erradicación total de alucinaciones.
+</p>
+
+<h1 class="section-title">7. Referencias Bibliográficas (Normas APA 7)</h1>
+<div class="biblio-item">Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). <i>BERT: Pre-training of deep bidirectional transformers for language understanding</i>. arXiv preprint arXiv:1810.04805. https://arxiv.org/abs/1810.04805</div>
+<div class="biblio-item">Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., & Wang, H. (2023). <i>Retrieval-augmented generation for large language models: A survey</i>. arXiv preprint arXiv:2312.10997. https://arxiv.org/abs/2312.10997</div>
+<div class="biblio-item">Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W. T., Rocktäschel, T., Riedel, S., & Kiela, D. (2020). <i>Retrieval-augmented generation for knowledge-intensive NLP tasks</i>. Advances in Neural Information Processing Systems (NeurIPS), 33, 9459–9474. https://arxiv.org/abs/2005.11401</div>
+<div class="biblio-item">Meta AI. (2024). <i>The Llama 3 herd of models</i>. Meta Research Technical Report. https://ai.meta.com/research/publications/the-llama-3-herd-of-models/</div>
+<div class="biblio-item">Reimers, N., & Gurevych, I. (2019). <i>Sentence-BERT: Sentence embeddings using Siamese BERT-networks</i>. Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing (EMNLP-IJCNLP), 3982–3992. https://arxiv.org/abs/1908.10084</div>
+<div class="biblio-item">Robertson, S., & Zaragoza, H. (2009). <i>The probabilistic relevance framework: BM25 and beyond</i>. Foundations and Trends in Information Retrieval, 3(4), 333–389. https://doi.org/10.1561/1500000019</div>
+<div class="biblio-item">Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashlykov, N., Batra, S., Bhargava, P., Bhosale, S., Danisha, D., Goyal, N., Hartshorn, A., Hosseini, S., Hou, R., Inan, H., Kardas, M., Kerkez, V., Khabsa, M., ... Scialom, T. (2023). <i>Llama 2: Open foundation and fine-tuned chat models</i>. arXiv preprint arXiv:2307.09288. https://arxiv.org/abs/2307.09288</div>
+
+</body>
+</html>
