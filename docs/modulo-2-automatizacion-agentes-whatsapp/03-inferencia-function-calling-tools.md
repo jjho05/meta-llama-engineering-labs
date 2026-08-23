@@ -40,7 +40,9 @@ Un chatbot tradicional que únicamente responde _"Nuestro horario de restaurante
 
 Un **agente conversacional moderno basado en Llama 3** opera como un recepcionista humano con acceso a la libreta de reservas: interpreta la intención en lenguaje natural, consulta la base de datos en tiempo real, bloquea la mesa disponible y entrega un número de confirmación directamente en WhatsApp. 
 
-$$\Delta_{\text{action}}: (S_t, u_{t+1}) \xrightarrow{\text{NLU / Llama 3}} \mathcal{T}_{\text{call}}(\text{fn\\_name}, \mathbf{x}_{\text{args}}) \xrightarrow{\text{Backend SQL}} \text{Resultado}(\mathcal{R}) \longrightarrow S_{t+1}$$ 
+$$\Delta_{\text{action}}: (S_t, u_{t+1}) \xrightarrow{\text{NLU / Llama 3}} \mathcal{T}_{\text{call}}(\text{fn\_name}, \mathbf{x}_{\text{args}}) \xrightarrow{\text{Backend SQL}} \text{Resultado}(\mathcal{R}) \longrightarrow S_{t+1}$$
+
+ 
 
 Desglose Matemático de la Transición Operativa 5 fases
 
@@ -78,7 +80,9 @@ Tradicionalmente, para obtener JSON de un LLM se recurría a pedirle en el promp
 
 La solución moderna de grado industrial es el **Muestreo Guiado (Constrained Decoding)** implementado en motores como _vLLM_ y _Outlines_. Durante cada paso de generación $t$, se aplica una máscara binaria $M_t \in \\{0, -\infty\\}$ sobre los logits del vocabulario: 
 
-$$P(w_t \mid w_{1:t-1}) = ext{softmax}\left( \mathbf{z}_t + \mathbf{M}_t( ext{FSM}( ext{Grammar})) ight)$$ 
+$$P(w_t \mid w_{1:t-1}) = ext{softmax}\left( \mathbf{z}_t + \mathbf{M}_t( ext{FSM}( ext{Grammar})) ight)$$
+
+ 
 
 Desglose de Máscara de Logits por Autómata Finito 3 conceptos
 
@@ -100,7 +104,11 @@ Si permitiéramos que un LLM ejecute código en el servidor, un atacante podría
 
 El protocolo de **Tool Calling** separa el razonamiento de la ejecución mediante un ciclo en dos pasos: 
 
-$$\text{Inferencia 1: } \mathcal{M}(\text{Mensaje}, \text{ToolsSchema}) \longrightarrow \text{tool\\_calls: } [\\{\text{name}, \text{args}\\}]$$ $$\text{Ejecución Backend: } \text{Resultado} = \text{Funciones}[\text{name}](**\text{args})$$ $$\text{Inferencia 2: } \mathcal{M}(\text{Historial} \oplus \text{Resultado}) \longrightarrow \text{Respuesta Conversacional WhatsApp}$$ 
+$$\text{Inferencia 1: } \mathcal{M}(\text{Mensaje}, \text{ToolsSchema}) \longrightarrow \text{tool\_calls: } [\\{\text{name}, \text{args}\\}]\text{Ejecución Backend: } \text{Resultado} = \text{Funciones}[\text{name}](**\text{args})
+
+\text{Inferencia 2: } \mathcal{M}(\text{Historial} \oplus \text{Resultado}) \longrightarrow \text{Respuesta Conversacional WhatsApp}
+
+$$ 
 
 Desglose Matemático del Pipeline de Invocación en 2 Pasos 4 fases
 
@@ -187,7 +195,11 @@ Tema 2.3.3 · Especificación Técnica
 
 Al iniciar la inferencia, tu backend adjunta en el payload de la API un arreglo llamado `tools`. Cada herramienta define su **nombre** , una **descripción inequívoca** y un esquema tipado de **parámetros** : 
 
-$$P(\text{ValidSchema} \mid \text{Prompt}, \mathcal{T}_{\text{schema}}) = \prod_{k \in \text{required}} \mathbb{I}(k \in \text{args}) \times \prod_{i} \mathbb{I}\Big(\text{type}(\text{args}[k_i]) = \tau_i\Big)$$ 
+$$
+
+P(\text{ValidSchema} \mid \text{Prompt}, \mathcal{T}_{\text{schema}}) = \prod_{k \in \text{required}} \mathbb{I}(k \in \text{args}) \times \prod_{i} \mathbb{I}\Big(\text{type}(\text{args}[k_i]) = \tau_i\Big)
+
+$$ 
 
 Desglose Matemático de Conformidad de Esquema 3 variables
 
@@ -252,15 +264,19 @@ Etapa de la Cascada | Tiempo Promedio | Estrategia de Optimización
 **5\. Despacho a WhatsApp Graph API** | 150 - 300 ms | Uso de clientes HTTP asíncronos persistentes (`httpx.AsyncClient`).  
 **TOTAL CICLO COMPLETO** | **1.8s - 3.6s** | **Experiencia fluida y profesional.**  
   
-$$T_{\text{total}} = T_{\text{webhook\\_in}} + T_{\text{inferencia\\_1}} + T_{\text{database}} + T_{\text{inferencia\\_2}} + T_{\text{graph\\_api\\_out}} \le 3.5\,\text{s}$$ 
+$$
+
+T_{\text{total}} = T_{\text{webhook\_in}} + T_{\text{inferencia\_1}} + T_{\text{database}} + T_{\text{inferencia\_2}} + T_{\text{graph\_api\_out}} \le 3.5\,\text{s}
+
+$$ 
 
 Desglose de los Componentes de Latencia E2E 5 métricas
 
-$T_{\text{webhook\\_in}}$
+$T_{\text{webhook\_in}}$
 
 **Tránsito de Red Entrante:** Latencia HTTPS desde el router de Meta Cloud API hasta tu servidor FastAPI ($\approx 200\text{ms}$). 
 
-$T_{\text{inferencia\\_1}}$
+$T_{\text{inferencia\_1}}$
 
 **Evaluación de Herramienta:** Tiempo de generación del JSON de parámetros en GPU ($\approx 900\text{ms}$). 
 
@@ -268,11 +284,11 @@ $T_{\text{database}}$
 
 **Consulta de Negocio:** Lectura/escritura en PostgreSQL o CRM con pool asíncrono ($\approx 150\text{ms}$). 
 
-$T_{\text{inferencia\\_2}}$
+$T_{\text{inferencia\_2}}$
 
 **Síntesis Conversacional:** Redacción del texto final para WhatsApp ($\approx 1000\text{ms}$). 
 
-$T_{\text{graph\\_api\\_out}}$
+$T_{\text{graph\_api\_out}}$
 
 **Despacho Saliente:** Petición POST a `graph.facebook.com/v20.0/.../messages` ($\approx 250\text{ms}$). 
 
@@ -298,7 +314,13 @@ Si tu backend tarda más de 3 segundos en responder `HTTP 200` a Meta, los servi
 
 La **idempotencia** garantiza que una misma operación ejecutada múltiples veces produzca exactamente el mismo resultado sin efectos secundarios duplicados. Cada mensaje de WhatsApp posee un identificador global único: `wamid`. 
 
-$$\text{Filtro en Redis: } \text{SETNX}(\text{"processed:"} + \text{wamid}, \text{"OK"}, \text{EX}=86400)$$ $$\text{Si Llave Ya Existe} \implies \text{Retornar HTTP 200 OK Inmediato (Sin re-ejecutar la función)}$$ 
+$$
+
+\text{Filtro en Redis: } \text{SETNX}(\text{"processed:"} + \text{wamid}, \text{"OK"}, \text{EX}=86400)
+
+\text{Si Llave Ya Existe} \implies \text{Retornar HTTP 200 OK Inmediato (Sin re-ejecutar la función)}
+
+$$ 
 
 Desglose del Filtro Atómico de Idempotencia 3 variables
 
@@ -373,7 +395,11 @@ Fase del Grafo (DAG) | Herramienta Invocada | Validación Previa Requerida | Man
 **Paso 2: Cotización** | `calcular_tarifa_envio(destino, peso)` | Validación de código postal con Pydantic. | Solicitar aclaración de dirección.  
 **Paso 3: Transacción** | `crear_orden_compra(items, total)` | Saldo $\ge$ Total + Envío (Condición Atómica). | Rollback en PostgreSQL con Redlock.  
   
-$$P( ext{Éxito Pipeline}) = \prod_{k=1}^{M} P( ext{Tool}_k \mid ext{Context}_k) imes P( ext{Schema}_k = 1) \ge 0.95$$ 
+$$
+
+P( ext{Éxito Pipeline}) = \prod_{k=1}^{M} P( ext{Tool}_k \mid ext{Context}_k) imes P( ext{Schema}_k = 1) \ge 0.95
+
+$$ 
 
 Desglose Matemático de Fiabilidad Multi-Paso 3 variables
 
@@ -535,7 +561,7 @@ JSON Schema
             },
             "telefono": {
               "type": "string",
-              "pattern": "^\\+[1-9]\\d{1,14}$",
+              "pattern": "^\+[1-9]\\d{1,14}$",
               "description": "Número telefónico en formato E.164 con código de país."
             },
             "zona": {
@@ -572,7 +598,11 @@ Ver Solución de Ingeniería Paso a Paso & Desglose Waterfall
 
 ##### Desglose Matemático de la Latencia E2E
 
-$$T_{\text{total}} = T_{\text{in}} + T_{\text{inferencia\\_1}} + T_{\text{DB}} + T_{\text{inferencia\\_2}} + T_{\text{out}}$$ $$T_{\text{total}} = 200\text{ms} + 1200\text{ms} + 400\text{ms} + 1300\text{ms} + 200\text{ms} = 3,300\text{ms} \quad (3.30\text{ segundos})$$ 
+$$
+
+T_{\text{total}} = T_{\text{in}} + T_{\text{inferencia\_1}} + T_{\text{DB}} + T_{\text{inferencia\_2}} + T_{\text{out}}
+
+T_{\text{total}} = 200\text{ms} + 1200\text{ms} + 400\text{ms} + 1300\text{ms} + 200\text{ms} = 3,300\text{ms} \quad (3.30\text{ segundos})$$ 
 
 Una latencia de 3.3s se encuentra en el límite de la tolerancia conversacional en mensajería móvil. 
 

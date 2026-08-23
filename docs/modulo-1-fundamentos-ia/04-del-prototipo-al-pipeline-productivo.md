@@ -90,7 +90,9 @@ Principio Fundamental de Arquitectura
 
 La calidad de un sistema de IA en producción no se mide solo por el loss del modelo, sino por la **robustez de su interfaz de servicio, su latencia bajo carga y su capacidad de recuperarse ante fallos**.
 
-$$\text{Servicio Productivo} = \mathcal{M}_{\theta}(\text{Pesos}) + \mathcal{S}_{\text{API}}(\text{FastAPI}) + \mathcal{V}_{\text{Schema}}(\text{Pydantic}) + \mathcal{G}_{\text{SRE}}(\text{SLAs})$$ 
+$$\text{Servicio Productivo} = \mathcal{M}_{\theta}(\text{Pesos}) + \mathcal{S}_{\text{API}}(\text{FastAPI}) + \mathcal{V}_{\text{Schema}}(\text{Pydantic}) + \mathcal{G}_{\text{SRE}}(\text{SLAs})$$
+
+ 
 
 Desglose de los 4 Pilares del Servicio en Producción 4 componentes
 
@@ -187,7 +189,9 @@ Implementación de la Etapa
     class SFTRecord(BaseModel):
         messages: list[Turn] = Field(min_items=2)
 
-$$W_{\text{prod}} = \text{merge\\_and\\_unload}(W_0, B, A, \alpha, r) = W_0 + \frac{\alpha}{r}(B \cdot A)$$ 
+$$W_{\text{prod}} = \text{merge\_and\_unload}(W_0, B, A, \alpha, r) = W_0 + \frac{\alpha}{r}(B \cdot A)$$
+
+ 
 
 Desglose de la Fusión de Adaptadores LoRA para Producción 5 variables
 
@@ -293,7 +297,9 @@ app_fastapi_llama3.py (Microservicio de Inferencia)
             "latency_ms": round(elapsed_ms, 2)
         }
 
-$$\text{Throughput}_{\text{cluster}} = \frac{\sum_{i=1}^{U} N_{\text{tokens}}^{(i)}}{\Delta t} = \frac{U \cdot \bar{N}_{\text{tokens}}}{T_{\text{servicio}}}$$ 
+$$\text{Throughput}_{\text{cluster}} = \frac{\sum_{i=1}^{U} N_{\text{tokens}}^{(i)}}{\Delta t} = \frac{U \cdot \bar{N}_{\text{tokens}}}{T_{\text{servicio}}}$$
+
+ 
 
 Desglose de la Capacidad y Throughput del Endpoint 4 métricas
 
@@ -327,7 +333,9 @@ En modelos de lenguaje grandes, generar una respuesta completa de 500 tokens pue
 
 La solución estándar de la industria es el **Streaming asíncrono con Server-Sent Events (SSE)** bajo el tipo de contenido `text/event-stream`. El servidor emite cada token inmediatamente después de ser predicho por la función de muestreo ($y_t$), logrando un **Time to First Token (TTFT)** de menos de 100 ms. 
 
-$$\text{Latencia Percibida} = \text{TTFT} = T_{\text{red}} + T_{\text{prefill}}(S_{\text{prompt}}) + T_{\text{decode}}(1)$$ 
+$$\text{Latencia Percibida} = \text{TTFT} = T_{\text{red}} + T_{\text{prefill}}(S_{\text{prompt}}) + T_{\text{decode}}(1)$$
+
+ 
 
 Desglose de la Fórmula de Latencia Percibida (TTFT) 4 variables
 
@@ -456,11 +464,13 @@ test_pipeline_e2e.py (Pruebas Automatizadas)
         assert res.status_code == 422
         assert "detail" in res.json()
 
-$$T_{\text{total\\_E2E}} = T_{\text{red}} + T_{\text{retrieval}}(k) + T_{\text{prefill}} + \sum_{t=2}^{N} \text{ITL}_t$$ 
+$$T_{\text{total\_E2E}} = T_{\text{red}} + T_{\text{retrieval}}(k) + T_{\text{prefill}} + \sum_{t=2}^{N} \text{ITL}_t$$
+
+ 
 
 Desglose de la Latencia End-to-End en Pipelines RAG 5 términos
 
-$T_{\text{total\\_E2E}}$
+$T_{\text{total\_E2E}}$
 
 **Latencia Completa:** Tiempo total de ejecución desde el envío de la consulta hasta la recepción del último token.
 
@@ -534,7 +544,9 @@ Disponibilidad de Latencia (<2.0s)
 
 **Régimen de Excelencia:** Latencia total de **1.25s** para 20 usuarios simultáneos. La experiencia conversacional es instantánea y fluida para canales como WhatsApp o Web. 
 
-$$L = \lambda \cdot W \quad \iff \quad \text{Concurrencia} = \text{Tasa de Llegada (RPS)} \times \text{Tiempo de Respuesta (s)}$$ 
+$$L = \lambda \cdot W \quad \iff \quad \text{Concurrencia} = \text{Tasa de Llegada (RPS)} \times \text{Tiempo de Respuesta (s)}$$
+
+ 
 
 Desglose de la Ley de Little para Dimensionamiento de Clusters 4 variables
 
@@ -589,7 +601,9 @@ Dockerfile (Producción con Soporte GPU)
     # 4. Servidor Uvicorn ASGI con múltiples workers
     CMD ["uvicorn", "app_fastapi_llama3:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
 
-$$\text{Disponibilidad (SLA)} = \frac{\text{MTBF}}{\text{MTBF} + \text{MTTR}} \times 100\% \ge 99.9\%$$ 
+$$\text{Disponibilidad (SLA)} = \frac{\text{MTBF}}{\text{MTBF} + \text{MTTR}} \times 100\% \ge 99.9\%$$
+
+ 
 
 Desglose de la Ecuación de Disponibilidad y Resiliencia SRE 4 parámetros
 

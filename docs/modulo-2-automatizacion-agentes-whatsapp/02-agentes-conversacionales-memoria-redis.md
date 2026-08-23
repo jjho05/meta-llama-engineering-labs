@@ -45,7 +45,9 @@ Cada vez que ejecutas una inferencia con un LLM, el modelo procesa la secuencia 
 
 El **estado de la conversación** no es solo el historial de texto crudo; incluye variables estructuradas de sesión (slots de negocio, etapa de la máquina de estados, fecha seleccionada, ID de paciente y metadatos de telemetría): 
 
-$$\text{Estado}(S_t) = \Big\langle \text{wa\\_id}, \quad \mathcal{H}_t = \big[(u_1, a_1), \dots, (u_t, a_t)\big], \quad \mathcal{E}_t = \\{k_i \mapsto v_i\\}, \quad \sigma_t \in \Sigma \Big\rangle$$ $$\text{Prompt}_{\text{Llama}}(S_t, u_{t+1}) = \text{SystemPrompt} \oplus \text{Serializar}(\mathcal{E}_t) \oplus \mathcal{W}_K(\mathcal{H}_t) \oplus \text{FormatearUser}(u_{t+1})$$ 
+$$\text{Estado}(S_t) = \Big\langle \text{wa\_id}, \quad \mathcal{H}_t = \big[(u_1, a_1), \dots, (u_t, a_t)\big], \quad \mathcal{E}_t = \\{k_i \mapsto v_i\\}, \quad \sigma_t \in \Sigma \Big\rangle\text{Prompt}_{\text{Llama}}(S_t, u_{t+1}) = \text{SystemPrompt} \oplus \text{Serializar}(\mathcal{E}_t) \oplus \mathcal{W}_K(\mathcal{H}_t) \oplus \text{FormatearUser}(u_{t+1})
+
+$$ 
 
 Desglose Matemático del Vector de Estado 6 variables
 
@@ -53,7 +55,7 @@ $S_t$
 
 **Vector de Estado en el Turno $t$:** Tupla multidimensional que contiene toda la información de contexto necesaria para interpretar el siguiente mensaje sin requerir reentrenamiento del modelo. 
 
-$\text{wa\\_id}$
+$\text{wa\_id}$
 
 **Clave Primaria de Sesión:** Número telefónico internacional normalizado (E.164) que actúa como clave de indexación en Redis (`session:5215587654321`). 
 
@@ -150,15 +152,19 @@ Interfaz declarativa que expone funciones (consultar base de datos, agendar cita
 
 Módulos de inspección que filtran entradas maliciosas (inyecciones de prompt con Prompt Guard) y clasifican contenido inapropiado con Llama Guard 3 en milisegundos. 
 
-$$T_{\text{Total}} = T_{\text{Shield\\_In}} + T_{\text{Redis\\_Fetch}} + T_{\text{Prefill}}(\text{Tokens}_{\text{in}}) + T_{\text{Decode}}(\text{Tokens}_{\text{out}}) + T_{\text{Tool\\_Exec}} + T_{\text{Shield\\_Out}} \le 3.0\,\text{s}$$ 
+$$
+
+T_{\text{Total}} = T_{\text{Shield\_In}} + T_{\text{Redis\_Fetch}} + T_{\text{Prefill}}(\text{Tokens}_{\text{in}}) + T_{\text{Decode}}(\text{Tokens}_{\text{out}}) + T_{\text{Tool\_Exec}} + T_{\text{Shield\_Out}} \le 3.0\,\text{s}
+
+$$ 
 
 Desglose de Latencia & Presupuesto de SLA 5 fases
 
-$T_{\text{Shield\\_In}}$
+$T_{\text{Shield\_In}}$
 
 **Evaluación de Entrada Llama Guard 3:** Tiempo para verificar que el mensaje entrante es seguro ($\approx 80\text{ms}$). 
 
-$T_{\text{Redis\\_Fetch}}$
+$T_{\text{Redis\_Fetch}}$
 
 **Recuperación de Estado en RAM:** Latencia de lectura en base de datos en memoria ($\approx 2\text{ms}$ a $5\text{ms}$). 
 
@@ -166,7 +172,7 @@ $T_{\text{Prefill}} + T_{\text{Decode}}$
 
 **Inferencia GPU con Llama 3 8B:** Fase de procesamiento de prompt y generación token por token ($\approx 400\text{ms}$ - $800\text{ms}$). 
 
-$T_{\text{Tool\\_Exec}}$
+$T_{\text{Tool\_Exec}}$
 
 **Ejecución de API Externa:** Consulta SQL a base de citas médicas o CRM ($\approx 150\text{ms}$). 
 
@@ -246,7 +252,11 @@ Las **reglas fijas (Guardrails Deterministas)** actúan como rieles inquebrantab
   * **Emergencias Críticas:** Detección de crisis médicas o reportes de fraude bancario detienen la generación probabilística y despachan ayuda inmediata.
   * **Libertad Generativa para Llama 3:** Interpretación de jerga, reformulación de preguntas complejas, síntesis empática y explicaciones contextuales.
 
-$$\delta(S_t, u_{t+1}) = \begin{cases} \text{Protocolo}_{\text{Humano}}(u_{t+1}), & \text{si } \text{Regex}_{\text{Human}}(u_{t+1}) = \text{true} \\\ \text{Protocolo}_{\text{ARCO}}(u_{t+1}), & \text{si } \text{Intent}_{\text{Legal}}(u_{t+1}) = \text{true} \\\ \text{Protocolo}_{\text{911\\_Emergencia}}(u_{t+1}), & \text{si } \text{Triage}_{\text{Emergency}}(u_{t+1}) = \text{true} \\\ \arg\max_y P(y \mid \text{Prompt}(S_t, u_{t+1}); \theta), & \text{en cualquier otro caso (LLM)} \end{cases}$$ 
+$$
+
+\delta(S_t, u_{t+1}) = \begin{cases} \text{Protocolo}_{\text{Humano}}(u_{t+1}), & \text{si } \text{Regex}_{\text{Human}}(u_{t+1}) = \text{true} \\\ \text{Protocolo}_{\text{ARCO}}(u_{t+1}), & \text{si } \text{Intent}_{\text{Legal}}(u_{t+1}) = \text{true} \\\ \text{Protocolo}_{\text{911\_Emergencia}}(u_{t+1}), & \text{si } \text{Triage}_{\text{Emergency}}(u_{t+1}) = \text{true} \\\ \arg\max_y P(y \mid \text{Prompt}(S_t, u_{t+1}); \theta), & \text{en cualquier otro caso (LLM)} \end{cases}
+
+$$ 
 
 Desglose de la Función de Transición Híbrida 3 caminos
 
@@ -322,7 +332,13 @@ Memoria con Resumen Jerárquico
 
 Un modelo ligero comprime los turnos antiguos en un párrafo de hechos clave (_"Usuario agendó cita dental para el sábado"_) y reenvía ese resumen condensado junto con los últimos 2 turnos recientes.
 
-$$C_{\text{total}}(N) = \sum_{t=1}^{N} \Big( T_{\text{sys}} + 2 \cdot t \cdot \bar{L} \Big) = N \cdot T_{\text{sys}} + N(N+1) \cdot \bar{L}$$ $$M_{\text{KV\\_Cache}}(N) = 2 \cdot L_{\text{layers}} \cdot H_{\text{KV}} \cdot d_{\text{head}} \cdot N \cdot b_{\text{bytes}}$$ 
+$$
+
+C_{\text{total}}(N) = \sum_{t=1}^{N} \Big( T_{\text{sys}} + 2 \cdot t \cdot \bar{L} \Big) = N \cdot T_{\text{sys}} + N(N+1) \cdot \bar{L}
+
+M_{\text{KV\_Cache}}(N) = 2 \cdot L_{\text{layers}} \cdot H_{\text{KV}} \cdot d_{\text{head}} \cdot N \cdot b_{\text{bytes}}
+
+$$ 
 
 Desglose Matemático de Crecimiento Cuadrático y VRAM 3 componentes
 
@@ -391,7 +407,11 @@ Nivel de Memoria | Tecnología de Almacén | Tiempo de Retención | Función en 
 **Nivel 2: Resumen Estructurado (Warm)** | Hash JSON en Redis | TTL de 24 horas tras último mensaje | Almacena variables clave (nombre, intención, saldo, producto).  
 **Nivel 3: Historial Histórico (Cold)** | PostgreSQL / SQLite WAL | Permanente (Meses / Años) | Auditoría forense, analítica de negocio y reanudación a largo plazo.  
   
-$$ ext{Memoria RAM}_{ ext{Total}} = U_{ ext{activos}} imes \left( S_{ ext{sliding\\_window}} + S_{ ext{summary\\_json}} ight) \le ext{MaxRAM}_{ ext{Redis}} imes 0.75$$ 
+$$
+
+ ext{Memoria RAM}_{ ext{Total}} = U_{ ext{activos}} imes \left( S_{ ext{sliding\_window}} + S_{ ext{summary\_json}} ight) \le ext{MaxRAM}_{ ext{Redis}} imes 0.75
+
+$$ 
 
 Desglose de Capacidad de Memoria Concurrente 3 variables
 
@@ -623,7 +643,9 @@ Ver Solución de Ingeniería Paso a Paso & Algoritmo de Compresión
 
 Si se reenvía el historial completo en una conversación de $N$ turnos con longitud promedio $\bar{L}$, el consumo acumulado de tokens crece de forma cuadrática: 
 
-$$C_{\text{total}} = \sum_{t=1}^{N} \Big( T_{\text{sys}} + 2 \cdot t \cdot \bar{L} \Big) = N \cdot T_{\text{sys}} + N(N+1) \cdot \bar{L}$$ 
+$$
+
+C_{\text{total}} = \sum_{t=1}^{N} \Big( T_{\text{sys}} + 2 \cdot t \cdot \bar{L} \Big) = N \cdot T_{\text{sys}} + N(N+1) \cdot \bar{L}$$ 
 
 Para una conversación de 15 turnos con $\bar{L} = 50$ tokens y $T_{\text{sys}} = 200$, el método ingenuo procesa **14,550 tokens** , elevando la latencia de la fase de _Prefill_ en GPU y multiplicando el costo en APIs. 
 

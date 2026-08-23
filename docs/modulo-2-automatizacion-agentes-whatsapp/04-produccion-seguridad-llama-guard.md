@@ -45,7 +45,9 @@ La arquitectura completa de producción integra 6 componentes especializados com
 5\. **Motor de Inferencia Llama 3 (vLLM / Llama Stack):** Procesamiento de NLU y despacho de herramientas.  
 6\. **Capa de Persistencia (PostgreSQL + Redis):** Almacén de estado relacional y caché de idempotencia. 
 
-$$\text{Pipeline}_{\text{E2E}} = \text{MetaGraph} \xrightarrow{\text{Webhook}} \text{NGINX} \xrightarrow{\text{TLS/Proxy}} \text{FastAPI} \xrightarrow{\text{Filtro}} \mathcal{G}_{\text{Guard3}} \xrightarrow{\text{NLU}} \mathcal{M}_{\text{Llama3}} \xrightarrow{\text{Tools}} \text{SQL/Redis}$$ 
+$$\text{Pipeline}_{\text{E2E}} = \text{MetaGraph} \xrightarrow{\text{Webhook}} \text{NGINX} \xrightarrow{\text{TLS/Proxy}} \text{FastAPI} \xrightarrow{\text{Filtro}} \mathcal{G}_{\text{Guard3}} \xrightarrow{\text{NLU}} \mathcal{M}_{\text{Llama3}} \xrightarrow{\text{Tools}} \text{SQL/Redis}$$
+
+ 
 
 Desglose de Componentes de la Arquitectura E2E 6 nodos
 
@@ -87,7 +89,9 @@ Los atacantes avanzados no usan frases simples como _"Olvida tus reglas"_ , sino
 
 Para neutralizar estos vectores, el modelo **Prompt Guard 86M** procesa las representaciones de embeddings contextuales completas (mDeBERTa-v3), detectando patrones de jailbreak independientemente del idioma o la codificación con una latencia de menos de $15 ext{ms}$. 
 
-$$ ext{Score}_{ ext{Jailbreak}} = \sigma\left( \mathbf{W}_{ ext{clf}} \cdot ext{Encoder}_{ ext{mDeBERTa}}( ext{Texto}) + \mathbf{b} ight) \in [0, 1]$$ 
+$$ ext{Score}_{ ext{Jailbreak}} = \sigma\left( \mathbf{W}_{ ext{clf}} \cdot ext{Encoder}_{ ext{mDeBERTa}}( ext{Texto}) + \mathbf{b} ight) \in [0, 1]$$
+
+ 
 
 Desglose de Clasificador Neuronal de Seguridad 2 factores
 
@@ -116,7 +120,10 @@ Característica | Prompt Guard (86M Parámetros) | Llama Guard 3 (8B / 1B Parám
 **Taxonomía de Contenido** | Binaria (Seguro vs Intento de Inyección). | Detallada: Odio, Violencia, Armas, Explotación, Privacidad (S1-S14).  
 **Ubicación en el Pipeline** | **Filtro Inicial Inmediato:** Desecha ataques obvios al instante. | **Auditoría Dual:** Evalúa la entrada del usuario y la respuesta de Llama 3.  
   
-$$P(\text{Violación} \mid \mathbf{x}, \mathcal{T}_{\text{taxonomía}}) = \sigma\Big(\mathbf{w}_{\text{guard}} \cdot \mathbf{h}(\mathbf{x}) + b\Big)$$ $$\text{Decisión: } \begin{cases} \text{safe} & \text{si } P(\text{Violación}) \le \theta_{\text{umbral}} \\\ \text{unsafe} \, [S_1 \dots S_{14}] & \text{si } P(\text{Violación}) > \theta_{\text{umbral}} \end{cases}$$ 
+
+$$P(\text{Violación} \mid \mathbf{x}, \mathcal{T}_{\text{taxonomía}}) = \sigma\Big(\mathbf{w}_{\text{guard}} \cdot \mathbf{h}(\mathbf{x}) + b\Big)\text{Decisión: } \begin{cases} \text{safe} & \text{si } P(\text{Violación}) \le \theta_{\text{umbral}} \\\ \text{unsafe} \, [S_1 \dots S_{14}] & \text{si } P(\text{Violación}) > \theta_{\text{umbral}} \end{cases}
+
+$$ 
 
 Desglose Matemático del Clasificador de Guardrails 4 variables
 
@@ -254,7 +261,13 @@ Tema 2.4.4 · Observabilidad & KPIs
 
 No puedes mejorar lo que no mides. En producción debes instrumentar tu aplicación con métricas de **Prometheus y dashboards en Grafana** : 
 
-$$\text{Disponibilidad (SLA)} = \left(1 - \frac{\sum T_{\text{downtime}}}{T_{\text{periodo\\_total}}}\right) \times 100\% \ge 99.9\% \quad (\text{Máximo 43.8 min de caída/mes})$$ $$\text{MTTR (Tiempo Medio de Recuperación)} = \frac{1}{K} \sum_{i=1}^K (T_{\text{recuperación}}^{(i)} - T_{\text{fallo}}^{(i)}) \le 10\,\text{min}$$ 
+$$
+
+\text{Disponibilidad (SLA)} = \left(1 - \frac{\sum T_{\text{downtime}}}{T_{\text{periodo\_total}}}\right) \times 100\% \ge 99.9\% \quad (\text{Máximo 43.8 min de caída/mes})
+
+\text{MTTR (Tiempo Medio de Recuperación)} = \frac{1}{K} \sum_{i=1}^K (T_{\text{recuperación}}^{(i)} - T_{\text{fallo}}^{(i)}) \le 10\,\text{min}
+
+$$ 
 
 Desglose Matemático de Métricas de Disponibilidad y Resiliencia 4 métricas
 
@@ -295,7 +308,11 @@ Un agente de inteligencia artificial en producción no se monitorea revisando ma
   * **Saturación de VRAM y CPU:** Porcentaje de uso de memoria de la GPU y cola de peticiones pendientes en el motor vLLM.
   * **Tasa de Violaciones de Seguridad:** Conteo en tiempo real de mensajes bloqueados por Prompt Guard y categorías disparadas en Llama Guard 3.
 
-$$ ext{Burn Rate}_{ ext{Error Budget}} = rac{ ext{Tasa de Errores Actual}}{ ext{Presupuesto de Error Permitido (1 - SLO)}} \ge 14.4 \implies ext{Alerta Crítica}$$ 
+$$
+
+ ext{Burn Rate}_{ ext{Error Budget}} = rac{ ext{Tasa de Errores Actual}}{ ext{Presupuesto de Error Permitido (1 - SLO)}} \ge 14.4 \implies ext{Alerta Crítica}
+
+$$ 
 
 Desglose de Burn Rate de Presupuesto de Error SRE 2 condiciones
 
@@ -349,7 +366,11 @@ Código OWASP | Nombre de la Amenaza | Vector de Ataque en WhatsApp | Capa de Mi
 **LLM07** | **Inyección en Plugins (Tools)** | Parámetros maliciosos inyectados en llamadas SQL o APIs externas. | Validación estricta con Pydantic V2 + Prepared Statements en PostgreSQL.  
 **LLM10** | **Consumo Ilimitado de Recursos** | Ataques de denegación de servicio con mensajes gigantescos para saturar la GPU. | Rate Limiting Token Bucket en NGINX + Límite de 500 caracteres por mensaje en FastAPI.  
   
-$$ ext{Riesgo Residual} = ext{Amenaza} imes ext{Vulnerabilidad} imes (1 - ext{Eficacia}_{ ext{Guardrails}}) \le 0.001$$ 
+$$
+
+ ext{Riesgo Residual} = ext{Amenaza} imes ext{Vulnerabilidad} imes (1 - ext{Eficacia}_{ ext{Guardrails}}) \le 0.001
+
+$$ 
 
 Desglose de Ecuación de Riesgo de Ciberseguridad 3 factores
 
@@ -558,7 +579,13 @@ Ver Solución de Ingeniería Paso a Paso & Balance de Disponibilidad
 
 ##### Cálculo Matemático de Disponibilidad
 
-$$T_{\text{total}} = 30 \times 24 \times 60 = 43,200\text{ minutos}$$ $$T_{\text{downtime}} = 25\text{ min} + 12\text{ min} = 37\text{ minutos}$$ $$\text{Disponibilidad} = \left(1 - \frac{37}{43,200}\right) \times 100\% = 99.914\%$$ 
+$$
+
+T_{\text{total}} = 30 \times 24 \times 60 = 43,200\text{ minutos}
+
+T_{\text{downtime}} = 25\text{ min} + 12\text{ min} = 37\text{ minutos}
+
+\text{Disponibilidad} = \left(1 - \frac{37}{43,200}\right) \times 100\% = 99.914\%$$ 
 
 **Conclusión:** El SLA **SÍ se cumplió** (99.914% > 99.900%). El presupuesto máximo de caída permitido era de 43.2 minutos y solo se consumieron 37 minutos (quedaron 6.2 minutos de margen de seguridad). 
 

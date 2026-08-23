@@ -48,7 +48,9 @@ Tema 1.3.1 · Paradigmas de Adaptación
 
 Uno de los errores más costosos en la industria es intentar usar **Fine-Tuning** para actualizar conocimientos fácticos dinámicos (como precios de catálogo o leyes recientes). El Fine-Tuning no es una base de datos: es un mecanismo para **enseñar formato, tono, razonamiento, jerga y estructura**. Para datos cambiantes y citas verificables, **RAG** es la arquitectura correcta. 
 
-$$\text{Memoria}_{\text{Full FT}} \approx 2P_{\text{pesos}} + 2P_{\text{grad}} + 8P_{\text{AdamW}} + 4P_{\text{act}} \approx 16 P \text{ bytes}$$ $$\text{Memoria}_{\text{QLoRA}} \approx 0.5P_{\text{base}} + 2P_{\text{adapter}} + 0.8P_{\text{adapter}} + 1.5\text{ GB}_{\text{act}} \approx 0.6 P + 2\text{ GB}$$ 
+$$\text{Memoria}_{\text{Full FT}} \approx 2P_{\text{pesos}} + 2P_{\text{grad}} + 8P_{\text{AdamW}} + 4P_{\text{act}} \approx 16 P \text{ bytes}\text{Memoria}_{\text{QLoRA}} \approx 0.5P_{\text{base}} + 2P_{\text{adapter}} + 0.8P_{\text{adapter}} + 1.5\text{ GB}_{\text{act}} \approx 0.6 P + 2\text{ GB}
+
+$$ 
 
 Desglose de Memoria: Full Fine-Tuning vs QLoRA 6 variables
 
@@ -138,13 +140,19 @@ Aghajanyan et al. (Meta AI, 2020) y Hu et al. (Microsoft, 2021) demostraron que 
 
 En lugar de actualizar la matriz completa de pesos $W_0 \in \mathbb{R}^{d \times k}$, LoRA la descompone en el producto de dos matrices de bajo rango $B \in \mathbb{R}^{d \times r}$ y $A \in \mathbb{R}^{r \times k}$, donde el rango $r \ll \min(d, k)$ (típicamente $r \in [4, 64]$). 
 
-$$h = W_0 x + \Delta W x = W_0 x + \frac{\alpha}{r} (B \cdot A) x$$ $$\text{Inicialización: } A \sim \mathcal{N}\left(0,\, \frac{1}{r}\right), \quad B = 0 \implies \Delta W = 0 \quad (\text{al inicio})$$ 
+$$
+
+h = W_0 x + \Delta W x = W_0 x + \frac{\alpha}{r} (B \cdot A) x
+
+\text{Inicialización: } A \sim \mathcal{N}\left(0,\, \frac{1}{r}\right), \quad B = 0 \implies \Delta W = 0 \quad (\text{al inicio})
+
+$$ 
 
 Desglose de la Ecuación LoRA 6 elementos
 
 $W_0 \in \mathbb{R}^{d \times k}$
 
-**Matriz de Pesos Preentrenada (Congelada):** Los pesos originales de Llama 3 se mantienen inmutables ($\text{requires\\_grad} = \text{False}$), evitando el olvido catastrófico. 
+**Matriz de Pesos Preentrenada (Congelada):** Los pesos originales de Llama 3 se mantienen inmutables ($\text{requires\_grad} = \text{False}$), evitando el olvido catastrófico. 
 
 $r$ (Rango LoRA)
 
@@ -272,7 +280,13 @@ Cuantiza las propias constantes de escala de cuantización (de 32 bits a 8 bits)
 
 Mueve automáticamente los estados del optimizador de la VRAM a la memoria RAM del sistema durante picos de gradiente, eliminando los temidos errores OOM.
 
-$$\tilde{W} = \text{dequantize}\left( c_1^{\text{FP32}}, c_2^{\text{FP8}}, q^{\text{NF4}} \right) + \frac{\alpha}{r} (B \cdot A)$$ $$q_i^{\text{NF4}} = \arg\min_{q \in Q_{\text{NF4}}} |w_i - q|$$ 
+$$
+
+\tilde{W} = \text{dequantize}\left( c_1^{\text{FP32}}, c_2^{\text{FP8}}, q^{\text{NF4}} \right) + \frac{\alpha}{r} (B \cdot A)
+
+q_i^{\text{NF4}} = \arg\min_{q \in Q_{\text{NF4}}} |w_i - q|
+
+$$ 
 
 Desglose de la Ecuación QLoRA 5 variables
 
@@ -350,7 +364,11 @@ En el **Ajuste Fino Supervisado (SFT)** , los datos se preparan en formato de di
 
 El **Enmascaramiento de Pérdida (Loss Masking)** asigna el valor especial `label = -100` (ignorado por PyTorch) a todos los tokens del prompt, obligando al modelo a actualizar sus gradientes exclusivamente sobre los tokens emitidos por el asistente. 
 
-$$\mathcal{L}_{\text{SFT}}(\theta) = -\sum_{t=1}^{|Y|} \log P_\theta\\!\left(y_t \mid X,\, y_{1:t-1}\right) \quad \text{donde } \mathrm{label}(x_i) = {-100}\; \forall\; x_i \in X$$ 
+$$
+
+\mathcal{L}_{\text{SFT}}(\theta) = -\sum_{t=1}^{|Y|} \log P_\theta\\!\left(y_t \mid X,\, y_{1:t-1}\right) \quad \text{donde } \mathrm{label}(x_i) = {-100}\; \forall\; x_i \in X
+
+$$ 
 
 Desglose de Pérdida SFT Enmascarada 5 variables
 
@@ -452,7 +470,13 @@ Ajustar adaptadores LoRA requiere una tasa de aprendizaje (*learning rate*) sust
 
 Para garantizar una convergencia suave sin desestabilizar las representaciones latentes, se utiliza un planificador con **calentamiento lineal (*Warmup*)** seguido de un decaimiento por **Coseno (*Cosine Annealing*)** , complementado con **Acumulación de Gradientes (*Gradient Accumulation*)** para simular lotes masivos sin agotar la memoria de la tarjeta gráfica. 
 
-$$\text{Batch Size}_{\text{Efectivo}} = \text{Micro Batch Size} \times \text{Gradient Accumulation Steps} \times N_{\text{GPUs}}$$ $$\text{Steps Totales} = \left\lceil \frac{N_{\text{ejemplos}}}{\text{Batch Size}_{\text{Efectivo}}} \right\rceil \times \text{Epocas}$$ 
+$$
+
+\text{Batch Size}_{\text{Efectivo}} = \text{Micro Batch Size} \times \text{Gradient Accumulation Steps} \times N_{\text{GPUs}}
+
+\text{Steps Totales} = \left\lceil \frac{N_{\text{ejemplos}}}{\text{Batch Size}_{\text{Efectivo}}} \right\rceil \times \text{Epocas}
+
+$$ 
 
 Desglose de Hiperparámetros de Entrenamiento 5 variables
 
@@ -594,7 +618,13 @@ ROUGE (Recall-Oriented Understudy)
 
 Mide la cobertura de información. ROUGE-1 (palabras individuales), ROUGE-2 (bigramas) y ROUGE-L (Longest Common Subsequence). Ideal para resúmenes.
 
-$$\text{PPL}(W) = \exp\left( -\frac{1}{N} \sum_{i=1}^{N} \log P(w_i \mid w_{1:i-1}) \right)$$ $$\text{BLEU-4} = \text{BP} \cdot \exp\left( \sum_{n=1}^{4} \frac{1}{4} \log p_n \right), \quad \text{ROUGE-L} = \frac{(1 + \beta^2) R_{\text{LCS}} P_{\text{LCS}}}{R_{\text{LCS}} + \beta^2 P_{\text{LCS}}}$$ 
+$$
+
+\text{PPL}(W) = \exp\left( -\frac{1}{N} \sum_{i=1}^{N} \log P(w_i \mid w_{1:i-1}) \right)
+
+\text{BLEU-4} = \text{BP} \cdot \exp\left( \sum_{n=1}^{4} \frac{1}{4} \log p_n \right), \quad \text{ROUGE-L} = \frac{(1 + \beta^2) R_{\text{LCS}} P_{\text{LCS}}}{R_{\text{LCS}} + \beta^2 P_{\text{LCS}}}
+
+$$ 
 
 Desglose de Métricas de Evaluación NLP 6 elementos
 
@@ -680,7 +710,13 @@ Las métricas léxicas tradicionales (BLEU/ROUGE) no pueden evaluar razonamiento
 
 Para evitar que el modelo genere contenido peligroso, tóxico o vulnerable a inyecciones de prompt, Meta desarrolló **Llama Guard 3** : un clasificador especializado de 8B parámetros que audita entradas y salidas según 14 categorías de riesgo estandarizadas (violencia, automedicación no autorizada, robo de credenciales, jailbreaks, etc.). 
 
-$$\bar{S} = \frac{1}{M} \sum_{j=1}^{M} S_j, \quad S_j = f_{\text{Judge}}\left(X, Y_{\text{ref}}, \hat{Y}, \mathcal{R}\right)$$ $$\text{LlamaGuard}(X, \hat{Y}) \in \\{\text{safe}\\} \cup \\{\text{unsafe}, S_1, S_2, \dots, S_{14}\\}$$ 
+$$
+
+\bar{S} = \frac{1}{M} \sum_{j=1}^{M} S_j, \quad S_j = f_{\text{Judge}}\left(X, Y_{\text{ref}}, \hat{Y}, \mathcal{R}\right)
+
+\text{LlamaGuard}(X, \hat{Y}) \in \\{\text{safe}\\} \cup \\{\text{unsafe}, S_1, S_2, \dots, S_{14}\\}
+
+$$ 
 
 Desglose de LLM-as-a-Judge & Llama Guard 5 variables
 
@@ -927,7 +963,11 @@ dataset_sft_postgresql.jsonl
 
 2
 
-**Justificación Matemática del Loss Masking:** $$\mathcal{L}_{\text{SFT}} = -\sum_{t \in \mathcal{A}} \log P_\theta\\!\left(y_t \;\middle|\; x_{\text{sys}},\, x_{\text{usr}},\, y_{1:t-1}\right)$$ 
+**Justificación Matemática del Loss Masking:** $$
+
+\mathcal{L}_{\text{SFT}} = -\sum_{t \in \mathcal{A}} \log P_\theta\\!\left(y_t \;\middle|\; x_{\text{sys}},\, x_{\text{usr}},\, y_{1:t-1}\right)
+
+$$ 
 
 Donde $\mathcal{A}$ es el conjunto exclusivo de índices de tokens del asistente. Asignar `label = -100` a los tokens de $x_{\text{sys}}$ y $x_{\text{usr}}$ garantiza que `torch.nn.CrossEntropyLoss(ignore_index=-100)` no calcule gradientes sobre el prompt del usuario. 
 
@@ -977,7 +1017,9 @@ Ver Criterio de Solución & Script DPO Completo
 
 **a) Función de Pérdida DPO:**
 
-$$\mathcal{L}_{\text{DPO}}(\pi_\theta;\, \pi_{\text{ref}}) = -\mathbb{E}_{(x,\, y_w,\, y_l) \sim \mathcal{D}} \left[ \log \sigma \\!\left( \beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)} \right) \right]$$ 
+$$
+
+\mathcal{L}_{\text{DPO}}(\pi_\theta;\, \pi_{\text{ref}}) = -\mathbb{E}_{(x,\, y_w,\, y_l) \sim \mathcal{D}} \left[ \log \sigma \\!\left( \beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)} \right) \right]$$ 
 
   * **$\pi_\theta$** — política en entrenamiento (Llama 3 + LoRA activo).
   * **$\pi_{\text{ref}}$** — política de referencia congelada: el checkpoint SFT sin gradientes.

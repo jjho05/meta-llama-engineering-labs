@@ -53,7 +53,9 @@ En este primer tema dominarás los tres fundamentos que gobiernan este comportam
 
 Matemáticamente, un LLM aproxima la probabilidad conjunta de una secuencia $W = (w_1, w_2, \dots, w_n)$ mediante la regla de la cadena probabilística:
 
-$$P(W) = \prod_{t=1}^{n} P(w_t \mid w_1, w_2, \dots, w_{t-1})$$ 
+$$P(W) = \prod_{t=1}^{n} P(w_t \mid w_1, w_2, \dots, w_{t-1})$$
+
+ 
 
 Desglose de Símbolos y Variables 6 elementos
 
@@ -83,7 +85,9 @@ $w_1, \dots, w_{t-1}$
 
 La capa lineal final de la red emite un vector de logits no normalizados $\mathbf{z} \in \mathbb{R}^{|V|}$ (donde $|V| = 128,256$). La distribución sobre el vocabulario se calcula mediante la función **Softmax modulada por la Temperatura ($T$)** :
 
-$$P(x_{t+1} = w_i \mid x_{1:t}) = \frac{\exp(z_i / T)}{\sum_{j=1}^{|V|} \exp(z_j / T)}$$ 
+$$P(x_{t+1} = w_i \mid x_{1:t}) = \frac{\exp(z_i / T)}{\sum_{j=1}^{|V|} \exp(z_j / T)}$$
+
+ 
 
 Desglose de Softmax y Temperatura 7 elementos
 
@@ -237,7 +241,9 @@ Las personas nos comunicamos mediante palabras, emociones y metáforas, pero los
 
 Un **tensor** es una generalización de vectores y matrices a cualquier número de dimensiones. En Llama 3, una entrada de texto se representa como un tensor tridimensional con forma:
 
-$$\text{Forma del Tensor} = [\text{Batch Size}, \text{Sequence Length}, d_{\text{model}}]$$ $$\text{Ejemplo para Llama 3 8B}: [1, 2048, 4096]$$ 
+$$\text{Forma del Tensor} = [\text{Batch Size}, \text{Sequence Length}, d_{\text{model}}]\text{Ejemplo para Llama 3 8B}: [1, 2048, 4096]
+
+$$ 
 
 Desglose de Dimensiones Tensoriales 5 dimensiones
 
@@ -367,7 +373,13 @@ De Palabras a Números · Tokenización
 
 BPE comienza tratando cada byte del texto como un símbolo base. Luego, cuenta estadísticamente qué pares de bytes adyacentes ocurren con más frecuencia en el corpus y los fusiona recursivamente en un nuevo token compuesto hasta alcanzar el tamaño de vocabulario deseado:
 
-$$\text{Vocabulario Llama 3} = 128,256 \text{ tokens}$$ $$\text{Compresión Promedio} \approx 3.8 \text{ caracteres / token}$$ 
+$$
+
+\text{Vocabulario Llama 3} = 128,256 \text{ tokens}
+
+\text{Compresión Promedio} \approx 3.8 \text{ caracteres / token}
+
+$$ 
 
 Desglose de Tokenización y BPE 4 métricas
 
@@ -377,7 +389,7 @@ $|V| = 128,256$ (Vocabulario)
 
 $\text{BPE}$ (Byte-Pair)
 
-**Algoritmo de Fusión Recursiva:** Empieza con bytes UTF-8 individuales y une progresivamente los pares de letras más comunes (ej. `d` \+ `e` $\to$ `de`, `c` \+ `i` \+ `ó` \+ `n` $\to$ `ción`) hasta formar bloques eficientes. 
+**Algoritmo de Fusión Recursiva:** Empieza con bytes UTF-8 individuales y une progresivamente los pares de letras más comunes (ej. `d` + `e` $\to$ `de`, `c` + `i` + `ó` + `n` $\to$ `ción`) hasta formar bloques eficientes. 
 
 $\approx 3.8\text{ chars/token}$
 
@@ -399,7 +411,7 @@ Palabras comunes como _"el"_ , _"de"_ , _"computadora"_ reciben su propio ID de 
 
 **Palabras Compuestas o Raras:**
 
-Se dividen en prefijos y sufijos comunes (ej. _"inconstitucionalmente"_ $\to$ `in` \+ `constitucional` \+ `mente`).
+Se dividen en prefijos y sufijos comunes (ej. _"inconstitucionalmente"_ $\to$ `in` + `constitucional` + `mente`).
 
 3
 
@@ -451,7 +463,13 @@ Para una computadora, los IDs de los tokens son números arbitrarios (ej. perro 
 
 Cada token se representa como un vector $\mathbf{v} \in \mathbb{R}^{d}$ ($d=4096$ en Llama 3 8B). Para medir qué tan cercanos están dos conceptos, calculamos el coseno del ángulo entre sus vectores:
 
-$$\text{Similitud Coseno}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \|\mathbf{v}\|} = \frac{\sum_{i=1}^{d} u_i v_i}{\sqrt{\sum_{i=1}^d u_i^2} \cdot \sqrt{\sum_{i=1}^d v_i^2}}$$ $$\vec{v}(\text{"Rey"}) - \vec{v}(\text{"Hombre"}) + \vec{v}(\text{"Mujer"}) \approx \vec{v}(\text{"Reina"})$$ 
+$$
+
+\text{Similitud Coseno}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \|\mathbf{v}\|} = \frac{\sum_{i=1}^{d} u_i v_i}{\sqrt{\sum_{i=1}^d u_i^2} \cdot \sqrt{\sum_{i=1}^d v_i^2}}
+
+\vec{v}(\text{"Rey"}) - \vec{v}(\text{"Hombre"}) + \vec{v}(\text{"Mujer"}) \approx \vec{v}(\text{"Reina"})
+
+$$ 
 
 Desglose de Álgebra Vectorial y Semántica 5 conceptos
 
@@ -525,7 +543,11 @@ Las redes neuronales recurrentes antiguas (RNNs y LSTMs) olvidaban el principio 
 
 Para cada token, se multiplican sus embeddings por tres matrices de pesos aprendidos para generar tres representaciones:
 
-$$\text{Attention}(Q, K, V) = \text{Softmax}\left(\frac{Q K^T}{\sqrt{d_k}}\right) V$$ 
+$$
+
+\text{Attention}(Q, K, V) = \text{Softmax}\left(\frac{Q K^T}{\sqrt{d_k}}\right) V
+
+$$ 
 
 Desglose de Auto-Atención Transformer 7 componentes
 
@@ -617,7 +639,11 @@ Desplegar un modelo de Inteligencia Artificial requiere planificar con precisió
 
 Cada parámetro en precisión original (FP16/BF16) ocupa 2 bytes. Al aplicar **Cuantización (GGUF / AWQ)** a 4 bits (INT4), cada parámetro ocupa solo 0.5 bytes, reduciendo el consumo a una cuarta parte con una pérdida imperceptible de calidad:
 
-$$\text{VRAM Mínima (GB)} \approx \left(\text{Parámetros (Billones)} \times \frac{\text{Bits de Precisión}}{8}\right) \times 1.25$$ $$\text{Margen KV Cache: } +25\% \text{ para contexto y activación}$$ 
+$$
+
+\text{VRAM Mínima (GB)} \approx \left(\text{Parámetros (Billones)} \times \frac{\text{Bits de Precisión}}{8}\right) \times 1.25
+
+\text{Margen KV Cache: } +25\% \text{ para contexto y activación}$$ 
 
 Desglose de Memoria GPU y Cuantización 6 variables
 

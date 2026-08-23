@@ -56,7 +56,11 @@ Imagina que para poder recibir llamadas de tus clientes tuvieras que **comprar e
 
 Desde la perspectiva de la ingeniería de software y finanzas operativas (FinOps), la decisión de arquitectura entre On-Premises y Cloud API se modela a través del **Costo Total de Propiedad ($TCO$)** y la **Disponibilidad Compuesta del Sistema ($A_{\text{Sistema}}$)** : 
 
-$$TCO_{\text{On-Prem}} = C_{\text{Servidores}} + C_{\text{DevOps}} + C_{\text{DB/Storage}} + C_{\text{Certificados/SSL}} + \sum_{k} N_k \cdot P_k$$ $$TCO_{\text{Cloud}} = \$0_{\text{Infraestructura}} + \$0_{\text{Mantenimiento\\_Base}} + \sum_{k} N_k \cdot P_k$$ $$A_{\text{Compuesta\\_OnPrem}} = A_{\text{Hardware}} \times A_{\text{Docker}} \times A_{\text{MySQL}} \times A_{\text{ISP}} \le 0.9850 \quad\text{vs}\quad A_{\text{Meta\\_Cloud}} \ge 0.9995$$ 
+$$TCO_{\text{On-Prem}} = C_{\text{Servidores}} + C_{\text{DevOps}} + C_{\text{DB/Storage}} + C_{\text{Certificados/SSL}} + \sum_{k} N_k \cdot P_kTCO_{\text{Cloud}} = \$0_{\text{Infraestructura}} + \$0_{\text{Mantenimiento\_Base}} + \sum_{k} N_k \cdot P_k
+
+A_{\text{Compuesta\_OnPrem}} = A_{\text{Hardware}} \times A_{\text{Docker}} \times A_{\text{MySQL}} \times A_{\text{ISP}} \le 0.9850 \quad\text{vs}\quad A_{\text{Meta\_Cloud}} \ge 0.9995
+
+$$ 
 
 Desglose Exhaustivo de Variables: FinOps & Confiabilidad 6 variables
 
@@ -76,7 +80,7 @@ $A_{\text{Compuesta}}$
 
 **Disponibilidad E2E (SLA):** En On-Premises, la probabilidad de que el servicio esté activo es la multiplicación de las disponibilidades de cada componente local ($99\% \times 99.5\% \times 99.9\% \approx 98.4\%$), resultando en hasta 11 horas de caída al mes. 
 
-$A_{\text{Meta\\_Cloud}} \ge 99.95\%$
+$A_{\text{Meta\_Cloud}} \ge 99.95\%$
 
 **Redundancia Anycast Global de Meta:** Menos de 21 minutos de indisponibilidad acumulada por año garantizada por la red perimetral de centros de datos de Meta. 
 
@@ -157,15 +161,21 @@ Imagina que un cartero llega a tu puerta y te entrega una carta importante. Si t
 
 En sistemas distribuidos de mensajería en tiempo real, el flujo no es una tubería síncrona monohilo, sino una **arquitectura orientada a eventos desacoplada**. El presupuesto temporal se modela mediante dos ecuaciones deterministas: 
 
-$$T_{\text{Webhook\\_ACK}} = T_{\text{Meta}\to\text{Proxy}} + T_{\text{Proxy}\to\text{FastAPI}} + T_{\text{HMAC\\_Check}} + T_{\text{Queue}} \le 3000\text{ ms}$$ $$T_{\text{Latencia\\_E2E}} = T_{\text{Webhook\\_ACK}} + T_{\text{Redis\\_Lock}} + T_{\text{RAG/DB}} + \sum_{i=1}^{N_{\text{tok}}} \frac{1}{\text{TPS}_{\text{Llama}}} + T_{\text{Graph\\_API\\_POST}}$$ 
+$$
+
+T_{\text{Webhook\_ACK}} = T_{\text{Meta}\to\text{Proxy}} + T_{\text{Proxy}\to\text{FastAPI}} + T_{\text{HMAC\_Check}} + T_{\text{Queue}} \le 3000\text{ ms}
+
+T_{\text{Latencia\_E2E}} = T_{\text{Webhook\_ACK}} + T_{\text{Redis\_Lock}} + T_{\text{RAG/DB}} + \sum_{i=1}^{N_{\text{tok}}} \frac{1}{\text{TPS}_{\text{Llama}}} + T_{\text{Graph\_API\_POST}}
+
+$$ 
 
 Desglose de Variables: Presupuesto de Latencia & Timeout 6 variables
 
-$T_{\text{Webhook\\_ACK}} \le 50\text{ ms}$
+$T_{\text{Webhook\_ACK}} \le 50\text{ ms}$
 
 **Confirmación Inmediata de Recepción:** Retorno síncrono de `{"status": "ok"}` (HTTP 200) para evitar que Meta reintente la entrega del paquete. 
 
-$T_{\text{HMAC\\_Check}} \approx 2\text{ ms}$
+$T_{\text{HMAC\_Check}} \approx 2\text{ ms}$
 
 **Validación Criptográfica de Cabecera:** Tiempo de cómputo en CPU para validar la firma `X-Hub-Signature-256` antes de admitir la carga. 
 
@@ -173,7 +183,7 @@ $\text{TPS}_{\text{Llama}} \ge 35\text{ tokens/s}$
 
 **Velocidad de Inferencia de Llama 3:** Tasa de generación de texto ejecutada en una GPU acelerada o endpoint de inferencia optimizado. 
 
-$T_{\text{Graph\\_API}} \approx 180\text{ ms}$
+$T_{\text{Graph\_API}} \approx 180\text{ ms}$
 
 **Despacho de Salida:** Petición HTTP POST final al endpoint `/messages` de Meta para entregar la respuesta al usuario. 
 
@@ -181,7 +191,7 @@ $\text{Límite} = 3000\text{ ms}$
 
 **Ventana de Cancelación de Meta:** Tiempo máximo que espera Meta antes de declarar _Webhook Delivery Failed_ y reintentar. 
 
-$T_{\text{Total\\_Usuario}} \approx 1.2\text{ s}$
+$T_{\text{Total\_Usuario}} \approx 1.2\text{ s}$
 
 **Experiencia E2E del Usuario:** Tiempo total percibido por el cliente desde que envía su duda en WhatsApp hasta que ve el mensaje de respuesta. 
 
@@ -290,7 +300,13 @@ El **Handshake GET inicial** equivale al santo y seña que le dices al guardia p
 
 Para garantizar la **autenticidad del origen** y la **integridad de los datos** contra ataques Man-In-The-Middle (MITM) o inyecciones maliciosas, Meta firma el cuerpo exacto en bytes de cada webhook mediante el estándar criptográfico **HMAC (Hash-based Message Authentication Code)** : 
 
-$$\text{HMAC}(K, m) = \text{H}\Big(\big(K' \oplus \text{opad}\big) \parallel \text{H}\big((K' \oplus \text{ipad}) \parallel m\big)\Big)$$ $$\text{Firma}_{\text{Meta}} = \text{"sha256="} + \text{HexEncode}\Big(\text{HMAC}\big(\text{AppSecret},\, \text{Payload}_{\text{RawBytes}}\big)\Big)$$ 
+$$
+
+\text{HMAC}(K, m) = \text{H}\Big(\big(K' \oplus \text{opad}\big) \parallel \text{H}\big((K' \oplus \text{ipad}) \parallel m\big)\Big)
+
+\text{Firma}_{\text{Meta}} = \text{"sha256="} + \text{HexEncode}\Big(\text{HMAC}\big(\text{AppSecret},\, \text{Payload}_{\text{RawBytes}}\big)\Big)
+
+$$ 
 
 Desglose Criptográfico: Estándar RFC 2104 en Meta Webhooks 6 componentes
 
@@ -314,7 +330,7 @@ $\oplus \;\text{y}\; \parallel$
 
 **Operadores de Bits y Concatenación:** $\oplus$ representa XOR bit a bit y $\parallel$ la unión secuencial de streams de bytes. 
 
-$\text{hmac.compare\\_digest}()$
+$\text{hmac.compare\_digest}()$
 
 **Comparación en Tiempo Constante:** Función en Python que evita fugas de información por ataques de temporización (_timing attacks_). 
 
@@ -392,7 +408,13 @@ Tu computadora portátil dentro de la red Wi-Fi de tu casa u oficina tiene una d
 
 El funcionamiento de un túnel inverso como ngrok introduce una pequeña sobrecarga de latencia que debe ser considerada durante las pruebas de tiempo de respuesta de webhooks: 
 
-$$T_{\text{Túnel}} = 2 \times \text{RTT}_{\text{Anycast\\_Edge}} + T_{\text{TLS\\_Terminación}} + T_{\text{Mux\\_Forwarding}} + T_{\text{Local\\_Socket}}$$ $$\text{Throughput}_{\text{Efectivo}} = \min\big(\text{BW}_{\text{ISP\\_Local}},\, \text{BW}_{\text{ngrok\\_Edge}}\big) \times (1 - \text{Overhead}_{\text{Encapsulación}})$$ 
+$$
+
+T_{\text{Túnel}} = 2 \times \text{RTT}_{\text{Anycast\_Edge}} + T_{\text{TLS\_Terminación}} + T_{\text{Mux\_Forwarding}} + T_{\text{Local\_Socket}}
+
+\text{Throughput}_{\text{Efectivo}} = \min\big(\text{BW}_{\text{ISP\_Local}},\, \text{BW}_{\text{ngrok\_Edge}}\big) \times (1 - \text{Overhead}_{\text{Encapsulación}})
+
+$$ 
 
 Desglose de Variables: Red y Transporte del Túnel 5 variables
 
@@ -400,19 +422,19 @@ $\text{RTT}_{\text{Anycast}} \approx 30\text{ ms}$
 
 **Round Trip Time al Servidor Perimetral:** Tiempo de ida y vuelta entre Meta y el punto de presencia (PoP) de ngrok más cercano. 
 
-$T_{\text{TLS\\_Terminación}} \approx 15\text{ ms}$
+$T_{\text{TLS\_Terminación}} \approx 15\text{ ms}$
 
 **Terminación SSL en el Borde:** El servidor de ngrok descifra el tráfico HTTPS de Meta y lo retransmite por el canal seguro establecido con tu cliente local. 
 
-$T_{\text{Mux\\_Forwarding}} \approx 25\text{ ms}$
+$T_{\text{Mux\_Forwarding}} \approx 25\text{ ms}$
 
 **Reenvío Multiplexado en Túnel:** Transmisión del paquete a través de la conexión persistente TCP/TLS abierta por el agente ngrok en tu laptop. 
 
-$T_{\text{Local\\_Socket}} \le 1\text{ ms}$
+$T_{\text{Local\_Socket}} \le 1\text{ ms}$
 
 **Entrega a Loopback (127.0.0.1):** Paso del paquete HTTP al proceso de Uvicorn/FastAPI en tu puerto 8000. 
 
-$T_{\text{Overhead\\_Total}} \approx 70\text{ - }100\text{ ms}$
+$T_{\text{Overhead\_Total}} \approx 70\text{ - }100\text{ ms}$
 
 **Impacto Total en Desarrollo:** Sobrecarga despreciable que permite validar el flujo sin requerir despliegues continuos a la nube. 
 
@@ -455,7 +477,15 @@ En una fábrica de automóviles de alta gama, jamás se instala el motor turbo a
 
 Debido a la naturaleza asíncrona de Meta, un mismo mensaje puede ser entregado más de una vez (_At-Least-Once Delivery_). Para evitar que tu modelo Llama 3 procese dos veces la misma consulta o cobre dos veces un pedido, se implementa una **capa de Idempotencia Distribuida** : 
 
-$$\text{Llave}_{\text{Idempotencia}} = \text{"msg\\_ack:"} + \text{SHA256}\big(\text{wamid} \parallel \text{phone\\_number\\_id}\big)$$ $$P_{\text{Colisión}} \approx 1 - \exp\left(-\frac{N^2}{2 \times 2^{256}}\right) \approx 0 \quad (\text{para } N = 10^9 \text{ mensajes})$$ $$\text{Acción} = \begin{cases} \text{Ignorar / Retornar HTTP 200}, & \text{si } \text{Redis.SET}(\text{Llave}, \text{TTL}=86400, \text{NX}) = \text{nil} \\\ \text{Procesar con Llama 3}, & \text{si } \text{Redis.SET}(\text{Llave}, \text{TTL}=86400, \text{NX}) = \text{OK} \end{cases}$$ 
+$$
+
+\text{Llave}_{\text{Idempotencia}} = \text{"msg\_ack:"} + \text{SHA256}\big(\text{wamid} \parallel \text{phone\_number\_id}\big)
+
+P_{\text{Colisión}} \approx 1 - \exp\left(-\frac{N^2}{2 \times 2^{256}}\right) \approx 0 \quad (\text{para } N = 10^9 \text{ mensajes})
+
+\text{Acción} = \begin{cases} \text{Ignorar / Retornar HTTP 200}, & \text{si } \text{Redis.SET}(\text{Llave}, \text{TTL}=86400, \text{NX}) = \text{nil} \\\ \text{Procesar con Llama 3}, & \text{si } \text{Redis.SET}(\text{Llave}, \text{TTL}=86400, \text{NX}) = \text{OK} \end{cases}
+
+$$ 
 
 Desglose de Variables: Idempotencia y Blindaje de Reintentos 5 variables
 
@@ -516,7 +546,11 @@ WhatsApp es el **mostrador express de café para llevar** : perfecto para consul
 
 El retorno de inversión de implementar un agente de Llama 3 en WhatsApp se calcula comparando el costo de atención humana versus el costo de la Cloud API e inferencia del modelo: 
 
-$$\text{Costo}_{\text{Mensual}} = \max\big(0,\, N_{\text{servicio}} - 1000\big) \times P_{\text{servicio}} + \sum_{k \in \\{\text{utilidad, auth, mkt}\\}} N_{k} \times P_{k}$$ $$\text{ROI}_{\text{Automatización}} = \frac{\big(C_{\text{Humano}} \times N_{\text{tickets}}\big) - \big(\text{Costo}_{\text{Meta}} + \text{Costo}_{\text{Inferencia}}\big)}{\text{Costo}_{\text{Meta}} + \text{Costo}_{\text{Inferencia}}} \times 100\%$$ 
+$$
+
+\text{Costo}_{\text{Mensual}} = \max\big(0,\, N_{\text{servicio}} - 1000\big) \times P_{\text{servicio}} + \sum_{k \in \\{\text{utilidad, auth, mkt}\\}} N_{k} \times P_{k}
+
+\text{ROI}_{\text{Automatización}} = \frac{\big(C_{\text{Humano}} \times N_{\text{tickets}}\big) - \big(\text{Costo}_{\text{Meta}} + \text{Costo}_{\text{Inferencia}}\big)}{\text{Costo}_{\text{Meta}} + \text{Costo}_{\text{Inferencia}}} \times 100\%$$ 
 
 Desglose de Costos & Retorno de Inversión (ROI) 6 variables
 
@@ -632,33 +666,23 @@ Lic. Jesús Olvera (+52 1 55 8765 4321)
 
 Remitente (from) messages[0].from
 
--
-
-**¿Para qué sirve?** Número telefónico al que responderemos mediante la Graph API.
+* **¿Para qué sirve?** Número telefónico al que responderemos mediante la Graph API.
 
 Nombre de Perfil contacts[0].profile.name
 
--
-
-**¿Para qué sirve?** Permite que Llama 3 salude al usuario por su nombre.
+* **¿Para qué sirve?** Permite que Llama 3 salude al usuario por su nombre.
 
 Contenido del Mensaje messages[0].text.body
 
--
-
-**¿Para qué sirve?** El texto o acción que se le pasa al modelo Llama 3 para razonar.
+* **¿Para qué sirve?** El texto o acción que se le pasa al modelo Llama 3 para razonar.
 
 ID del Mensaje (wamid) messages[0].id
 
--
-
-**¿Para qué sirve?** Idempotencia: evita procesar dos veces el mismo mensaje si Meta reintenta.
+* **¿Para qué sirve?** Idempotencia: evita procesar dos veces el mismo mensaje si Meta reintenta.
 
 Phone Number ID (Meta) metadata.phone_number_id
 
--
-
-**¿Para qué sirve?** Identifica qué número empresarial de tu cuenta recibió el mensaje.
+* **¿Para qué sirve?** Identifica qué número empresarial de tu cuenta recibió el mensaje.
 
 Código Python Equivalente para tu Servidor FastAPI:
     

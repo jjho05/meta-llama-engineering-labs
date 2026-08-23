@@ -395,7 +395,9 @@ Terminal de Salida [STDOUT] Facturación Calculada
     Tokens de la respuesta: 85
     Tokens totales: 117
 
-$$\text{Tokens}_{\text{total}} = \text{Tokens}_{\text{prompt}} + \text{Tokens}_{\text{completion}}$$ $$\text{Costo Total} = (\text{Tokens}_{\text{prompt}} \times P_{\text{in}}) + (\text{Tokens}_{\text{completion}} \times P_{\text{out}})$$ 
+$$\text{Tokens}_{\text{total}} = \text{Tokens}_{\text{prompt}} + \text{Tokens}_{\text{completion}}\text{Costo Total} = (\text{Tokens}_{\text{prompt}} \times P_{\text{in}}) + (\text{Tokens}_{\text{completion}} \times P_{\text{out}})
+
+$$ 
 
 Desglose Técnico Exhaustivo Línea por Línea 6 instrucciones analizadas
 
@@ -456,7 +458,11 @@ Terminal de Salida [STDOUT] Cronometraje Completado
     
     Tiempo de respuesta: 0.48 segundos
 
-$$\text{Latencia Total } (\Delta t) = t_{\text{fin}} - t_{\text{inicio}}$$ $$\text{Throughput} = \frac{\text{completion\\_tokens}}{\Delta t} \approx \frac{85 \text{ tok}}{0.48 \text{ s}} \approx 177 \text{ tokens/segundo}$$ 
+$$
+
+\text{Latencia Total } (\Delta t) = t_{\text{fin}} - t_{\text{inicio}}
+
+\text{Throughput} = \frac{\text{completion\_tokens}}{\Delta t} \approx \frac{85 \text{ tok}}{0.48 \text{ s}} \approx 177 \text{ tokens/segundo}$$ 
 
 Desglose Técnico Exhaustivo Línea por Línea 7 instrucciones analizadas
 

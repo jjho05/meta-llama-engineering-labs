@@ -82,7 +82,9 @@ Estrategia #3 Razonamiento Paso a Paso
 
 En términos formales, el Prompt Engineering no modifica los pesos neuronales estáticos $\theta$ de Llama 3, sino que modifica la distribución condicional prefijando una secuencia de tokens de contexto $\mathcal{I} = (i_1, \dots, i_k)$: 
 
-$$P(Y \mid X, \mathcal{I}) = \prod_{t=1}^{m} P(y_t \mid X, \mathcal{I}, y_1, \dots, y_{t-1})$$ 
+$$P(Y \mid X, \mathcal{I}) = \prod_{t=1}^{m} P(y_t \mid X, \mathcal{I}, y_1, \dots, y_{t-1})$$
+
+ 
 
 Desglose de la Fórmula de Inferencia en Contexto 6 elementos
 
@@ -204,7 +206,9 @@ Componente #3
 
 RAG modela la probabilidad de generar una secuencia de respuesta $y$ a partir de la consulta $x$ marginalizando sobre los fragmentos documentales recuperados $z \in \text{Top-}k$ (Paper Fundacional de Lewis et al., Meta AI FAIR): 
 
-$$P(y \mid x) = \sum_{z \in \text{Top-}k} P(z \mid x) \cdot P(y \mid x, z)$$ 
+$$P(y \mid x) = \sum_{z \in \text{Top-}k} P(z \mid x) \cdot P(y \mid x, z)$$
+
+ 
 
 Desglose de la Ecuación RAG 5 variables
 
@@ -244,7 +248,9 @@ Tema 1.2.4 · Espacios Semánticos & Álgebra Vectorial
 
 Un modelo de embeddings transforma un fragmento de texto en un vector denso $\mathbf{u} \in \mathbb{R}^{d}$. La afinidad conceptual entre dos textos no se mide por coincidencia de palabras exactas, sino por el **coseno del ángulo $\theta$** entre sus vectores multidimensionales: 
 
-$$\text{Similitud Coseno}(\mathbf{u}, \mathbf{v}) = \cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \|\mathbf{v}\|_2} = \frac{\sum_{i=1}^d u_i v_i}{\sqrt{\sum_{i=1}^d u_i^2} \sqrt{\sum_{i=1}^d v_i^2}}$$ 
+$$\text{Similitud Coseno}(\mathbf{u}, \mathbf{v}) = \cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \|\mathbf{v}\|_2} = \frac{\sum_{i=1}^d u_i v_i}{\sqrt{\sum_{i=1}^d u_i^2} \sqrt{\sum_{i=1}^d v_i^2}}$$
+
+ 
 
 Desglose de la Fórmula de Similitud Coseno 6 elementos
 
@@ -292,7 +298,9 @@ Tema 1.2.5 · Indexación & Bases de Datos Vectoriales
 
 Para que un libro o manual empresarial pueda indexarse con precisión, se divide en **fragmentos (chunks)** con un margen de **solapamiento (overlap)** para evitar que oraciones importantes queden partidas a la mitad: 
 
-$$\text{Paso (Stride)} = S - O, \quad N_{\text{chunks}} = \left\lceil \frac{|D| - O}{S - O} \right\rceil$$ 
+$$\text{Paso (Stride)} = S - O, \quad N_{\text{chunks}} = \left\lceil \frac{|D| - O}{S - O} \right\rceil$$
+
+ 
 
 Desglose de Fragmentación (Chunking) 5 variables
 
@@ -418,11 +426,13 @@ Tema 1.2.7 · RAG Avanzado de Grado Industrial
 
 En entornos de producción masiva con Llama 3 (ventana de contexto de 128k tokens), tres optimizaciones marcan la diferencia entre un prototipo básico y un motor de búsqueda empresarial: 
 
-$$\text{RRF\\_Score}(d) = \sum_{m \in \\{\text{BM25}, \text{Dense}\\}} \frac{1}{k + r_m(d)}$$ 
+$$\text{RRF\_Score}(d) = \sum_{m \in \\{\text{BM25}, \text{Dense}\\}} \frac{1}{k + r_m(d)}$$
+
+ 
 
 Desglose de Reciprocal Rank Fusion (RRF) 5 variables
 
-$\text{RRF\\_Score}(d)$
+$\text{RRF\_Score}(d)$
 
 **Puntuación Fusionada del Documento:** Métrica unificada no paramétrica que combina los ordenamientos de múltiples recuperadores sin sesgos de escala. 
 
@@ -466,7 +476,9 @@ Tema 1.2.8 · Agentes de Razonamiento & Prompting Autónomo
 
 El patrón **ReAct (Reason + Act)** combina la generación de razonamiento interno de Chain-of-Thought con la capacidad de ejecutar llamadas a herramientas externas (APIs, calculadoras o bases de datos vectoriales). Para problemas de alta incertidumbre, la técnica de **Auto-Consistencia (Self-Consistency)** muestrea múltiples rutas de deducción y selecciona la respuesta por consenso mayoritario: 
 
-$$\hat{y} = \arg\max_{y} \sum_{i=1}^{N} \mathbb{I}\left( \text{ExtractAnswer}(c_i) = y \right) \quad \text{donde } c_i \sim P_{\text{CoT}}(C \mid X, \mathcal{I})$$ 
+$$\hat{y} = \arg\max_{y} \sum_{i=1}^{N} \mathbb{I}\left( \text{ExtractAnswer}(c_i) = y \right) \quad \text{donde } c_i \sim P_{\text{CoT}}(C \mid X, \mathcal{I})$$
+
+ 
 
 Desglose de Auto-Consistencia (Self-Consistency) 6 elementos
 
