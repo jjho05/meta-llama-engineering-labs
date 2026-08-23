@@ -13,7 +13,7 @@
   margin: 1in;
   @top-left {
     content: "INVESTIGACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3";
-    font-family: 'Tinos', 'Times New Roman', serif;
+    font-family: 'Tinos', 'Times New Roman', Times, serif;
     font-size: 8.5pt;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -21,7 +21,7 @@
   }
   @top-right {
     content: counter(page);
-    font-family: 'Tinos', 'Times New Roman', serif;
+    font-family: 'Tinos', 'Times New Roman', Times, serif;
     font-size: 10pt;
     color: #111;
   }
@@ -35,7 +35,7 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: 'Tinos', 'Times New Roman', Times, serif;
+  font-family: 'Tinos', 'Times New Roman', Times, Georgia, serif;
   font-size: 12pt;
   line-height: 2.0;
   color: #000000;
@@ -52,14 +52,14 @@ body {
 
 /* PORTADA EXACTAMENTE CENTRADA */
 .cover-page {
-  min-height: 8.8in;
+  height: 8.6in;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   page-break-after: always;
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0 auto;
   padding: 0;
 }
@@ -77,11 +77,11 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   color: #222;
-  margin-bottom: 3rem;
+  margin-bottom: 3.2rem;
 }
 
 .cover-title {
-  font-size: 16pt;
+  font-size: 14pt;
   font-weight: 700;
   line-height: 1.4;
   margin-bottom: 1.2rem;
@@ -89,9 +89,9 @@ body {
 }
 
 .cover-subtitle {
-  font-size: 12.5pt;
+  font-size: 12pt;
   font-style: italic;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3.2rem;
   max-width: 90%;
   color: #333;
 }
@@ -101,11 +101,11 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3.2rem;
 }
 
 .cover-author {
-  font-size: 14pt;
+  font-size: 13pt;
   font-weight: 700;
   margin-bottom: 0.2rem;
 }
@@ -113,7 +113,7 @@ body {
 .cover-degree {
   font-size: 11.5pt;
   color: #333;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3.2rem;
 }
 
 .cover-year {
@@ -121,10 +121,10 @@ body {
   font-weight: 700;
 }
 
-/* ÍNDICE DE CONTENIDO EN PÁGINA 2 */
+/* ÍNDICE DE CONTENIDO COMPACTO EN EXACTAMENTE 1 PÁGINA (PÁGINA 2) */
 .toc-wrapper {
   margin-top: 0;
-  line-height: 1.8;
+  line-height: 1.25;
   page-break-after: always;
 }
 
@@ -132,41 +132,49 @@ body {
   text-align: center;
   font-size: 14pt;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.8rem;
 }
 
 .toc-entry {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.35rem;
-  font-size: 11pt;
+  margin-bottom: 0.15rem;
+  font-size: 9.5pt;
+}
+
+.toc-entry.toc-main {
+  font-weight: 700;
+  margin-top: 0.25rem;
+  font-size: 10pt;
 }
 
 .toc-dots {
   flex-grow: 1;
-  border-bottom: 1px dotted #555;
-  margin: 0 0.5rem;
+  border-bottom: 1px dotted #666;
+  margin: 0 0.3rem;
 }
 
-.toc-pg { font-weight: 700; }
+.toc-pg { font-weight: 700; font-size: 9.5pt; }
 
-/* ENCABEZADOS APA 7 */
-h1.apa-h1, h1 {
+/* TÍTULOS DE CAPÍTULO (14pt, CENTRADOS, SALTO DE PÁGINA) */
+h1.chapter-title, h1.apa-h1, .abstract-title {
   text-align: center;
-  font-size: 13pt;
+  font-size: 14pt;
   font-weight: 700;
-  margin-top: 2.2rem;
+  margin-top: 1.8rem;
   margin-bottom: 1rem;
+  page-break-before: always;
   page-break-after: avoid;
 }
 
+/* SUBTÍTULOS Y SECCIONES (12pt) */
 h2.apa-h2, h2 {
   text-align: left;
   font-size: 12pt;
   font-weight: 700;
-  margin-top: 1.8rem;
-  margin-bottom: 0.8rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
   page-break-after: avoid;
 }
 
@@ -175,8 +183,8 @@ h3.apa-h3, h3 {
   font-size: 12pt;
   font-weight: 700;
   font-style: italic;
-  margin-top: 1.5rem;
-  margin-bottom: 0.6rem;
+  margin-top: 1.3rem;
+  margin-bottom: 0.4rem;
   page-break-after: avoid;
 }
 
@@ -184,58 +192,52 @@ h4.apa-h4, h4 {
   text-align: left;
   font-size: 12pt;
   font-weight: 700;
-  margin-top: 1.2rem;
-  margin-bottom: 0.4rem;
+  margin-top: 1.1rem;
+  margin-bottom: 0.3rem;
   page-break-after: avoid;
 }
 
+/* PÁRRAFOS APA 7 (12pt, SANGRÍA DE 0.5 PULGADAS) */
 p {
+  font-size: 12pt;
   text-indent: 0.5in;
   margin: 0 0 1rem 0;
 }
 
 p.no-indent { text-indent: 0; }
 
-.abstract-box {
+/* TABLAS APA 7 IMPECABLES */
+.table-container {
   margin: 1.5rem 0;
-  page-break-after: always;
-}
-
-.abstract-title {
-  text-align: center;
-  font-size: 13pt;
-  font-weight: 700;
-  margin-bottom: 1.2rem;
-}
-
-/* TABLAS FORMALES APA 7 */
-table.apa-table, table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.8rem 0;
-  font-size: 10.5pt;
-  line-height: 1.45;
   page-break-inside: avoid;
 }
 
 .table-number {
   font-weight: 700;
   font-size: 11pt;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.1rem;
   text-indent: 0;
 }
 
 .table-title {
   font-style: italic;
   font-size: 11pt;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   text-indent: 0;
+}
+
+table.apa-table, table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.4rem 0 0.6rem 0;
+  font-size: 10pt;
+  line-height: 1.35;
 }
 
 table.apa-table th, table th {
   border-top: 1.5pt solid #000;
   border-bottom: 1pt solid #000;
-  padding: 8px 10px;
+  padding: 5px 7px;
   text-align: left;
   font-weight: 700;
   color: #000;
@@ -243,8 +245,8 @@ table.apa-table th, table th {
 }
 
 table.apa-table td, table td {
-  padding: 8px 10px;
-  border-bottom: 0.5pt solid #ddd;
+  padding: 5px 7px;
+  border-bottom: 0.5pt solid #e0e0e0;
 }
 
 table.apa-table tr:last-child td, table tr:last-child td {
@@ -253,31 +255,32 @@ table.apa-table tr:last-child td, table tr:last-child td {
 
 .table-note {
   font-size: 9.5pt;
-  line-height: 1.4;
-  margin-top: 0.4rem;
+  line-height: 1.35;
+  margin-top: 0.3rem;
   text-indent: 0;
 }
 
 /* FÓRMULAS MATEMÁTICAS */
 .math-eq {
   text-align: center;
-  margin: 1.5rem 0;
-  padding: 0.5rem;
+  margin: 1.2rem 0;
+  padding: 0.3rem;
   font-size: 12pt;
   page-break-inside: avoid;
 }
 
-/* BLOQUES DE CÓDIGO FORMALES */
+/* BLOQUES DE CÓDIGO */
 .code-container {
   background: #fbfbfb;
   border: 1pt solid #ccc;
   border-left: 3pt solid #000;
   border-radius: 4px;
-  padding: 0.9rem 1.1rem;
-  margin: 1.5rem 0;
+  padding: 0.8rem 1rem;
+  margin: 1.2rem 0;
   font-family: 'JetBrains Mono', monospace;
   font-size: 8.5pt;
-  line-height: 1.45;
+  line-height: 1.4;
+  overflow-x: hidden;
   page-break-inside: avoid;
 }
 
@@ -301,18 +304,19 @@ p code, li code {
 }
 
 ul, ol {
-  margin: 0 0 1.2rem 1.5rem;
+  margin: 0 0 1rem 1.5rem;
   padding-left: 0.5in;
+  font-size: 12pt;
 }
 
-li { margin-bottom: 0.5rem; }
+li { margin-bottom: 0.35rem; }
 
 .ref-item {
   padding-left: 0.5in;
   text-indent: -0.5in;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   font-size: 11pt;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 </style>
@@ -337,17 +341,17 @@ li { margin-bottom: 0.5rem; }
   <div class="cover-year">2026</div>
 </div>
 
-<!-- ÍNDICE DE CONTENIDO EN PÁGINA 2 INMEDIATA -->
+<!-- ÍNDICE DE CONTENIDO COMPACTO EN PÁGINA 2 INMEDIATA -->
 <div class="toc-wrapper">
   <div class="toc-heading">ÍNDICE GENERAL DE CONTENIDO</div>
   
-        <div class="toc-entry">
+        <div class="toc-entry toc-main">
           <span>RESUMEN EJECUTIVO Y ABSTRACT</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">iii</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-entry toc-main">
           <span>CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">1</span>
@@ -360,147 +364,135 @@ li { margin-bottom: 0.5rem; }
         </div>
         
         <div class="toc-entry">
-          <span>1.2. Formulación del Problema</span>
+          <span>1.2. Formulación y Preguntas de Investigación</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">2</span>
         </div>
         
         <div class="toc-entry">
-          <span>1.3. Preguntas de Investigación</span>
-          <span class="toc-dots"></span>
-          <span class="toc-pg">2</span>
-        </div>
-        
-        <div class="toc-entry">
-          <span>1.4. Objetivos (General y Específicos)</span>
+          <span>1.3. Objetivos y Justificación Técnica</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">3</span>
         </div>
         
-        <div class="toc-entry">
-          <span>1.5. Justificación y Viabilidad</span>
+        <div class="toc-entry toc-main">
+          <span>CAPÍTULO II: MARCO TEÓRICO Y FUNDAMENTOS MATEMÁTICOS</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">4</span>
         </div>
         
         <div class="toc-entry">
-          <span>CAPÍTULO II: MARCO TEÓRICO Y FUNDAMENTOS MATEMÁTICOS</span>
-          <span class="toc-dots"></span>
-          <span class="toc-pg">5</span>
-        </div>
-        
-        <div class="toc-entry">
           <span>2.1. Microarquitectura Transformer y Auto-Atención Escalada</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">5</span>
+          <span class="toc-pg">4</span>
         </div>
         
         <div class="toc-entry">
           <span>2.2. Rotary Position Embeddings (RoPE) y Codificación Posicional</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">7</span>
+          <span class="toc-pg">6</span>
         </div>
         
         <div class="toc-entry">
-          <span>2.3. Grouped-Query Attention (GQA) y Memoria KV-Cache</span>
+          <span>2.3. Grouped-Query Attention (GQA) y Reducción de KV-Cache</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">8</span>
+          <span class="toc-pg">7</span>
         </div>
         
         <div class="toc-entry">
           <span>2.4. Hardware Tensorial Especializado: Arquitectura Groq LPU</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">10</span>
+          <span class="toc-pg">9</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-entry toc-main">
           <span>CAPÍTULO III: MARCO METODOLÓGICO Y DISEÑO EXPERIMENTAL</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">11</span>
+          <span class="toc-pg">10</span>
         </div>
         
         <div class="toc-entry">
           <span>3.1. Taxonomía de Modelos y Consultas Evaluadas</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">11</span>
+          <span class="toc-pg">10</span>
         </div>
         
         <div class="toc-entry">
           <span>3.2. Gestión Criptográfica de Secretos en Google Colab</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">12</span>
+          <span class="toc-pg">11</span>
         </div>
         
         <div class="toc-entry">
           <span>3.3. Algoritmo de Benchmarking y Telemetría en Tiempo Real</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">14</span>
+          <span class="toc-pg">13</span>
         </div>
         
-        <div class="toc-entry">
+        <div class="toc-entry toc-main">
           <span>CAPÍTULO IV: RESULTADOS EXPERIMENTALES Y DISCUSIÓN</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">16</span>
+          <span class="toc-pg">15</span>
         </div>
         
         <div class="toc-entry">
-          <span>4.1. Análisis Cuantitativo de Latencia, Tokens y Throughput (Tabla 1)</span>
+          <span>4.1. Análisis Cuantitativo de Latencia y Throughput (Tabla 1)</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">16</span>
+          <span class="toc-pg">15</span>
         </div>
         
         <div class="toc-entry">
-          <span>4.2. Análisis Cualitativo y Evaluación de Tokens de Pensamiento (CoT)</span>
+          <span>4.2. Análisis Cualitativo y Evaluación de Tokens CoT</span>
+          <span class="toc-dots"></span>
+          <span class="toc-pg">17</span>
+        </div>
+        
+        <div class="toc-entry">
+          <span>4.3. Contrastación Empírica: SLM (20B/8B) vs. LLM Masivo (120B/70B)</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">18</span>
         </div>
         
-        <div class="toc-entry">
-          <span>4.3. Contrastación Empírica entre SLM (20B/8B) y LLM Masivo (120B/70B)</span>
+        <div class="toc-entry toc-main">
+          <span>CAPÍTULO V: PROPUESTA DE ARQUITECTURA DE ENRUTAMIENTO JERÁRQUICO</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">19</span>
         </div>
         
         <div class="toc-entry">
-          <span>CAPÍTULO V: PROPUESTA DE ARQUITECTURA DE ENRUTAMIENTO JERÁRQUICO</span>
-          <span class="toc-dots"></span>
-          <span class="toc-pg">20</span>
-        </div>
-        
-        <div class="toc-entry">
           <span>5.1. Patrón Arquitectónico Tiered Routing</span>
           <span class="toc-dots"></span>
-          <span class="toc-pg">20</span>
+          <span class="toc-pg">19</span>
         </div>
         
         <div class="toc-entry">
-          <span>5.2. Análisis de Retorno de Inversión y Costo Total de Propiedad (TCO)</span>
+          <span>5.2. Análisis de Retorno de Inversión y Costo Total de Propiedad</span>
+          <span class="toc-dots"></span>
+          <span class="toc-pg">20</span>
+        </div>
+        
+        <div class="toc-entry toc-main">
+          <span>CAPÍTULO VI: CONCLUSIONES Y RECOMENDACIONES</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">21</span>
         </div>
         
-        <div class="toc-entry">
-          <span>CAPÍTULO VI: CONCLUSIONES Y RECOMENDACIONES</span>
+        <div class="toc-entry toc-main">
+          <span>REFERENCIAS BIBLIOGRÁFICAS (APA 7ª EDICIÓN)</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">22</span>
         </div>
         
-        <div class="toc-entry">
-          <span>REFERENCIAS BIBLIOGRÁFICAS (APA 7ª EDICIÓN)</span>
+        <div class="toc-entry toc-main">
+          <span>APÉNDICES: CÓDIGO FUENTE, GLOSARIO Y PREGUNTAS FRECUENTES (Q&A)</span>
           <span class="toc-dots"></span>
           <span class="toc-pg">23</span>
-        </div>
-        
-        <div class="toc-entry">
-          <span>APÉNDICES: CÓDIGO FUENTE, GLOSARIO TÉCNICO Y PREGUNTAS FRECUENTES</span>
-          <span class="toc-dots"></span>
-          <span class="toc-pg">24</span>
         </div>
         
 </div>
 
 
-<h1 class="apa-h1">CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</h1>
+<h1 class="chapter-title">CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</h1>
 
 <h2 class="apa-h2">1.1. Antecedentes del Problema</h2>
 <p>
@@ -536,14 +528,12 @@ En arquitecturas conversacionales distribuidas (como canales de atención en Wha
 La presente investigación aporta datos empíricos sobre la inferencia en silicio determinista LPU y proporciona directrices numéricas para reducir hasta en un 70% los gastos de infraestructura sin comprometer la calidad de respuesta.
 </p>
 
-<div class="page-break"></div>
-
 
 <div align="center">
 </div>
 <hr/>
 <p>MÓDULO 1 CHALLENGE 1 · COMPARADOR MULTI-MODELO DE LENGUAJE</p>
-<h1 class="apa-h1">Comparador de Modelos Llama &amp; Benchmarking de Inferencia</h1>
+<h1 class="chapter-title">Comparador de Modelos Llama &amp; Benchmarking de Inferencia</h1>
 <p><strong>Evaluación empírica de latencia, consumo de tokens y calidad de respuesta</strong>. Conecta la API de Groq Cloud mediante Google Colab Secrets, orquesta inferencias zero-shot en chips LPU de alta velocidad y construye una matriz analítica para comparar modelos ligeros (20B / 8B), medianos de razonamiento (Qwen 27B) y modelos masivos (120B / 70B). </p>
 <p>Guía de Inicio · Visión del Entregable</p>
 <h3 class="apa-h3">Resumen Ejecutivo &amp; Fundamento: ¿Por qué no usar siempre el modelo más grande?</h3>
@@ -1370,7 +1360,7 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
 <p>Tokens Totales</p>
 <p>437 t/s</p>
 <p>Throughput</p>
-<h1 class="apa-h1">Guía de Restablecimiento Seguro de Contraseña 1. Accede al portal oficial con protocolo seguro HTTPS. 2. Selecciona la opción de recuperación de credenciales. 3. Ingresa tu número de matrícula o correo institucional. 4. Valida tu identidad y actualiza la clave respetando las directivas institucionales.</h1>
+<h1 class="chapter-title">Guía de Restablecimiento Seguro de Contraseña 1. Accede al portal oficial con protocolo seguro HTTPS. 2. Selecciona la opción de recuperación de credenciales. 3. Ingresa tu número de matrícula o correo institucional. 4. Valida tu identidad y actualiza la clave respetando las directivas institucionales.</h1>
 <p>Dictamen de Telemetría en Tiempo Real</p>
 <p><strong>Modelo Ligero (20B)</strong> es <strong>52% más rápido</strong> en TTFT frente a Modelo Grande (120B). Recomendado para esta consulta frecuente. </p>
 <p>Entregable Autónomo de Producción · Python Standalone</p>
