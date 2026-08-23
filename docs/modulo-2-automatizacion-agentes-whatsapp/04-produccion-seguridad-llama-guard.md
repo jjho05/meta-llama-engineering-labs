@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](03-inferencia-function-calling-tools.md)
+
+</div>
+
+---
+
 # Tema 2.4 · Producción SRE, Blindaje con Llama Guard 3 y Prompt Guard
 
 TL;DR
@@ -59,3 +67,11 @@ Prompt Guard: Modelo entrenado para detectar intentos de manipular o secuestrar 
 Inyección de prompt: Técnica que intenta hacer que un modelo ignore sus instrucciones originales mediante texto malicioso en la entrada. Es un vector de ataque común en agentes expuestos públicamente.
 Despliegue (deployment): Proceso de poner un sistema en un ambiente que corre de forma continua, disponible para usuarios reales. Es el paso que separa el prototipo del producto.
 Monitoreo básico: Seguimiento de métricas mínimas —tiempo de respuesta, tasa de error y volumen— para detectar problemas en producción antes de que afecten a los usuarios.
+
+---
+
+<div align="center">
+
+[⬅️ Tema Anterior](03-inferencia-function-calling-tools.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md)
+
+</div>

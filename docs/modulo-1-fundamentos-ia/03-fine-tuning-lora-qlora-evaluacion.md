@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](02-prompt-engineering-avanzado-rag.md) • [Siguiente ➡️](04-del-prototipo-al-pipeline-productivo.md)
+
+</div>
+
+---
+
 # Tema 1.3 · Fine-Tuning con LoRA / QLoRA y Métricas de Evaluación
 
 TL;DR
@@ -68,3 +76,11 @@ Llama Guard: Modelo separado entrenado para clasificar contenido problemático e
 
 
 Pipeline Completo: por qué un modelo que funciona en el notebook no es lo mismo que un modelo en producción
+
+---
+
+<div align="center">
+
+[⬅️ Tema Anterior](02-prompt-engineering-avanzado-rag.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Tema Siguiente ➡️](04-del-prototipo-al-pipeline-productivo.md)
+
+</div>

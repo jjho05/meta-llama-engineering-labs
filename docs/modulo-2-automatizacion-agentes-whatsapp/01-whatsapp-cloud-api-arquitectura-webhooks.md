@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](../modulo-1-fundamentos-ia/04-del-prototipo-al-pipeline-productivo.md) • [Siguiente ➡️](02-agentes-conversacionales-memoria-redis.md)
+
+</div>
+
+---
+
 # Tema 2.1 · WhatsApp Cloud API: Arquitectura, Handshake GET y Webhooks
 
 Módulo 2
@@ -85,3 +93,11 @@ ngrok: herramienta que expone un servidor que corre en tu máquina local mediant
 Payload: el conjunto de datos que se envía dentro de una solicitud o notificación; en este contexto, el cuerpo que contiene el mensaje entrante y sus metadatos asociados.
 
 Diseño de Agentes Conversacionales: cómo darle memoria y estructura a una conversación con Llama
+
+---
+
+<div align="center">
+
+[⬅️ Tema Anterior](../modulo-1-fundamentos-ia/04-del-prototipo-al-pipeline-productivo.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [Tema Siguiente ➡️](02-agentes-conversacionales-memoria-redis.md)
+
+</div>

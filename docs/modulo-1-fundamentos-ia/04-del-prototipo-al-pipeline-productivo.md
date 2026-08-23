@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](03-fine-tuning-lora-qlora-evaluacion.md) • [Siguiente ➡️](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
+
+</div>
+
+---
+
 # Tema 1.4 · Del Prototipo al Pipeline Productivo con FastAPI y Docker
 
 TL;DR
@@ -68,3 +76,11 @@ Endpoint: Punto de acceso al que una aplicación externa envía una solicitud y 
 FastAPI: Framework de Python usado para construir endpoints con validación automática de datos y generación de documentación interactiva, basado en estándares como OpenAPI.
 Testing end-to-end: Prueba que simula una solicitud real de principio a fin, verificando que todo el flujo —datos, modelo y salida— funcione de manera conjunta y robusta.
 Despliegue (deployment): Proceso de poner un modelo o sistema en un ambiente donde otros pueden usarlo sin supervisión directa.
+
+---
+
+<div align="center">
+
+[⬅️ Tema Anterior](03-fine-tuning-lora-qlora-evaluacion.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Tema Siguiente ➡️](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
+
+</div>

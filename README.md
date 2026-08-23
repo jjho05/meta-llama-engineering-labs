@@ -1,4 +1,6 @@
-# Meta Llama 3 Engineering Labs & Applied AI Specialization
+# 🦙 Meta Llama 3 Engineering Labs & Applied AI Specialization
+
+<div align="center">
 
 [![Meta AI](https://img.shields.io/badge/Meta_AI-Llama_3.1-0866FF?style=for-the-badge&logo=meta&logoColor=white)](https://ai.meta.com/llama/)
 [![Groq LPU](https://img.shields.io/badge/Hardware-Groq_LPU_Inference-F55036?style=for-the-badge)](https://groq.com/)
@@ -7,11 +9,39 @@
 [![Google Colab](https://img.shields.io/badge/Notebooks-Google_Colab_Ready-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-Repositorio oficial de **cuadernos interactivos de Google Colab, laboratorios prácticos (*Hands-On*), scripts de terminal y documentación técnica en Markdown** del programa de Especialización en Inteligencia Artificial con Modelos de Pesos Abiertos (*Open Weights*), creado y mantenido por **Ing. Jesús Javier Hernández Olvera**.
+**Recurso educativo y de ingeniería completo para el desarrollo con modelos de pesos abiertos (*Open Weights*) de Meta Llama 3**
+
+[📚 Contenido](#-contenido-del-programa) • [🚀 Inicio Rápido](#-inicio-rápido-en-local-cli) • [🧪 Cuadernos Google Colab](#-cuadernos-de-google-colab-y-laboratorios-en-1-clic) • [💻 Scripts](#-scripts-de-terminal) • [📖 Documentación](#-documentación-técnica-por-módulos)
+
+</div>
 
 ---
 
-## Cuadernos de Google Colab (Ejecución Inmediata en 1-Clic)
+## 📋 Descripción
+
+Este repositorio contiene el material técnico, los manuales teóricos en Markdown, los cuadernos interactivos de Google Colab y los scripts de producción del programa de **Especialización en Inteligencia Artificial Aplicada con Meta Llama 3**, diseñado y construido por **Ing. Jesús Javier Hernández Olvera**. Incluye:
+
+- ✅ **8 Temas Teóricos Detallados** organizados en 2 Módulos de Especialización
+- ✅ **2 Cuadernos Jupyter (.ipynb)** listos para ejecutarse con 1 clic en Google Colab
+- ✅ **2 Scripts Python de Producción** para benchmarking y RAG desde Terminal
+- ✅ **100% Alineado con las Mejores Prácticas** de Meta AI, Hugging Face y Groq LPU
+- ✅ **Arquitectura Libre de Alucinaciones** mediante Sentence-Transformers y RAG
+
+---
+
+## 🎓 Competencias Profesionales del Programa
+
+Al completar este programa de ingeniería serás capaz de:
+
+1. ⚡ **Dominar la Microarquitectura Transformer:** Comprender el cálculo de auto-atención escalada ($Q, K, V$), Grouped-Query Attention (GQA), Rotary Position Embeddings (RoPE) y KV-Cache.
+2. 🔍 **Construir Sistemas RAG de Grado Industrial:** Generar representaciones densas con `sentence-transformers`, indexar espacios vectoriales y anclar respuestas en documentos verídicos.
+3. 🛠️ **Optimizar con Fine-Tuning LoRA / QLoRA:** Adaptar modelos masivos mediante matrices de bajo rango en 4-bits sin requerir clusters inaccesibles de GPUs.
+4. 🤖 **Desarrollar Agentes Autónomos Multi-Turno:** Gestionar estado conversacional persistente con Redis y orquestar llamadas a herramientas (*Function Calling*).
+5. 🛡️ **Blindar y Desplegar en Producción:** Conectar la API oficial de WhatsApp Cloud con FastAPI, NGINX SSL y defensas activas contra inyecciones de prompts con **Llama Guard 3** y **Prompt Guard**.
+
+---
+
+## 🧪 Cuadernos de Google Colab y Laboratorios (En 1-Clic)
 
 | # | Laboratorio / Challenge | Descripción de Ingeniería | Enlace Directo a Colab |
 |---|---|---|---|
@@ -20,54 +50,33 @@ Repositorio oficial de **cuadernos interactivos de Google Colab, laboratorios pr
 
 ---
 
-## Estructura del Repositorio
+## 📚 Contenido del Programa
 
-```bash
-meta-llama-engineering-labs/
-├── docs/                                    # Manuales teóricos completos en Markdown (.md)
-│   ├── modulo-1-fundamentos-ia/
-│   │   ├── 01-arquitectura-transformer-llama3.md
-│   │   ├── 02-prompt-engineering-avanzado-rag.md
-│   │   ├── 03-fine-tuning-lora-qlora-evaluacion.md
-│   │   └── 04-del-prototipo-al-pipeline-productivo.md
-│   └── modulo-2-automatizacion-agentes-whatsapp/
-│       ├── 01-whatsapp-cloud-api-arquitectura-webhooks.md
-│       ├── 02-agentes-conversacionales-memoria-redis.md
-│       ├── 03-inferencia-function-calling-tools.md
-│       └── 04-produccion-seguridad-llama-guard.md
-├── notebooks/                               # Cuadernos Jupyter listos para Google Colab
-│   ├── 01_Challenge1_MultiModel_Benchmark_Groq.ipynb
-│   └── 02_Challenge2_RAG_Politicas_SentenceTransformers.ipynb
-├── scripts/                                 # Scripts Python ejecutables en Terminal
-│   ├── ejecutar_challenge1.py
-│   └── ejecutar_challenge2.py
-├── data/                                    # Datasets y políticas de prueba para RAG
-│   └── reglamento_academico_politicas.json
-├── .env.example                             # Plantilla de variables de entorno
-├── requirements.txt                         # Dependencias del entorno
-├── LICENSE                                  # Licencia MIT
-└── README.md                                # Documentación principal
-```
+### [Módulo 1: Fundamentos de IA & Ecosistema de Modelos Abiertos](docs/modulo-1-fundamentos-ia/README.md)
+**4 manuales de ingeniería • 2 challenges prácticos en Colab**
+
+- [1.1 Arquitectura Transformer & Llama 3](docs/modulo-1-fundamentos-ia/01-arquitectura-transformer-llama3.md) — Tokenización BPE, tensores, GQA, RoPE y soberanía tecnológica.
+- [1.2 Prompt Engineering & Sistemas RAG](docs/modulo-1-fundamentos-ia/02-prompt-engineering-avanzado-rag.md) — Zero-Shot, Few-Shot, Chain-of-Thought y mitigación de alucinaciones.
+- [1.3 Fine-Tuning LoRA / QLoRA & Evaluación](docs/modulo-1-fundamentos-ia/03-fine-tuning-lora-qlora-evaluacion.md) — Matrices de bajo rango $\Delta W = B \cdot A$, cuantización NF4 y métricas Perplexity/BLEU.
+- [1.4 Del Prototipo al Pipeline Productivo](docs/modulo-1-fundamentos-ia/04-del-prototipo-al-pipeline-productivo.md) — Microservicios FastAPI, endpoints de inferencia y Docker.
+
+**Cuadernos Colab:** [Ver carpeta notebooks/](notebooks/)
 
 ---
 
-## Contenido del Programa Formativo (Documentación Técnica)
+### [Módulo 2: Automatización con Llama & WhatsApp Cloud API](docs/modulo-2-automatizacion-agentes-whatsapp/README.md)
+**4 manuales de ingeniería • 2 scripts de producción en Python**
 
-### Módulo 1: Fundamentos de IA & Ecosistema de Modelos Abiertos
-* [Tema 1.1 · Arquitectura Transformer & Llama 3](docs/modulo-1-fundamentos-ia/01-arquitectura-transformer-llama3.md): Mecanismo de auto-atención escalada ($Q, K, V$), Grouped-Query Attention (GQA), Rotary Position Embeddings (RoPE), KV-Cache y tokenizadores BPE de 128k.
-* [Tema 1.2 · Prompt Engineering & RAG](docs/modulo-1-fundamentos-ia/02-prompt-engineering-avanzado-rag.md): In-Context Learning (Few-Shot), Chain-of-Thought (CoT), delimitadores especiales y delimitación contra alucinaciones probabilísticas.
-* [Tema 1.3 · Fine-Tuning LoRA / QLoRA & Evaluación](docs/modulo-1-fundamentos-ia/03-fine-tuning-lora-qlora-evaluacion.md): Matrices de bajo rango ($\Delta W = B \cdot A$), cuantización NormalFloat4 (NF4), Unsloth y métricas Perplexity/BLEU.
-* [Tema 1.4 · Del Prototipo al Pipeline Productivo](docs/modulo-1-fundamentos-ia/04-del-prototipo-al-pipeline-productivo.md): Microservicios con FastAPI, endpoints de inferencia, contenedores Docker y evaluación end-to-end.
+- [2.1 WhatsApp Cloud API & Webhooks](docs/modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md) — Handshake criptográfico GET, parseo de eventos JSON y túneles ngrok.
+- [2.2 Agentes Conversacionales & Memoria Redis](docs/modulo-2-automatizacion-agentes-whatsapp/02-agentes-conversacionales-memoria-redis.md) — Gestión de estado multi-turno, ventanas de contexto y Llama Stack.
+- [2.3 Inferencia, Function Calling & Tools](docs/modulo-2-automatizacion-agentes-whatsapp/03-inferencia-function-calling-tools.md) — Inferencia en dos pasos, esquemas JSON Schema y validación en Pydantic.
+- [2.4 Producción SRE & Seguridad Llama Guard](docs/modulo-2-automatizacion-agentes-whatsapp/04-produccion-seguridad-llama-guard.md) — Blindaje con Llama Guard 3, Prompt Guard, Docker Compose y NGINX SSL.
 
-### Módulo 2: Automatización con Llama & WhatsApp Cloud API
-* [Tema 2.1 · WhatsApp Cloud API & Webhooks](docs/modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md): Verificación criptográfica del handshake GET, parseo de eventos JSON y túneles con ngrok.
-* [Tema 2.2 · Agentes Conversacionales & Memoria de Sesión](docs/modulo-2-automatizacion-agentes-whatsapp/02-agentes-conversacionales-memoria-redis.md): Gestión de estado multi-turno con Redis, ventanas deslizantes de contexto y Llama Stack.
-* [Tema 2.3 · Function Calling & Herramientas](docs/modulo-2-automatizacion-agentes-whatsapp/03-inferencia-function-calling-tools.md): Inferencia en dos pasos, esquemas JSON Schema y validación estricta de payloads con Pydantic.
-* [Tema 2.4 · Producción SRE & Seguridad con Llama Guard](docs/modulo-2-automatizacion-agentes-whatsapp/04-produccion-seguridad-llama-guard.md): Despliegue con Docker Compose, NGINX SSL con Let\x27s Encrypt, telemetría P95 y blindaje contra Jailbreaks con Llama Guard 3 y Prompt Guard.
+**Scripts de terminal:** [Ver carpeta scripts/](scripts/)
 
 ---
 
-## Inicio Rápido en Local (CLI)
+## 🚀 Inicio Rápido en Local (CLI)
 
 ### 1. Clonar el repositorio
 ```bash
@@ -85,21 +94,21 @@ pip install -r requirements.txt
 ### 3. Configurar variables de entorno
 ```bash
 cp .env.example .env
-# Edita .env y agrega tu GROQ_API_KEY
+# Agrega tu clave secreta de Groq en .env
 ```
 
-### 4. Ejecutar los scripts de producción
+### 4. Ejecutar los scripts en terminal
 ```bash
 # Challenge 1: Benchmarking Multi-Modelo en LPU
 python3 scripts/ejecutar_challenge1.py --modelo openai/gpt-oss-20b --query "¿Qué es Grouped-Query Attention?"
 
-# Challenge 2: Pipeline RAG con Sentence-Transformers
+# Challenge 2: Pipeline RAG de Políticas con Sentence-Transformers
 python3 scripts/ejecutar_challenge2.py --modelo openai/gpt-oss-20b
 ```
 
 ---
 
-## Autoría & Dirección Técnica
+## 👨‍💻 Dirección Técnica & Autoría
 
 * **Creador & Arquitecto:** **Ing. Jesús Javier Hernández Olvera**
 * **Especialización:** Arquitectura de Inteligencia Artificial, Modelos de Pesos Abiertos y Agentes Autónomos.
@@ -107,6 +116,6 @@ python3 scripts/ejecutar_challenge2.py --modelo openai/gpt-oss-20b
 
 ---
 
-## Licencia
+## 📄 Licencia
 
 Distribuido bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.

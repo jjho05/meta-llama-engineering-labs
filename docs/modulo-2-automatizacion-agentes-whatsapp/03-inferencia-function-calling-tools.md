@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](02-agentes-conversacionales-memoria-redis.md) • [Siguiente ➡️](04-produccion-seguridad-llama-guard.md)
+
+</div>
+
+---
+
 # Tema 2.3 · Inferencia en Dos Pasos, Function Calling y Validación Pydantic
 
 TL;DR
@@ -85,3 +93,11 @@ Latencia del ciclo: el tiempo total desde que llega un mensaje hasta que se env�
 API de envío de WhatsApp: la llamada que usa tu servidor para enviar un mensaje de vuelta al usuario a través de la WhatsApp Cloud API.
 
 Proyecto Integrador: qué necesita un agente para pasar de prototipo a producción
+
+---
+
+<div align="center">
+
+[⬅️ Tema Anterior](02-agentes-conversacionales-memoria-redis.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [Tema Siguiente ➡️](04-produccion-seguridad-llama-guard.md)
+
+</div>

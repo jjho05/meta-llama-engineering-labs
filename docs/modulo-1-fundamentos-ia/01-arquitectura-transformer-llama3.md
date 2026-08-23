@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](02-prompt-engineering-avanzado-rag.md)
+
+</div>
+
+---
+
 # Tema 1.1 · Fundamentos de LLMs y Arquitectura de Llama 3
 
 Módulo 1
@@ -73,3 +81,11 @@ Transformer: Arquitectura de red neuronal profunda cuyo componente distintivo es
 Pesos abiertos (open weights): Conjunto de parámetros entrenados de un modelo disponibles públicamente para su descarga, ejecución local, modificación mediante fine-tuning y auditoría independiente, sin depender de APIs de terceros.
 Parámetro: Valor numérico interno, típicamente un número de punto flotante, que forma parte de las matrices del modelo y que se ajusta durante el entrenamiento para definir su comportamiento predictivo final.
 Inferencia: Fase operativa en la que un modelo ya entrenado recibe una entrada nueva, la procesa a través de sus capas de transformación y genera una salida (predicción de tokens); es el momento en que el modelo "responde" a una consulta.
+
+---
+
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Tema Siguiente ➡️](02-prompt-engineering-avanzado-rag.md)
+
+</div>

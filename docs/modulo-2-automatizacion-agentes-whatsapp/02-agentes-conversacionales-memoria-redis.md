@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](01-whatsapp-cloud-api-arquitectura-webhooks.md) • [Siguiente ➡️](03-inferencia-function-calling-tools.md)
+
+</div>
+
+---
+
 # Tema 2.2 · Agentes Conversacionales, Memoria de Sesión y Llama Stack
 
 TL;DR
@@ -58,3 +66,11 @@ Ventana de contexto: Cantidad total de texto, medida en tokens, que un modelo pu
 Identificador de usuario: Dato único —como un número de teléfono en WhatsApp o un ID de sesión— que permite asociar el estado de una conversación con la persona correcta y recuperarla entre mensajes asíncronos.
 
 Integración Llama + WhatsApp: cómo conectar el modelo como motor de razonamiento detrás del canal
+
+---
+
+<div align="center">
+
+[⬅️ Tema Anterior](01-whatsapp-cloud-api-arquitectura-webhooks.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [Tema Siguiente ➡️](03-inferencia-function-calling-tools.md)
+
+</div>

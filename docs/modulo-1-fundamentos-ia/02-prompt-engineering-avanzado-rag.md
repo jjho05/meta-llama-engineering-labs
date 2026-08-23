@@ -1,3 +1,11 @@
+<div align="center">
+
+[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](01-arquitectura-transformer-llama3.md) • [Siguiente ➡️](03-fine-tuning-lora-qlora-evaluacion.md)
+
+</div>
+
+---
+
 # Tema 1.2 · Prompt Engineering y Sistemas RAG
 
 Prompt Engineering y RAG con Llama
@@ -70,3 +78,11 @@ RAG (Retrieval-Augmented Generation): Arquitectura que separa la generación de 
 Zero-shot: Técnica de prompting en la que se solicita una tarea directamente, sin ejemplos previos. El modelo debe resolverla confiando exclusivamente en el conocimiento adquirido durante su entrenamiento.
 
 Fine-tuning y Evaluación de Modelos: ajustar Llama sin reentrenarlo desde cero
+
+---
+
+<div align="center">
+
+[⬅️ Tema Anterior](01-arquitectura-transformer-llama3.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Tema Siguiente ➡️](03-fine-tuning-lora-qlora-evaluacion.md)
+
+</div>
