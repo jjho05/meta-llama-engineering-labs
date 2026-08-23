@@ -4,440 +4,478 @@
 <meta charset="utf-8">
 <title>Evaluación Empírica de Rendimiento, Latencia, Throughput y Eficiencia Computacional en Modelos Abiertos de Lenguaje: Benchmarking Comparativo entre Arquitecturas SLM, CoT Reasoning y LLM Masivo en Hardware Groq LPU</title>
 <style>
-')[1].split('"""\n\nprint')[0]
 
-# -----------------------------------------------------------------------------
-# 1. EXPANDED CHALLENGE 1 (20+ PAGES STRICT APA 7)
-# -----------------------------------------------------------------------------
-html_ch1_full = f"""<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<title>Challenge 1 - Reporte Exhaustivo APA 7</title>
-<style>
-{apa7_css}
-</style>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
-</head>
-<body>
-
-<!-- PORTADA OFICIAL APA 7 -->
-<div class="title-page">
-  <h1>Evaluación Empírica de Rendimiento, Latencia, Throughput y Eficiencia Computacional en Modelos Abiertos de Lenguaje: Benchmarking Comparativo entre Arquitecturas SLM, CoT Reasoning y LLM Masivo en Hardware Groq LPU</h1>
-  
-  <div class="author">Ing. Jesús Javier Hernández Olvera</div>
-  <div class="affiliation">Especialización en Arquitectura de Inteligencia Artificial \& Meta Llama 3</div>
-  <div class="course">Módulo 1: Fundamentos de IA \& Ecosistema de Modelos Abiertos</div>
-  <div class="course">Entregable Oficial: Challenge 1 (Reporte Técnico y Académico de Ingeniería)</div>
-  <div class="date">2026</div>
-  
-  <div class="author-note">
-    <strong>Nota del Autor:</strong> Este documento constituye el reporte formal de investigación aplicada e ingeniería correspondiente al Challenge 1 de la Especialización en Inteligencia Artificial con Meta Llama 3. Los datos empíricos, código fuente ejecutable, scripts de terminal y cuadernos interactivos de Google Colab se encuentran disponibles públicamente en el repositorio oficial de GitHub: <a href="https://github.com/jjho05/meta-llama-engineering-labs">https://github.com/jjho05/meta-llama-engineering-labs</a>.
-  </div>
-</div>
-
-<div class="page-break"></div>
-
-<!-- RESUMEN / ABSTRACT -->
-<div class="abstract-heading">Resumen</div>
-<p class="abstract-text">
-En los entornos modernos de producción de Inteligencia Artificial Generativa, el hábito generalizado de seleccionar automáticamente el modelo de lenguaje de mayor tamaño disponible (70B a 120B parámetros) introduce severas ineficiencias presupuestarias y compromete de forma crítica los acuerdos de nivel de servicio (SLA) en aplicaciones interactivas de tiempo real. Este trabajo de investigación técnica presenta una evaluación empírica exhaustiva del rendimiento, latencia y consumo de tokens entre tres clases de arquitecturas de modelos de pesos abiertos (<i>Open Weights</i>): un Modelo Pequeño de Lenguaje (SLM, 20B/8B), un Modelo con Razonamiento en Cadena de Pensamiento (CoT Reasoning, 27B) y un Modelo Masivo Empresarial (LLM, 120B/70B). Las inferencias fueron orquestadas a través de la infraestructura de Unidades de Procesamiento de Lenguaje (LPU) de Groq Cloud mediante Google Colab Secrets. Los resultados experimentales revelan que los modelos SLM alcanzan velocidades sostenidas de hasta 189.4 tokens/s con latencias de respuesta sub-segundo (0.31 s a 0.94 s), resolviendo con alta fidelidad más del 80% de las consultas operativas a un costo diez veces inferior frente a arquitecturas masivas (2.89 s, 84.8 tokens/s). A partir de estos hallazgos, se formaliza la arquitectura de Enrutamiento Jerárquico Inteligente (<i>Tiered Routing</i>) como estándar para despliegues empresariales sostenibles.
-</p>
-<p class="keywords-text">
-<strong>Palabras clave:</strong> Meta Llama 3, Benchmarking de Inferencia, Groq LPU, Latencia, Small Language Models, Chain-of-Thought, Tiered Routing Architecture, Google Colab Secrets.
-</p>
-
-<div style="margin-top: 2rem;"></div>
-
-<div class="abstract-heading">Abstract</div>
-<p class="abstract-text">
-In enterprise generative AI production environments, defaulting to the largest available foundation model (70B–120B parameters) creates severe financial overhead and unacceptable latency degradation for interactive workloads. This technical research report provides an exhaustive empirical evaluation of inference latency, token economics, and qualitative fidelity across three tiers of open-weights language models: a Small Language Model (SLM, 20B/8B), a Chain-of-Thought Reasoning Model (CoT, 27B), and a Massive Enterprise Foundation Model (LLM, 120B/70B). Inferences were executed on Groq Cloud Language Processing Unit (LPU) silicon using Google Colab Secrets for credential management. Empirical results show that SLM architectures achieve throughputs up to 189.4 tokens/s with sub-second response times (0.31 s to 0.94 s), successfully handling over 80% of routine corporate workflows at one-tenth of the operating cost compared to massive models (2.89 s, 84.8 tokens/s). Based on these measurements, a Tiered Routing Architecture is proposed to optimize latency, cost, and cognitive quality in production.
-</p>
-<p class="keywords-text">
-<strong>Keywords:</strong> Meta Llama 3, Inference Benchmarking, Groq LPU, Latency Profiling, Small Language Models, Chain-of-Thought, Tiered Routing Architecture.
-</p>
-
-<div class="page-break"></div>
-
-<!-- SECCIÓN 1: INTRODUCCIÓN -->
-<h1 class="apa-h1">1. Introducción y Planteamiento del Problema</h1>
-<p>
-El vertiginoso desarrollo de los Modelos de Lenguaje Grande (LLMs) ha transformado radicalmente el panorama de la ingeniería de software y la automatización empresarial. No obstante, la transición desde entornos experimentales de laboratorio hacia sistemas en producción de misión crítica ha revelado que la potencia computacional bruta no es el único factor determinante en el éxito de una solución tecnológica. En arquitecturas conversacionales distribuidas (como canales de atención en WhatsApp, asistentes de soporte técnico interno y motores de extracción estructurada de datos), variables como el Tiempo Hasta el Primer Token (<i>Time to First Token</i>, TTFT), la velocidad de generación sostenida (<i>Throughput</i> en tokens por segundo) y el costo operativo recurrente (<i>Operating Expense</i>, OPEX) constituyen restricciones arquitectónicas fundamentales.
-</p>
-<p>
-Históricamente, los ingenieros de software y científicos de datos han incurrido en el antipatrón de sobredimensión computacional (<i>over-provisioning</i>), consistente en canalizar la totalidad de las consultas de usuario hacia el modelo fundacional con mayor cantidad de parámetros disponible en el mercado. Si bien los modelos que superan los 70 billones de parámetros exhiben capacidades extraordinarias para resolver problemas complejos de razonamiento multidominio y síntesis enciclopédica, su utilización indiscriminada introduce graves deficiencias:
-</p>
-<ol>
-  <li><strong>Latencias Inaceptables en Tiempo Real:</strong> Tiempos de inferencia superiores a los 2.5 segundos deterioran severamente la experiencia de usuario y reducen la retención en canales interactivos.</li>
-  <li><strong>Sobrecosto Financiero Marginal:</strong> El costo de inferencia por cada millón de tokens en arquitecturas de 70B a 120B parámetros es entre 4.5 y 10 veces superior al de modelos ligeros de 8B a 20B.</li>
-  <li><strong>Desperdicio de Recursos Cognitivos:</strong> Tareas deterministas de extracción de entidades, clasificación de intenciones o respuesta a preguntas directas no requieren la vasta capacidad combinatoria de un modelo de 120 billones de parámetros.</li>
-</ol>
-<p>
-El presente estudio experimental tiene como propósito evaluar empíricamente el comportamiento de tres familias de modelos abiertos en hardware especializado de inferencia ultra-rápida (Groq LPU), analizando de forma rigurosa el balance costo-latencia-calidad para establecer directrices arquitectónicas reproducibles.
-</p>
-
-<h2 class="apa-h2">1.1. Contexto Operativo y Evolución de Modelos en Groq</h2>
-<p>
-El ecosistema de inferencia en la nube evoluciona a un ritmo acelerado. En plataformas de vanguardia como Groq Cloud, el catálogo de modelos de pesos abiertos se actualiza continuamente para incorporar los últimos avances de la comunidad de investigación abierta:
-</p>
-<ul>
-  <li><strong>Familia Meta Llama:</strong> Desde Llama 2 hasta las series Llama 3, Llama 3.1 y Llama 3.3, optimizadas para arquitecturas de 8B, 70B y 405B parámetros con soporte nativo de contextos extensos de 128k tokens.</li>
-  <li><strong>Modelos de Razonamiento CoT:</strong> Modelos como Qwen 2.5 y Qwen 3.6 entrenados con aprendizaje por refuerzo a partir de retroalimentación humana (RLHF) para emitir trazas de pensamiento deductivo antes de la síntesis final.</li>
-  <li><strong>Modelos Abiertos Eficientes (GPT-OSS):</strong> Variantes orientadas a optimización extrema de throughput en hardware de flujo de datos tensorial.</li>
-</ul>
-
-<!-- SECCIÓN 2: MARCO TEÓRICO -->
-<h1 class="apa-h1">2. Marco Teórico y Fundamentos Matemáticos</h1>
-
-<h2 class="apa-h2">2.1. Microarquitectura Transformer y Auto-Atención por Producto Punto Escalado</h2>
-<p>
-Los modelos de la familia Meta Llama 3 se basan en una arquitectura Transformer autoregresiva de tipo decodificador exclusivo (<i>Decoder-only</i>). En cada paso de generación temporal $t$, el modelo calcula la distribución de probabilidad de la siguiente palabra condicionada a la secuencia previa de tokens $W = (w_1, w_2, \dots, w_{{t-1}})$. El núcleo computacional que gobierna esta interacción es el mecanismo de Auto-Atención por Producto Punto Escalado (<i>Scaled Dot-Product Attention</i>), formalizado por Vaswani et al. (2017):
-</p>
-<div class="math-display">
-  $$\\text{{Attention}}(Q, K, V) = \\text{{softmax}}\\left(\\frac{{Q K^T}}{{\\sqrt{{d_k}}}}\\right) V$$
-</div>
-<p>
-En esta ecuación fundamental:
-</p>
-<ul>
-  <li>$Q \\in \\mathbb{{R}}^{{N \\times d_k}}$ representa la matriz de Consultas (<i>Queries</i>), que codifica la información que cada token busca en el contexto circundante.</li>
-  <li>$K \\in \\mathbb{{R}}^{{N \\times d_k}}$ representa la matriz de Claves (<i>Keys</i>), que actúa como el descriptor o etiqueta semántica de cada posición de la secuencia.</li>
-  <li>$V \\in \\mathbb{{R}}^{{N \\times d_v}}$ denota la matriz de Valores (<i>Values</i>), que contiene la representación contextual real que será transferida si la consulta y la clave coinciden direccionalmente.</li>
-  <li>$d_k$ es la dimensión tensorial de cada cabezal de atención ($d_k = 128$ en Llama 3). El factor $\\sqrt{{d_k}}$ previene que los productos escalares alcancen magnitudes desmedidas en espacios de alta dimensionalidad, lo cual provocaría gradientes extremadamente pequeños en la función $\\text{{softmax}}$.</li>
-</ul>
-
-<h2 class="apa-h2">2.2. Codificación Posicional Rotatoria: Rotary Position Embeddings (RoPE)</h2>
-<p>
-A diferencia de las incrustaciones posicionales absolutas originales que sumaban vectores fijos a las representaciones iniciales, Llama 3 implementa Rotary Position Embeddings (RoPE) (Su et al., 2024). RoPE codifica la información posicional relativa rotando los vectores de Consulta $Q$ y Clave $K$ en el plano complejo bidimensional mediante una matriz ortogonal de rotación $R_{\\Theta, m}^d$:
-</p>
-<div class="math-display">
-  $$\\langle R_{{\\Theta, m}}^d \\mathbf{{q}}_m, R_{{\\Theta, n}}^d \\mathbf{{k}}_n \\rangle = g(\\mathbf{{q}}_m, \\mathbf{{k}}_n, m - n)$$
-</div>
-<p>
-Esta formulación matemática garantiza que el producto escalar entre una consulta en la posición $m$ y una clave en la posición $n$ dependa exclusivamente de su distancia relativa $m - n$, facilitando la extrapolación de secuencias largas de hasta 128,000 tokens mediante el escalado de frecuencia base $\\theta = 500,000$.
-</p>
-
-<h2 class="apa-h2">2.3. Grouped-Query Attention (GQA) y Reducción de la Memoria KV-Cache</h2>
-<p>
-En la arquitectura Transformer estándar con Atención Multi-Cabezal (<i>Multi-Head Attention</i>, MHA), cada cabezal de consulta posee su propio cabezal independiente de claves y valores. Al extender la ventana de contexto a 128,000 tokens en Llama 3, la memoria requerida para almacenar la caché de Claves y Valores ($KV\\text{{-Cache}}$) durante la inferencia secuencial colapsa la memoria VRAM de los servidores:
-</p>
-<div class="math-display">
-  $$\\text{{Memoria KV-Cache (Bytes)}} = 2 \\times n_{{\\text{{layers}}}} \\times n_{{\\text{{heads\\_kv}}}} \\times d_{{\\text{{head}}}} \\times s_{{\\text{{seq}}}} \\times \\text{{batch\\_size}} \\times b_{{\\text{{bytes}}}}$$
-</div>
-<p>
-Para resolver este cuello de botella, Meta Llama 3 implementa <i>Grouped-Query Attention</i> (GQA) (Ainslie et al., 2023). En lugar de mantener una proporción 1:1, GQA agrupa 8 cabezales de consulta por cada cabezal compartido de claves y valores ($H_q = 32, H_{{kv}} = 8$). Esta innovación reduce el tamaño de la memoria $KV\\text{{-Cache}}$ en un factor de $4\\times$ (75% de ahorro), reduciendo el tráfico de ancho de banda y permitiendo inferencias con latencias mínimas.
-</p>
-
-<h2 class="apa-h2">2.4. Arquitectura de Procesamiento en Silicio: Unidades Groq LPU</h2>
-<p>
-Los procesadores gráficos tradicionales (GPUs) fueron diseñados originalmente para cálculos masivos en paralelo de gráficos por computadora. En la generación de texto de un LLM, la fase de decodificación token por token es inherentemente secuencial y limitada por la memoria (<i>Memory-Bound</i>), ya que los pesos del modelo deben ser transferidos repetidamente desde la memoria externa HBM hacia las unidades de cómputo.
-</p>
-<p>
-La Unidad de Procesamiento de Lenguaje (LPU) de Groq fue concebida desde el silicio como una arquitectura de flujo de datos tensorial determinista (Groq Inc., 2024). Al integrar 230 MB de memoria estática ultrarrápida (SRAM) directamente en el chip con un ancho de banda de 80 TB/s, elimina por completo los cuellos de botella de bus externo, permitiendo alcanzar rendimientos que superan holgadamente los 180 tokens por segundo.
-</p>
-
-<!-- SECCIÓN 3: METODOLOGÍA -->
-<h1 class="apa-h1">3. Metodología de Implementación y Diseño Experimental</h1>
-
-<h2 class="apa-h2">3.1. Selección y Caracterización de Modelos</h2>
-<p>
-Para llevar a cabo el benchmark, se seleccionaron tres modelos que representan las tres principales categorías operativas en el ecosistema actual de pesos abiertos:
-</p>
-<ol>
-  <li><strong>Modelo Pequeño de Lenguaje (SLM):</strong> <code>openai/gpt-oss-20b</code> / <code>llama-3.1-8b-instant</code>. Diseñado para tareas que requieren máxima velocidad de respuesta, bajo consumo computacional y alta fidelidad en extracción de datos.</li>
-  <li><strong>Modelo con Razonamiento en Cadena de Pensamiento (CoT):</strong> <code>qwen/qwen3.6-27b</code>. Modelo de tamaño intermedio entrenado para emitir pasos lógicos deductivos internos encapsulados en etiquetas <code>&lt;think&gt;...&lt;/think&gt;</code> antes de emitir la respuesta final.</li>
-  <li><strong>Modelo Masivo de Fundación (LLM):</strong> <code>openai/gpt-oss-120b</code> / <code>llama-3.3-70b-versatile</code>. Arquitectura de escala masiva diseñada para redacción compleja, síntesis profunda y conocimiento interdisciplinario avanzado.</li>
-</ol>
-
-<h2 class="apa-h2">3.2. Taxonomía de Consultas Experimentales</h2>
-<p>
-Se diseñaron tres pruebas estandarizadas con niveles incrementales de complejidad cognitiva:
-</p>
-<ul>
-  <li><strong>Consulta 1 ($Q_1$ - Factual Simple):</strong> <i>"¿Cuál es la capital de Francia y cuál es su moneda oficial? Responde en una sola oración concisa."</i> (Evalúa la recuperación directa de conocimiento estático y adherencia a restricciones de formato).</li>
-  <li><strong>Consulta 2 ($Q_2$ - Arquitectura Técnica):</strong> <i>"Explica la diferencia entre Scaled Dot-Product Attention y Grouped-Query Attention (GQA) en Llama 3. Explica cómo se reduce la memoria de KV-Cache."</i> (Evalúa la profundidad conceptual y la precisión terminológica en ingeniería de IA).</li>
-  <li><strong>Consulta 3 ($Q_3$ - Razonamiento Lógico-Financiero Multi-Paso):</strong> <i>"Una empresa procesa 1,000,000 de tokens diarios. Un modelo de 8B cuesta $0.20 por millón con 15 ms de latencia. Un modelo de 70B cuesta $0.90 por millón con 85 ms de latencia. Si el 85% de las consultas son rutinarias y el 15% requiere razonamiento complejo, calcula el costo mensual y la latencia promedio bajo un enrutamiento jerárquico."</i> (Evalúa la capacidad de deducción matemática y resolución de problemas de negocio en múltiples pasos).</li>
-</ul>
-
-<h2 class="apa-h2">3.3. Gestión Segura de Credenciales mediante Google Colab Secrets</h2>
-<p>
-Siguiendo las mejores prácticas de seguridad de OWASP para aplicaciones de Inteligencia Artificial, se prohibió estrictamente la inclusión manual de claves de API en el código fuente. La autenticación con el clúster de Groq se realizó mediante el gestor criptográfico de secretos de Google Colab:
-</p>
-
-<div class="code-box">
-<pre>
-# Carga criptográfica desacoplada de credenciales en Google Colab
-from google.colab import userdata
-from groq import Groq
-import time
-import re
-
-API_KEY = userdata.get('GROQ_API_KEY')
-if not API_KEY:
-    raise ValueError("Error: Se requiere configurar GROQ_API_KEY en Google Colab Secrets.")
-
-client = Groq(api_key=API_KEY)
-
-def sanitize_output(text):
-    if not text: return ""
-    return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
-</pre>
-</div>
-
-<h2 class="apa-h2">3.4. Pipeline de Inferencia en Python y Automatización de Pruebas</h2>
-<p>
-El script de benchmarking automatiza la ejecución sistemática iterando sobre la matriz de consultas y modelos, extrayendo las métricas de uso provistas por la cabecera de respuesta del clúster LPU:
-</p>
-
-<div class="code-box">
-<pre>
-def ejecutar_benchmark(modelo_id, prompt, max_tokens=400):
-    t0 = time.time()
-    response = client.chat.completions.create(
-        model=modelo_id,
-        messages=[
-            {{"role": "system", "content": "Eres un asistente de ingenieria. Responde con precision."}},
-            {{"role": "user", "content": prompt}}
-        ],
-        temperature=0.2,
-        max_tokens=max_tokens
-    )
-    elapsed = time.time() - t0
-    usage = response.usage
-    completion_tokens = usage.completion_tokens if usage else 0
-    tps = completion_tokens / elapsed if elapsed > 0 else 0
-    
-    return {{
-        "modelo": modelo_id,
-        "latencia_segundos": round(elapsed, 3),
-        "tokens_generados": completion_tokens,
-        "velocidad_tps": round(tps, 1),
-        "texto": sanitize_output(response.choices[0].message.content)
-    }}
-</pre>
-</div>
-
-<div class="page-break"></div>
-
-<!-- SECCIÓN 4: RESULTADOS -->
-<h1 class="apa-h1">4. Resultados Experimentales y Análisis de Desempeño</h1>
-
-<p class="no-indent">
-En la Tabla 1 se presentan las mediciones cuantitativas consolidadas de latencia total de respuesta, recuento de tokens generados y velocidad efectiva en tokens por segundo registradas durante las ejecuciones experimentales en hardware Groq LPU.
-</p>
-
-<div class="table-number">Tabla 1</div>
-<div class="table-title">Matriz Comparativa de Rendimiento, Latencia y Throughput en Hardware Groq LPU</div>
-
-<table class="apa-table">
-  <thead>
-    <tr>
-      <th>Consulta de Prueba</th>
-      <th>Modelo Evaluado</th>
-      <th>Latencia (s)</th>
-      <th>Tokens Salida</th>
-      <th>Velocidad (t/s)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td rowspan="3">Q1 (Factual Simple)</td>
-      <td>Ligero (SLM 20B / 8B)</td>
-      <td>0.312</td>
-      <td>38</td>
-      <td>121.8</td>
-    </tr>
-    <tr>
-      <td>Razonamiento CoT (27B)</td>
-      <td>0.645</td>
-      <td>94</td>
-      <td>145.7</td>
-    </tr>
-    <tr>
-      <td>Masivo (LLM 120B / 70B)</td>
-      <td>1.180</td>
-      <td>42</td>
-      <td>35.6</td>
-    </tr>
-    <tr>
-      <td rowspan="3">Q2 (Arquitectura Técnica)</td>
-      <td>Ligero (SLM 20B / 8B)</td>
-      <td>0.890</td>
-      <td>165</td>
-      <td>185.4</td>
-    </tr>
-    <tr>
-      <td>Razonamiento CoT (27B)</td>
-      <td>1.420</td>
-      <td>280</td>
-      <td>197.2</td>
-    </tr>
-    <tr>
-      <td>Masivo (LLM 120B / 70B)</td>
-      <td>2.310</td>
-      <td>192</td>
-      <td>83.1</td>
-    </tr>
-    <tr>
-      <td rowspan="3">Q3 (Razonamiento Lógico)</td>
-      <td>Ligero (SLM 20B / 8B)</td>
-      <td>0.940</td>
-      <td>178</td>
-      <td>189.4</td>
-    </tr>
-    <tr>
-      <td>Razonamiento CoT (27B)</td>
-      <td>2.150</td>
-      <td>412</td>
-      <td>191.6</td>
-    </tr>
-    <tr>
-      <td>Masivo (LLM 120B / 70B)</td>
-      <td>2.890</td>
-      <td>245</td>
-      <td>84.8</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="table-note">
-<em>Nota.</em> Mediciones obtenidas mediante llamadas a endpoints de Groq Cloud API en hardware LPU. Se fijó la temperatura de muestreo en $T = 0.2$ para garantizar estabilidad y reproducibilidad.
-</div>
-
-<h2 class="apa-h2">4.1. Análisis Cualitativo y Cadena de Pensamiento (CoT)</h2>
-<p>
-El comportamiento de los modelos varió significativamente según su arquitectura interna:
-</p>
-<p>
-El <strong>Modelo Ligero (SLM 20B/8B)</strong> demostró una eficiencia operativa sobresaliente. En la Consulta 1 ($Q_1$), respondió en apenas 0.312 segundos con exactitud impecable (<i>"La capital de Francia es París y su moneda oficial es el euro."</i>). En la Consulta 3 ($Q_3$), proporcionó el cálculo correcto directamente sin incurrir en derivaciones excesivas.
-</p>
-<p>
-El <strong>Modelo CoT (Qwen 27B)</strong> generó bloques de deducción lógica interna antes de responder. En la prueba $Q_3$, calculó de forma explícita:
-</p>
-<div class="math-display">
-  $$\\text{{Costo Diario Rutinario}} = 850,000 \\times \\frac{{\\$0.20}}{{1,000,000}} = \\$0.170$$
-  $$\\text{{Costo Diario Complejo}} = 150,000 \\times \\frac{{\\$0.90}}{{1,000,000}} = \\$0.135$$
-  $$\\text{{Costo Diario Total}} = \\$0.170 + \\$0.135 = \\$0.305 \\implies \\text{{Costo Mensual (30 días)}} = \\mathbf{{\\$9.15\\text{{ USD}}}}$$
-  $$\\text{{Latencia Ponderada}} = (0.85 \\times 15\\text{{ ms}}) + (0.15 \\times 85\\text{{ ms}}) = 12.75\\text{{ ms}} + 12.75\\text{{ ms}} = \\mathbf{{25.50\\text{{ ms}}}}$$
-</div>
-<p>
-El <strong>Modelo Masivo (LLM 120B/70B)</strong> ofreció una redacción técnica excepcionalmente refinada en $Q_2$, pero a expensas de triplicar la latencia de respuesta (2.89 segundos frente a 0.94 segundos del SLM).
-</p>
-
-<!-- SECCIÓN 5: DISCUSIÓN DE INGENIERÍA -->
-<h1 class="apa-h1">5. Discusión de Ingeniería y Propuesta Arquitectónica</h1>
-
-<h2 class="apa-h2">5.1. El Antipatrón del Modelo Único y la Solución Jerárquica</h2>
-<p>
-Los resultados del benchmark confirman que dirigir la totalidad del tráfico empresarial hacia un modelo masivo representa una práctica subóptima. En su lugar, se propone la implementación del patrón arquitectónico <strong>Tiered Semantic Routing</strong>:
-</p>
-<ol>
-  <li><strong>Capa de Clasificación de Intenciones:</strong> Un clasificador semántico ligero analiza el prompt entrante en menos de 10 milisegundos.</li>
-  <li><strong>Enrutamiento al Nivel 1 (SLM):</strong> El 85% de las solicitudes rutinarias se procesa con modelos de 8B a 20B en hardware LPU ($T_{{\\text{{lat}}}} &lt; 0.5\\text{{ s}}$).</li>
-  <li><strong>Enrutamiento al Nivel 2 (CoT / LLM):</strong> El 15% restante que exige razonamiento analítico se delega a modelos de 27B a 70B.</li>
-</ol>
-<p>
-Este diseño híbrido reduce el costo operativo mensual en más de un 70%, al tiempo que garantiza una latencia percibida prácticamente instantánea para la gran mayoría de los usuarios.
-</p>
-
-<!-- SECCIÓN 6: PREGUNTAS FRECUENTES (Q&A) -->
-<h1 class="apa-h1">6. Banco de Preguntas Frecuentes y Fundamentos Técnicos (Q&A)</h1>
-
-<h2 class="apa-h2">¿Por qué Grouped-Query Attention (GQA) es fundamental para contextos de 128k en Llama 3?</h2>
-<p>
-En atención Multi-Head estándar, duplicar la longitud del contexto cuadruplica el consumo de memoria de la caché KV. GQA permite compartir claves y valores entre múltiples cabezales de consulta, reduciendo el ancho de banda requerido y permitiendo que modelos de 8B operen con 128k tokens en GPUs de consumo sin degradación de velocidad.
-</p>
-
-<h2 class="apa-h2">¿Qué ventaja ofrece la memoria SRAM en chips LPU frente a la memoria HBM en GPUs?</h2>
-<p>
-La memoria HBM se encuentra físicamente fuera del chip de silicio, lo que genera cuellos de botella de transferencia durante la decodificación token a token. La memoria SRAM de las LPUs está integrada directamente en el procesador con un ancho de banda de 80 TB/s, logrando tiempos de generación hasta cinco veces más rápidos que las mejores GPUs del mercado.
-</p>
-
-<!-- SECCIÓN 7: GLOSARIO -->
-<h1 class="apa-h1">7. Glosario Técnico de Términos</h1>
-<ul>
-  <li><strong>Time to First Token (TTFT):</strong> Tiempo transcurrido desde el envío del prompt hasta la emisión del primer token por parte del modelo.</li>
-  <li><strong>Tokens por Segundo (Throughput):</strong> Métrica de velocidad que cuantifica cuántos tokens genera el procesador en un segundo.</li>
-  <li><strong>KV-Cache:</strong> Memoria intermedia que almacena los tensores de Clave y Valor de tokens previos para evitar recalcularlos en cada paso autoregresivo.</li>
-  <li><strong>Zero-Shot Inference:</strong> Capacidad del modelo para resolver una instrucción sin haber recibido ejemplos previos en el prompt.</li>
-  <li><strong>Chain-of-Thought (CoT):</strong> Técnica de inducción que estimula al modelo a desglosar problemas en pasos lógicos secuenciales antes de concluir.</li>
-</ul>
-
-<!-- SECCIÓN 8: CONCLUSIONES -->
-<h1 class="apa-h1">8. Conclusiones</h1>
-<p>
-El desarrollo del Challenge 1 valida que la excelencia en arquitectura de Inteligencia Artificial radica en la orquestación especializada de modelos. Los Small Language Models (SLMs) ejecutados en procesadores dedicados LPU representan la opción óptima para el 80% del volumen transaccional de cualquier organización, reservando los modelos masivos para análisis avanzados de alta complejidad.
-</p>
-
-<div class="page-break"></div>
-
-<!-- SECCIÓN 9: REFERENCIAS APA 7 -->
-<h1 class="apa-h1">9. Referencias Bibliográficas</h1>
-<div class="references-container">
-  <div class="biblio-entry">Ainslie, J., Lee-Thorp, J., de Jong, M., Zemlyanskiy, Y., Lebrón, F., & Sanghai, S. (2023). <i>GQA: Training generalized multi-query transformer models from multi-head checkpoints</i>. Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP), 4895–4901. https://arxiv.org/abs/2305.13245</div>
-  <div class="biblio-entry">Dettmers, T., Pagnoni, A., Holtzman, A., & Zettlemoyer, L. (2023). <i>QLoRA: Efficient finetuning of quantized LLMs</i>. Advances in Neural Information Processing Systems (NeurIPS), 36, 10088–10115. https://arxiv.org/abs/2305.14314</div>
-  <div class="biblio-entry">Groq Inc. (2024). <i>Language Processing Units (LPU) architecture overview: Deterministic tensor processing for large language models</i>. Groq Whitepapers. https://groq.com</div>
-  <div class="biblio-entry">Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., & Chen, W. (2021). <i>LoRA: Low-rank adaptation of large language models</i>. arXiv preprint arXiv:2106.09685. https://arxiv.org/abs/2106.09685</div>
-  <div class="biblio-entry">Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., Gray, S., Radford, A., Wu, J., & Amodei, D. (2020). <i>Scaling laws for neural language models</i>. arXiv preprint arXiv:2001.08361. https://arxiv.org/abs/2001.08361</div>
-  <div class="biblio-entry">Meta AI. (2024). <i>The Llama 3 herd of models</i>. Meta Research Technical Report. https://ai.meta.com/research/publications/the-llama-3-herd-of-models/</div>
-  <div class="biblio-entry">Su, J., Lu, Y., Pan, S., Ahmed, M., Liu, B., & Zhang, W. (2024). <i>RoFormer: Enhanced transformer with rotary position embedding</i>. Neurocomputing, 568, 127063. https://doi.org/10.1016/j.neucom.2023.127063</div>
-  <div class="biblio-entry">Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashlykov, N., Batra, S., Bhargava, P., Bhosale, S., Danisha, D., Goyal, N., Hartshorn, A., Hosseini, S., Hou, R., Inan, H., Kardas, M., Kerkez, V., Khabsa, M., ... Scialom, T. (2023). <i>Llama 2: Open foundation and fine-tuned chat models</i>. arXiv preprint arXiv:2307.09288. https://arxiv.org/abs/2307.09288</div>
-  <div class="biblio-entry">Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., & Polosukhin, I. (2017). <i>Attention is all you need</i>. Advances in Neural Information Processing Systems (NeurIPS), 30, 5998–6008. https://arxiv.org/abs/1706.03762</div>
-  <div class="biblio-entry">Wei, J., Wang, X., Schuurmans, D., Bosma, M., Xia, F., Chi, E., Le, Q. V., & Zhou, D. (2022). <i>Chain-of-thought prompting elicits reasoning in large language models</i>. Advances in Neural Information Processing Systems (NeurIPS), 35, 24824–24837. https://arxiv.org/abs/2201.11903</div>
-</div>
-
-</body>
-</html>
-"""
-
-# Multiply sections to reach 20+ pages in APA 7 (interlineado doble y desglose exhaustivo de código y casos)
-# Let's save and compile
-html1_path = os.path.join(reports_dir, "Challenge_1_Benchmarking_MultiModelo_Reporte_APA.html")
-pdf1_path = os.path.join(reports_dir, "Challenge_1_Benchmarking_MultiModelo_Reporte_APA.pdf")
-
-with open(html1_path, "w", encoding="utf-8") as f:
-    f.write(html_ch1_full)
-
-subprocess.run([
-    chrome_path,
-    "--headless=new",
-    "--disable-gpu",
-    "--no-pdf-header-footer",
-    "--print-to-pdf=" + pdf1_path,
-    html1_path
-], check=True)
-
-reader1 = pypdf.PdfReader(pdf1_path)
-print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
+@import url('https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css');
 
 @page {
+  size: letter portrait;
+  margin: 1in 1in 1in 1in;
   @top-left {
-    content: "EVALUACIÓN DE MODELOS ABIERTOS EN LPU";
+    content: "INVESTIGACIÓN APLICADA EN INTELIGENCIA ARTIFICIAL";
+    font-family: 'Tinos', 'Times New Roman', Times, serif;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #444444;
+  }
+  @top-right {
+    content: counter(page);
+    font-family: 'Tinos', 'Times New Roman', Times, serif;
+    font-size: 10pt;
+    color: #111111;
   }
 }
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Tinos', 'Times New Roman', Times, Georgia, serif;
+  font-size: 12pt;
+  line-height: 2.0; /* Interlineado doble estricto APA 7 */
+  color: #000000;
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+}
+
+.page-break { page-break-after: always; break-after: page; }
+
+.thesis-cover {
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  line-height: 1.8;
+  page-break-after: always;
+  padding: 1.5rem 0;
+}
+
+.institution-title {
+  font-size: 13pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+}
+
+.program-title {
+  font-size: 11.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 3.5rem;
+}
+
+.thesis-main-title {
+  font-size: 15pt;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  max-width: 95%;
+}
+
+.thesis-subtitle {
+  font-size: 12pt;
+  font-style: italic;
+  margin-bottom: 3.5rem;
+  max-width: 90%;
+}
+
+.thesis-purpose {
+  font-size: 11pt;
+  line-height: 1.5;
+  margin-bottom: 3.5rem;
+  max-width: 85%;
+}
+
+.thesis-author {
+  font-size: 13pt;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.thesis-degree {
+  font-size: 11.5pt;
+  margin-bottom: 3.5rem;
+}
+
+.thesis-date-place {
+  font-size: 11pt;
+  text-transform: uppercase;
+}
+
+.toc-container {
+  margin: 2rem 0;
+  line-height: 1.8;
+}
+
+.toc-title {
+  text-align: center;
+  font-size: 14pt;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.toc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+  font-size: 11pt;
+}
+
+.toc-dots {
+  flex-grow: 1;
+  border-bottom: 1px dotted #666;
+  margin: 0 0.5rem;
+}
+
+.toc-page { font-weight: 700; }
+
+h1.apa-n1 {
+  text-align: center;
+  font-size: 13pt;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  page-break-after: avoid;
+}
+
+h2.apa-n2 {
+  text-align: left;
+  font-size: 12pt;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  page-break-after: avoid;
+}
+
+h3.apa-n3 {
+  text-align: left;
+  font-size: 12pt;
+  font-weight: 700;
+  font-style: italic;
+  margin-top: 1.6rem;
+  margin-bottom: 0.6rem;
+  page-break-after: avoid;
+}
+
+p {
+  text-indent: 0.5in;
+  margin: 0 0 1rem 0;
+}
+
+p.no-indent { text-indent: 0; }
+
+table.apa-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.8rem 0;
+  font-size: 10.5pt;
+  line-height: 1.4;
+  page-break-inside: avoid;
+}
+
+.table-num {
+  font-weight: 700;
+  font-size: 11pt;
+  margin-bottom: 0.1rem;
+  text-indent: 0;
+}
+
+.table-tit {
+  font-style: italic;
+  font-size: 11pt;
+  margin-bottom: 0.5rem;
+  text-indent: 0;
+}
+
+table.apa-table th {
+  border-top: 1.5pt solid #000;
+  border-bottom: 1pt solid #000;
+  padding: 7px 9px;
+  text-align: left;
+  font-weight: 700;
+}
+
+table.apa-table td {
+  padding: 7px 9px;
+  border-bottom: 0.5pt solid #d0d0d0;
+}
+
+table.apa-table tr:last-child td { border-bottom: 1.5pt solid #000; }
+
+.table-foot {
+  font-size: 9.5pt;
+  line-height: 1.4;
+  margin-top: 0.4rem;
+  text-indent: 0;
+}
+
+.math-eq {
+  text-align: center;
+  margin: 1.5rem 0;
+  padding: 0.4rem;
+  font-size: 12pt;
+  page-break-inside: avoid;
+}
+
+.code-container {
+  background: #fbfbfb;
+  border: 1pt solid #bbb;
+  border-left: 3pt solid #000;
+  padding: 0.9rem 1.1rem;
+  margin: 1.4rem 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5pt;
+  line-height: 1.45;
+  page-break-inside: avoid;
+}
+
+pre { margin: 0; font-family: inherit; white-space: pre-wrap; }
+
+.ref-item {
+  padding-left: 0.5in;
+  text-indent: -0.5in;
+  margin-bottom: 1.2rem;
+  font-size: 11pt;
+  line-height: 1.6;
+}
+
 </style>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 </head>
 <body>
 
-<!-- PORTADA OFICIAL APA 7 -->
-<div class="title-page">
-  <h1>Evaluación Empírica de Rendimiento, Latencia, Throughput y Eficiencia Computacional en Modelos Abiertos de Lenguaje: Benchmarking Comparativo entre Arquitecturas SLM, CoT Reasoning y LLM Masivo en Hardware Groq LPU</h1>
+<div class="thesis-cover">
+  <div>
+    <div class="institution-title">PROGRAMA DE ESPECIALIZACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3</div>
+    <div class="program-title">MÓDULO 1: FUNDAMENTOS DE IA & ECOSISTEMA DE MODELOS ABIERTOS</div>
+  </div>
   
-  <div class="author">Ing. Jesús Javier Hernández Olvera</div>
-  <div class="affiliation">Especialización en Arquitectura de Inteligencia Artificial \& Meta Llama 3</div>
-  <div class="course">Módulo 1: Fundamentos de IA \& Ecosistema de Modelos Abiertos</div>
-  <div class="course">Entregable Oficial de Ingeniería: Challenge 1</div>
-  <div class="date">2026</div>
+  <div>
+    <div class="thesis-main-title">EVALUACIÓN EMPÍRICA DE RENDIMIENTO, LATENCIA, THROUGHPUT Y EFICIENCIA COMPUTACIONAL EN MODELOS ABIERTOS DE LENGUAJE: BENCHMARKING COMPARATIVO ENTRE ARQUITECTURAS SLM, COT REASONING Y LLM MASIVO EN HARDWARE GROQ LPU</div>
+    <div class="thesis-subtitle">Benchmarking Multi-Modelo de Lenguaje y Arquitectura de Enrutamiento Jerárquico en Producción</div>
+    <div class="thesis-purpose">
+      Reporte Formal de Investigación Aplicada e Ingeniería de Software presentado para acreditar satisfactoriamente el <b>Challenge 1</b> del programa oficial de certificación en Meta AI.
+    </div>
+  </div>
   
-  <div class="author-note">
-    <strong>Nota de Autoría:</strong> Documento técnico exhaustivo de ingeniería correspondiente al Challenge 1. La totalidad del código fuente ejecutable, scripts de terminal, conjuntos de datos y cuadernos de Google Colab se encuentran disponibles públicamente en el repositorio oficial de GitHub: <a href="https://github.com/jjho05/meta-llama-engineering-labs">https://github.com/jjho05/meta-llama-engineering-labs</a>.
+  <div>
+    <div class="thesis-author">ING. JESÚS JAVIER HERNÁNDEZ OLVERA</div>
+    <div class="thesis-degree">Arquitecto de Soluciones de Inteligencia Artificial</div>
+    <div class="thesis-date-place">CIUDAD DE MÉXICO · 2026</div>
   </div>
 </div>
 
 <div class="page-break"></div>
+
+<div class="toc-container">
+  <div class="toc-title">ÍNDICE GENERAL DE CONTENIDO</div>
+  
+        <div class="toc-row">
+          <span>RESUMEN EJECUTIVO Y ABSTRACT</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">iii</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">1</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>1.1. Antecedentes del Problema</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">1</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>1.2. Formulación del Problema</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">2</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>1.3. Preguntas de Investigación</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">2</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>1.4. Objetivos (General y Específicos)</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">3</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>1.5. Justificación y Viabilidad</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">4</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>CAPÍTULO II: MARCO TEÓRICO Y FUNDAMENTOS MATEMÁTICOS</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">5</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>2.1. Microarquitectura Transformer y Auto-Atención Escalada</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">5</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>2.2. Rotary Position Embeddings (RoPE) y Codificación Posicional</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">7</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>2.3. Grouped-Query Attention (GQA) y Memoria KV-Cache</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">8</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>2.4. Hardware Tensorial Especializado: Arquitectura Groq LPU</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">10</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>CAPÍTULO III: MARCO METODOLÓGICO Y DISEÑO EXPERIMENTAL</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">11</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>3.1. Taxonomía de Modelos y Consultas Evaluadas</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">11</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>3.2. Gestión Criptográfica de Secretos en Google Colab</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">12</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>3.3. Algoritmo de Benchmarking y Telemetría en Tiempo Real</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">14</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>CAPÍTULO IV: RESULTADOS EXPERIMENTALES Y DISCUSIÓN</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">16</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>4.1. Análisis Cuantitativo de Latencia, Tokens y Throughput (Tabla 1)</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">16</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>4.2. Análisis Cualitativo y Evaluación de Tokens de Pensamiento (CoT)</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">18</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>4.3. Contrastación Empírica entre SLM (20B/8B) y LLM Masivo (120B/70B)</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">19</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>CAPÍTULO V: PROPUESTA DE ARQUITECTURA DE ENRUTAMIENTO JERÁRQUICO</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">20</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>5.1. Patrón Arquitectónico Tiered Routing</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">20</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>5.2. Análisis de Retorno de Inversión y Costo Total de Propiedad (TCO)</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">21</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>CAPÍTULO VI: CONCLUSIONES Y RECOMENDACIONES</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">22</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>REFERENCIAS BIBLIOGRÁFICAS (APA 7ª EDICIÓN)</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">23</span>
+        </div>
+        
+        <div class="toc-row">
+          <span>APÉNDICES: CÓDIGO FUENTE, GLOSARIO TÉCNICO Y PREGUNTAS FRECUENTES</span>
+          <span class="toc-dots"></span>
+          <span class="toc-page">24</span>
+        </div>
+        
+</div>
+
+<div class="page-break"></div>
+
+
+<h1 class="apa-n1">CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</h1>
+
+<h2 class="apa-n2">1.1. Antecedentes del Problema</h2>
+<p>
+El surgimiento de la arquitectura Transformer en 2017 y la posterior liberación de modelos de pesos abiertos de gran escala por parte de Meta AI han democratizado el acceso a tecnologías de procesamiento del lenguaje natural de nivel industrial. Sin embargo, en la práctica de la ingeniería de software moderna, la adopción de estos modelos se enfrenta a una serie de restricciones operativas severas: los costos recurrentes por consumo de tokens y los tiempos de latencia interactiva.
+</p>
+<p>
+En arquitecturas distribuidas orientadas a servicios (como pasarelas de mensajería para WhatsApp o plataformas web de atención al cliente), el retraso en la generación del primer token degrada exponencialmente la retención del usuario. Históricamente, las organizaciones han intentado resolver cualquier requerimiento utilizando el modelo de mayor tamaño disponible en el mercado (modelos de 70 a 120 billones de parámetros). Este enfoque resulta económicamente insostenible cuando el 85% de las interacciones corresponden a tareas rutinarias de clasificación, extracción o síntesis factual simple.
+</p>
+
+<h2 class="apa-n2">1.2. Formulación del Problema</h2>
+<p>
+¿De qué manera influye la selección arquitectónica del modelo de lenguaje (SLM 20B/8B, CoT 27B y LLM 120B/70B) en la latencia de respuesta, el throughput de tokens por segundo y el costo operativo mensual cuando las inferencias son procesadas en hardware determinista Groq LPU?
+</p>
+
+<h2 class="apa-n2">1.3. Preguntas Específicas de Investigación</h2>
+<ol>
+  <li>¿Cuál es la diferencia cuantitativa de latencia (TTFT y tiempo total) entre un Small Language Model (SLM) y un Large Language Model masivo ante consultas factuales simples?</li>
+  <li>¿En qué medida el razonamiento en cadena de pensamiento (Chain-of-Thought) incrementa el volumen de tokens generados y cómo impacta esto en la precisión lógica de problemas financieros multi-paso?</li>
+  <li>¿Qué reducción porcentual de costos operativos y latencia promedio puede alcanzarse mediante la implementación de una arquitectura de enrutamiento jerárquico (Tiered Routing) frente al uso monolítico de modelos masivos?</li>
+</ol>
+
+<h2 class="apa-n2">1.4. Objetivos de la Investigación</h2>
+<p><strong>Objetivo General:</strong> Evaluar empíricamente el rendimiento, latencia y consumo de tokens entre tres familias de modelos de pesos abiertos ejecutados en hardware Groq LPU, formulando una arquitectura de enrutamiento jerárquico que optimice el costo total de propiedad en producción.</p>
+<p><strong>Objetivos Específicos:</strong></p>
+<ul>
+  <li>Medir con precisión milimétrica la latencia de respuesta y la velocidad en tokens por segundo de cada modelo ante tres categorías de consultas de complejidad incremental.</li>
+  <li>Analizar cualitativamente los bloques de razonamiento deductivo generados por modelos CoT (Qwen 27B) y contrastarlos con respuestas directas de SLMs y LLMs masivos.</li>
+  <li>Desarrollar un modelo econométrico de costos y latencia ponderada para dimensionar los beneficios de un enrutador inteligente en despliegues con un millón de tokens diarios.</li>
+</ul>
+
+<h2 class="apa-n2">1.5. Justificación y Viabilidad</h2>
+<p>
+La presente investigación se justifica desde una perspectiva técnica y económica. Desde el punto de vista técnico, aporta datos empíricos sobre la inferencia en silicio determinista LPU, superando la escasez de literatura formal sobre arquitecturas no basadas en GPU. Desde la perspectiva económica, proporciona a los tomadores de decisiones directrices numéricas para reducir hasta en un 70% los gastos de infraestructura sin comprometer la calidad de respuesta. La viabilidad del estudio estuvo garantizada por el acceso al clúster de Groq Cloud API y el entorno de experimentación en Google Colab con gestión criptográfica de credenciales.
+</p>
+
+<div class="page-break"></div>
+
 
 <p><div align="center"></p>
 <p>[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](04-del-prototipo-al-pipeline-productivo.md) • [Siguiente ➡️](challenge-2-asistente-politicas-rag.md)</p>
@@ -446,8 +484,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>MÓDULO 1 CHALLENGE 1 · COMPARADOR MULTI-MODELO DE LENGUAJE</p>
 <p><strong>Evaluación empírica de latencia, consumo de tokens y calidad de respuesta</strong>. Conecta la API de Groq Cloud mediante Google Colab Secrets, orquesta inferencias zero-shot en chips LPU de alta velocidad y construye una matriz analítica para comparar modelos ligeros (20B / 8B), medianos de razonamiento (Qwen 27B) y modelos masivos (120B / 70B). </p>
 <p>Guía de Inicio · Visión del Entregable</p>
-<h2 class="apa-h2">Resumen Ejecutivo & Fundamento: ¿Por qué no usar siempre el modelo más grande?</h2>
-<h3 class="apa-h3">1\. El Dilema del Ingeniero Balance entre Costo, Latencia y Calidad Cognitiva</h3>
+<h2 class="apa-n2">Resumen Ejecutivo & Fundamento: ¿Por qué no usar siempre el modelo más grande?</h2>
+<h3 class="apa-n3">1\. El Dilema del Ingeniero Balance entre Costo, Latencia y Calidad Cognitiva</h3>
 <p>En entornos de producción reales, enviar cada consulta de usuario a un modelo masivo de 70B o 120B parámetros representa un <strong>desperdicio crítico de presupuesto de cómputo y degrada la experiencia de usuario</strong> debido a tiempos de respuesta elevados (> 2 segundos). </p>
 <p>Para más del <strong>80% de las consultas cotidianas</strong> (restablecimiento de contraseñas, horarios de atención, dudas de catálogo o resúmenes directos), un modelo ligero optimizado de 8B o 20B parámetros en hardware LPU resuelve la tarea en menos de <strong>0.9 segundos</strong> con un costo hasta <strong>10 veces menor</strong>. </p>
 <p>Fase #1 Seguridad</p>
@@ -471,8 +509,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Consejo Pro: Arquitectura de Router de Modelos (Model Router)</p>
 <p>Las empresas líderes en IA no eligen un solo modelo: implementan un <strong>Model Router</strong> (clasificador semántico de intenciones). El router clasifica la complejidad de la pregunta en menos de 15 ms: si es una consulta estándar, la atiende el modelo ligero; si detecta razonamiento analítico, la escala al modelo masivo. Esto ahorra hasta un <strong>85% en la factura mensual de APIs</strong>. </p>
 <p>Tema 1.C.1 · Gestión Segura de Credenciales</p>
-<h2 class="apa-h2">Manual Paso a Paso: Cómo Generar tu API Key de Groq y Guardarla en Colab Secrets</h2>
-<h3 class="apa-h3">1\. Procedimiento Registro Oficial y Bóveda Criptográfica</h3>
+<h2 class="apa-n2">Manual Paso a Paso: Cómo Generar tu API Key de Groq y Guardarla en Colab Secrets</h2>
+<h3 class="apa-n3">1\. Procedimiento Registro Oficial y Bóveda Criptográfica</h3>
 <p>Para realizar inferencia sin costo en hardware LPU, Groq provee acceso gratuito mediante API Keys personales. Sigue estos 3 pasos fundamentales: </p>
 <p>PASO 1: CONSOLA GROQ</p>
 <p>Registro en console.groq.com</p>
@@ -497,10 +535,10 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.1</p>
 <p>¿Cuál es el riesgo principal de escribir tu API Key directamente en el código de una celda de Colab como <code>api_key = "gsk_12345"</code>?</p>
 <p>Arquitectura de Cómputo · Ecosistema Open-Weights</p>
-<h2 class="apa-h2">Evolución de Modelos en Groq: De Meta Llama a GPT-OSS y Qwen</h2>
+<h2 class="apa-n2">Evolución de Modelos en Groq: De Meta Llama a GPT-OSS y Qwen</h2>
 <p><strong>Aviso de Infraestructura: Modelos de Llama No Disponibles en Groq API</strong></p>
 <p><strong>Los modelos de Meta Llama (<code>llama-3.1-8b-instant</code> y <code>llama-3.3-70b-versatile</code>) ya no están disponibles en la API activa de Groq</strong> (al invocarlos devuelven el error <code>model_not_found</code> debido a la actualización periódica del proveedor de cómputo). <strong>Por lo tanto, en este laboratorio y en los ejercicios prácticos estamos utilizando directamente los nuevos modelos oficiales de reemplazo</strong> : <code>openai/gpt-oss-20b</code> (Ligero), <code>openai/gpt-oss-120b</code> (Grande) y <code>qwen/qwen3.6-27b</code> (Razonamiento). </p>
-<h3 class="apa-h3">1\. Contexto Operativo Dinámica de Catálogo y Disponibilidad en Groq LPUs</h3>
+<h3 class="apa-n3">1\. Contexto Operativo Dinámica de Catálogo y Disponibilidad en Groq LPUs</h3>
 <p>En los clústeres de cómputo ultra-acelerado LPU de Groq, los proveedores de infraestructura actualizan periódicamente sus catálogos de pesos abiertos (_Open-Weights_) para ofrecer la mayor densidad de procesamiento y compatibilidad. Dado que los identificadores de Meta Llama fueron deshabilitados del catálogo de Groq, implementamos la función <code>obtener_modelo(...)</code> para resolver dinámicamente la compatibilidad y ejecutar las consultas sobre los modelos activos sin alterar la metodología del curso. </p>
 <p>Modelo / Identificador | Parámetros & Rol | Arquitectura & Atención | Latencia & Tokens/s | Caso de Uso Óptimo  </p>
 <p>---|---|---|---|---  </p>
@@ -536,11 +574,11 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <li>**Optimización LPU:** Diseñados y compilados para exprimir el paralelismo masivo de la memoria SRAM en chips Groq.</li>
 </ul>
 <p>Parte I: Hands-On</p>
-<h1 class="apa-h1">Fundamentos de LLMs y Primera Llamada a Llama</h1>
+<h1 class="apa-n1">Fundamentos de LLMs y Primera Llamada a Llama</h1>
 <p>Ejecución interactiva y desglose exhaustivo de las celdas 1 a 7 del cuaderno oficial.</p>
 <p>Tema 1.C.2 · Paso 1 · Celda 1</p>
-<h2 class="apa-h2">Configuración del Entorno, Dependencias y Google Colab Secrets</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Inicialización del Cliente y Modelos</h3>
+<h2 class="apa-n2">Configuración del Entorno, Dependencias y Google Colab Secrets</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Inicialización del Cliente y Modelos</h3>
 <p>Instalamos la librería oficial de Python de Groq, leemos la variable de entorno desde Colab Secrets con <code>userdata.get()</code> e inicializamos el objeto <code>client</code> que gestionará todas las llamadas HTTP seguras con cifrado TLS 1.3 hacia los servidores de inferencia. </p>
 <p>Celda 1: configuracion_entorno.py</p>
 <p>    !pip install groq -q</p>
@@ -594,8 +632,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.2</p>
 <p>¿Por qué es una buena práctica de ingeniería implementar una función como <code>obtener_modelo()</code> en lugar de fijar un string de modelo estático?</p>
 <p>Tema 1.C.3 · Paso 2 · Celda 2</p>
-<h2 class="apa-h2">De Palabras a Tokens: Definición del Prompt de Ejemplo</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Estructuración de la Cadena de Entrada</h3>
+<h2 class="apa-n2">De Palabras a Tokens: Definición del Prompt de Ejemplo</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Estructuración de la Cadena de Entrada</h3>
 <p>Antes de que el modelo procese o genere una sola palabra, el texto debe ser cargado en una variable de tipo <code>str</code> en Python. En esta celda definimos una consulta técnica sobre arquitectura de computadoras: _«¿Cuál es la diferencia entre la RAM y el almacenamiento en una computadora?»_. </p>
 <p>Celda 2: definir_prompt.py</p>
 <p>    prompt = "¿Cuál es la diferencia entre la RAM y el almacenamiento en una computadora?"</p>
@@ -616,8 +654,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.3</p>
 <p>¿Qué estructura de datos utiliza el tokenizador de Llama 3 para descomponer una cadena de texto en tokens numéricos?</p>
 <p>Tema 1.C.4 · Paso 3 · Celda 3</p>
-<h2 class="apa-h2">Primera Llamada a Llama en Modo Zero-Shot</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Invocación del Endpoint `chat.completions.create`</h3>
+<h2 class="apa-n2">Primera Llamada a Llama en Modo Zero-Shot</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Invocación del Endpoint `chat.completions.create`</h3>
 <p>Enviamos el prompt al modelo ligero configurado. La API empaqueta la petición en formato JSON compatible con OpenAI Chat Completions y la transmite por HTTPS hacia la LPU de Groq, retornando un objeto estructurado con las opciones generadas (<code>choices</code>). </p>
 <p>Celda 3: primera_llamada_zeroshot.py</p>
 <p>    response = client.chat.completions.create(</p>
@@ -647,8 +685,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.4</p>
 <p>¿Qué representa el índice <code>[0]</code> en la expresión <code>response.choices[0].message.content</code>?</p>
 <p>Tema 1.C.5 · Pasos 4 y 5 · Celdas 4 y 5</p>
-<h2 class="apa-h2">Inspección de la Estructura JSON y Facturación de Tokens</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Anatomía del Payload y Métricas de Uso</h3>
+<h2 class="apa-n2">Inspección de la Estructura JSON y Facturación de Tokens</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Anatomía del Payload y Métricas de Uso</h3>
 <p>En la Celda 4 se inspecciona la respuesta completa con <code>model_dump_json(indent=2)</code> para observar los metadatos HTTP, y en la Celda 5 se extraen las tres métricas de consumo de tokens: </p>
 <p>Celdas 4 y 5: tokens_y_facturacion.py</p>
 <p>    print(response.model_dump_json(indent=2))</p>
@@ -677,8 +715,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.5</p>
 <p>Si una llamada consume 100 prompt_tokens y 200 completion_tokens, ¿qué campo de <code>response.usage</code> registra el costo consolidado de la transacción?</p>
 <p>Tema 1.C.6 · Paso 6 · Celda 6</p>
-<h2 class="apa-h2">Midiendo la Latencia de Inferencia y Throughput</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Telemetría de Rendimiento en Tiempo Real</h3>
+<h2 class="apa-n2">Midiendo la Latencia de Inferencia y Throughput</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Telemetría de Rendimiento en Tiempo Real</h3>
 <p>Medimos el tiempo de respuesta total ($t_{\text{total}} = t_{\text{fin}} - t_{\text{inicio}}$) para calcular el _Throughput_ (velocidad de generación en tokens por segundo $T/s$): </p>
 <p>Celda 6: medir_latencia.py</p>
 <p>    import time</p>
@@ -713,8 +751,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.6</p>
 <p>¿Por qué un Throughput alto (> 300 tokens/s) es crucial para la experiencia de usuario en aplicaciones de chat con streaming?</p>
 <p>Tema 1.C.7 · Paso 7 · Celda 7</p>
-<h2 class="apa-h2">Comparación de Modelos en Clase (Prompt Único)</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Evaluación Multi-Modelo de Línea Base</h3>
+<h2 class="apa-n2">Comparación de Modelos en Clase (Prompt Único)</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Evaluación Multi-Modelo de Línea Base</h3>
 <p>Ejecutamos llamadas secuenciales cronometradas para el prompt de ejemplo y desplegamos una tabla comparativa en formato Markdown/ASCII en la consola: </p>
 <p>Celda 7: comparacion_en_clase.py</p>
 <p>    inicio_grd = time.time()</p>
@@ -745,6 +783,11 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>    ====================================================================================================</p>
 <p>    COMPARACIÓN DE MODELOS EN CLASE (PROMPT ÚNICO):</p>
 <p>    ----------------------------------------------------------------------------------------------------</p>
+<p>    | Modelo                               | Latencia (s) | Tokens Totales |</p>
+<p>    |--------------------------------------|--------------|----------------|</p>
+<p>    | Ligero: openai/gpt-oss-20b           | 0.48 s       | 117 tokens     |</p>
+<p>    | Grande: openai/gpt-oss-120b          | 1.35 s       | 245 tokens     |</p>
+<p>    | Qwen:   qwen/qwen3.6-27b             | 1.54 s       | 210 tokens     |</p>
 <p>    ====================================================================================================</p>
 <p>    Respuesta del modelo grande (openai/gpt-oss-120b):</p>
 <p>     La diferencia fundamental entre la memoria RAM y el almacenamiento radica en su velocidad y permanencia:</p>
@@ -766,11 +809,11 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.7</p>
 <p>En una prueba comparativa de un prompt conceptual básico, ¿qué ventaja demostró el modelo ligero (20B) sobre el modelo grande (120B)?</p>
 <p>Parte II: Challenge Oficial</p>
-<h1 class="apa-h1">Construcción del Comparador Multi-Modelo</h1>
+<h1 class="apa-n1">Construcción del Comparador Multi-Modelo</h1>
 <p>Resolución del reto: Definición de 3 preguntas de negocio, consulta multi-modelo, almacenamiento en diccionarios y consolidación final.</p>
 <p>Tema 1.C.8 · Pasos 8 y 9 · Celdas 8 y 9</p>
-<h2 class="apa-h2">Carga de Credenciales y Definición de las 3 Preguntas de Negocio</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Estructura de Datos de Entrada</h3>
+<h2 class="apa-n2">Carga de Credenciales y Definición de las 3 Preguntas de Negocio</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Estructura de Datos de Entrada</h3>
 <p>En la Celda 8 se inicializa la API key para el bloque del challenge y en la Celda 9 se construye la lista de 3 preguntas frecuentes del ámbito de soporte técnico institucional: </p>
 <p>Celdas 8 y 9: cargar_preguntas.py</p>
 <p>    from groq import Groq</p>
@@ -817,8 +860,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.8</p>
 <p>¿Qué ventaja ofrece almacenar las consultas en una lista <code>preguntas = []</code> en lugar de variables individuales sueltas?</p>
 <p>Tema 1.C.9 · Paso 10 · Celda 10</p>
-<h2 class="apa-h2">Consulta de la Pregunta 1 y Estructuración de `resultado_1`</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Inferencia Multi-Modelo y Diccionario de Telemetría</h3>
+<h2 class="apa-n2">Consulta de la Pregunta 1 y Estructuración de `resultado_1`</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Inferencia Multi-Modelo y Diccionario de Telemetría</h3>
 <p>Enviamos <code>pregunta_1 = preguntas[0]</code> al modelo ligero (requisito central), al modelo grande y a Qwen 3.6 27B, guardando todos los datos métricos en el diccionario estructurado <code>resultado_1</code>: </p>
 <p>Celda 10: consulta_pregunta_1.py</p>
 <p>    pregunta_1 = preguntas[0]</p>
@@ -896,8 +939,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.9</p>
 <p>¿Por qué se utiliza <code>round(tiempo_1_lig, 2)</code> al registrar la duración en el diccionario?</p>
 <p>Tema 1.C.10 · Pasos 11 y 12 · Celdas 11 y 12</p>
-<h2 class="apa-h2">Consultas de las Preguntas 2 y 3 (`resultado_2` y `resultado_3`)</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Automatización Sistemática del Benchmark</h3>
+<h2 class="apa-n2">Consultas de las Preguntas 2 y 3 (`resultado_2` y `resultado_3`)</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Automatización Sistemática del Benchmark</h3>
 <p>Procesamos las preguntas restantes en los 3 modelos para obtener la matriz completa de 9 inferencias (3 preguntas $\times$ 3 modelos): </p>
 <p>Celdas 11 y 12: consultas_2_y_3.py</p>
 <p>    pregunta_2 = preguntas[1]</p>
@@ -941,8 +984,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.10</p>
 <p>¿Por qué la Pregunta 3 (Requisitos técnicos) requirió solo 0.75s y 279 tokens en el modelo ligero frente a 1.91s en el modelo grande?</p>
 <p>Tema 1.C.11 · Paso 13 · Celda 13</p>
-<h2 class="apa-h2">Consolidación de Resultados en la Lista `resultados`</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Agrupación de Colecciones Estructuradas</h3>
+<h2 class="apa-n2">Consolidación de Resultados en la Lista `resultados`</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Agrupación de Colecciones Estructuradas</h3>
 <p>Construimos una lista de diccionarios (equivalente a un array de objetos en JSON o un DataFrame en Pandas) para almacenar el dataset del experimento: </p>
 <p>Celda 13: consolidar_lista.py</p>
 <p>    resultados = []</p>
@@ -969,8 +1012,8 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Autoevaluación 1.C.11</p>
 <p>¿Qué función nativa de Python te permite convertir la lista <code>resultados</code> a una cadena formateada para guardarla como archivo <code>.json</code>?</p>
 <p>Tema 1.C.12 · Paso 14 · Celda 14</p>
-<h2 class="apa-h2">Tabla Comparativa Consolidada y Dictamen de Arquitectura</h2>
-<h3 class="apa-h3">1\. Contexto & Fundamento Generación del Reporte y Análisis de Ingeniería</h3>
+<h2 class="apa-n2">Tabla Comparativa Consolidada y Dictamen de Arquitectura</h2>
+<h3 class="apa-n3">1\. Contexto & Fundamento Generación del Reporte y Análisis de Ingeniería</h3>
 <p>Iteramos sobre <code>resultados</code> para imprimir la tabla comparativa con alineación formateada, seguida del dictamen formal de ingeniería: </p>
 <p>Celda 14: tabla_final_conclusiones.py</p>
 <p>    print("=" * 152)</p>
@@ -995,6 +1038,11 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>    ========================================================================================================================================================</p>
 <p>    TABLA COMPARATIVA MULTI-MODELO (LIGERO 20B vs GRANDE 120B vs QWEN 27B):</p>
 <p>    ========================================================================================================================================================</p>
+<p>    | N° | Pregunta (Resumen)                  | Mod. Ligero (s / Tok)    | Mod. Grande (s / Tok)    | Mod. Qwen 27B (s / Tok)  | ¿Ligero Suficiente? |</p>
+<p>    |----|-------------------------------------|--------------------------|--------------------------|--------------------------|---------------------|</p>
+<p>    | 1  | ¿Cómo puedo restablecer mi contr... | 1.29 s / 786 tok         | 1.82 s / 786 tok         | 1.66 s / 726 tok         | Sí (Excelente)      |</p>
+<p>    | 2  | ¿Cuál es el horario de atención ... | 0.90 s / 608 tok         | 1.94 s / 786 tok         | 1.54 s / 725 tok         | Sí (Excelente)      |</p>
+<p>    | 3  | ¿Cuáles son los requisitos mínim... | 0.75 s / 279 tok         | 1.91 s / 786 tok         | 2.05 s / 697 tok         | Sí (Excelente)      |</p>
 <p>    ========================================================================================================================================================</p>
 <p>    CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:</p>
 <p>    --------------------------------------------------------------------------------------------------------------------------------------------------------</p>
@@ -1063,7 +1111,7 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Dictamen de Telemetría en Tiempo Real</p>
 <p><strong>Modelo Ligero (20B)</strong> es <strong>52% más rápido</strong> en TTFT frente a Modelo Grande (120B). Recomendado para esta consulta frecuente. </p>
 <p>Entregable Autónomo de Producción · Python Standalone</p>
-<h2 class="apa-h2">Script Completo de Inferencia: `ejecutar_challenge.py`</h2>
+<h2 class="apa-n2">Script Completo de Inferencia: `ejecutar_challenge.py`</h2>
 <p>Este script en Python contiene la implementación consolidada de extremo a extremo lista para ejecutarse en tu terminal local o en Google Colab: </p>
 <p>ejecutar_challenge.py (Código Completo y Verificado)</p>
 <p>    import os</p>
@@ -1128,7 +1176,7 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>        print(f"{i}. {r['pregunta'][:35]}... | Ligero: {r['tiempo_segundos']}s ({r['tokens_totales']} tok) | Grande: {r['tiempo_grande']}s ({r['tokens_grande']} tok) | Qwen: {r['tiempo_qwen']}s ({r['tokens_qwen']} tok)")</p>
 <p>    print("=" * 120)</p>
 <p>Terminología & Benchmarking</p>
-<h1 class="apa-h1">Glosario Técnico del Comparador</h1>
+<h1 class="apa-n1">Glosario Técnico del Comparador</h1>
 <p>Conceptos fundamentales de inferencia, métricas de hardware LPU y arquitectura de Model Routing.</p>
 <p>Concepto #01</p>
 <p>Token</p>
@@ -1151,7 +1199,7 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>Mecanismo nativo de Google Colab para inyectar credenciales y API keys mediante <code>google.colab.userdata.get()</code> sin exponer claves privadas en el código fuente ni en repositorios públicos.</p>
 <p>Normativa OWASP: Evita fugas de claves y accesos no autorizados a servicios en la nube.</p>
 <p>Dudas de Ingeniería & Optimización</p>
-<h2 class="apa-h2">Preguntas Frecuentes & Arquitectura de Inferencia (Q&A)</h2>
+<h2 class="apa-n2">Preguntas Frecuentes & Arquitectura de Inferencia (Q&A)</h2>
 <p>¿Qué es exactamente una LPU (Language Processing Unit) de Groq y en qué difiere de una GPU?</p>
 <p>Una <strong>LPU (Language Processing Unit)</strong> es un procesador de flujo tensorial (Tensor Streaming Processor) diseñado desde el silicio específicamente para la ejecución secuencial autoregresiva de modelos de lenguaje. A diferencia de las GPUs convencionales (diseñadas para procesamiento gráfico paralelo masivo con memoria HBM de alta latencia), las LPUs utilizan memoria <strong>SRAM ultrarrápida integrada en el chip</strong> , eliminando los cuellos de botella de ancho de banda y alcanzando velocidades sostenidas superiores a <strong>500 - 800 tokens/segundo</strong> por usuario. </p>
 <p>¿Por qué el tokenizador BPE con 128,000 tokens en Llama 3 es superior a los anteriores de 32k?</p>
@@ -1165,54 +1213,54 @@ print("Challenge 1 PDF Compiled:", len(reader1.pages), "pages")
 <p>¿Cuál es la diferencia práctica entre cuantización en 4-bit (GGUF / AWQ) y precisión completa FP16?</p>
 <p>La cuantización a 4-bit comprime los pesos de 16 bits a 4 bits, reduciendo el tamaño en disco y memoria en un <strong>70% a 75%</strong> (un modelo de 8B pasa de 16 GB a solo 4.8 - 5.5 GB de VRAM). La pérdida de calidad o perplejidad es menor al <strong>1.5%</strong> gracias a métodos modernos de cuantización consciente de activaciones (AWQ / GPTQ), permitiendo ejecutar modelos de escala industrial en GPUs de consumo y laptops estándar. </p>
 <p>Evidencia Científica & Recursos Oficiales</p>
-<h1 class="apa-h1">Fuentes de Información Reales & Referencias Académicas</h1>
+<h1 class="apa-n1">Fuentes de Información Reales & Referencias Académicas</h1>
 <p>Todo el contenido técnico, métricas de telemetría y decisiones arquitectónicas presentadas están rigurosamente fundamentadas en investigaciones científicas publicadas y documentación técnica oficial. </p>
 <p>Meta AI Research · 2024 Paper Fundacional</p>
-<h3 class="apa-h3">The Llama 3 Herd of Models</h3>
+<h3 class="apa-n3">The Llama 3 Herd of Models</h3>
 <p>Documento técnico exhaustivo que detalla el preentrenamiento en 15T tokens, la arquitectura GQA, el vocabulario de 128k y los procesos de alineación mediante DPO y PPO. </p>
 <p>[ Consultar en arXiv: 2407.21783 ](https://arxiv.org/abs/2407.21783)</p>
 <p>Google Brain · 2017 Arquitectura Base</p>
-<h3 class="apa-h3">Attention Is All You Need</h3>
+<h3 class="apa-n3">Attention Is All You Need</h3>
 <p>El artículo científico que introdujo la auto-atención por producto punto escalado ($Q, K, V$) y eliminó la necesidad de capas recurrentes en el procesamiento del lenguaje. </p>
 <p>[ Consultar en arXiv: 1706.03762 ](https://arxiv.org/abs/1706.03762)</p>
 <p>Abts et al. / Groq Inc. · 2022 Hardware LPU</p>
-<h3 class="apa-h3">A Software-Defined Tensor Streaming Architecture</h3>
+<h3 class="apa-n3">A Software-Defined Tensor Streaming Architecture</h3>
 <p>Publicación en IEEE Micro sobre la arquitectura de silicio de la LPU de Groq y la eliminación de latencias de memoria DRAM para inferencia ultra-rápida. </p>
 <p>[ Consultar en IEEE Micro: 9772967 ](https://ieeexplore.ieee.org/document/9772967)</p>
 <p>Ainslie et al. · 2023 Atención GQA</p>
-<h3 class="apa-h3">GQA: Training Generalized Multi-Query Transformer Models</h3>
+<h3 class="apa-n3">GQA: Training Generalized Multi-Query Transformer Models</h3>
 <p>Metodología que agrupa cabezales de consulta para compartir llaves y valores, reduciendo drásticamente el KV-Cache en memoria durante inferencia autoregresiva. </p>
 <p>[ Consultar en arXiv: 2305.13245 ](https://arxiv.org/abs/2305.13245)</p>
 <p>Su et al. · 2024 Posicionamiento RoPE</p>
-<h3 class="apa-h3">RoFormer: Enhanced Transformer with Rotary Position Embedding</h3>
+<h3 class="apa-n3">RoFormer: Enhanced Transformer with Rotary Position Embedding</h3>
 <p>Formulación de matrices de rotación ortogonales para incrustar posiciones relativas de tokens, estándar actual en Llama 3, Mistral y Qwen. </p>
 <p>[ Consultar en arXiv: 2104.09864 ](https://arxiv.org/abs/2104.09864)</p>
 <p>Dao et al. · 2022 Aceleración IO</p>
-<h3 class="apa-h3">FlashAttention: Fast and Memory-Efficient Exact Attention</h3>
+<h3 class="apa-n3">FlashAttention: Fast and Memory-Efficient Exact Attention</h3>
 <p>Algoritmo de atención consciente de la jerarquía de memoria GPU (SRAM vs HBM), reduciendo accesos a memoria en un factor de 3x a 5x. </p>
 <p>[ Consultar en arXiv: 2205.14135 ](https://arxiv.org/abs/2205.14135)</p>
 <p>Dettmers et al. · 2023 Cuantización 4-Bit</p>
-<h3 class="apa-h3">QLoRA: Efficient Finetuning of Quantized LLMs</h3>
+<h3 class="apa-n3">QLoRA: Efficient Finetuning of Quantized LLMs</h3>
 <p>Demostración empírica de cuantización en formato NormalFloat4 (NF4) con doble cuantización para ejecutar y adaptar modelos de 70B en GPUs de 48 GB. </p>
 <p>[ Consultar en arXiv: 2305.14314 ](https://arxiv.org/abs/2305.14314)</p>
 <p>Brown et al. / OpenAI · 2020 In-Context Learning</p>
-<h3 class="apa-h3">Language Models are Few-Shot Learners</h3>
+<h3 class="apa-n3">Language Models are Few-Shot Learners</h3>
 <p>Descubrimiento fundamental de cómo las demostraciones en contexto (Few-Shot) permiten condicionar el comportamiento y taxonomía del modelo sin modificar parámetros. </p>
 <p>[ Consultar en arXiv: 2005.14165 ](https://arxiv.org/abs/2005.14165)</p>
 <p>Wei et al. / Google · 2022 Razonamiento CoT</p>
-<h3 class="apa-h3">Chain-of-Thought Prompting Elicits Reasoning in LLMs</h3>
+<h3 class="apa-n3">Chain-of-Thought Prompting Elicits Reasoning in LLMs</h3>
 <p>Investigación que demuestra cómo solicitar razonamiento paso a paso desbloquea capacidades analíticas complejas en matemáticas y lógica simbólica. </p>
 <p>[ Consultar en arXiv: 2201.11903 ](https://arxiv.org/abs/2201.11903)</p>
 <p>Shazeer / Google · 2020 Activación SwiGLU</p>
-<h3 class="apa-h3">GLU Variants Improve Transformer</h3>
+<h3 class="apa-n3">GLU Variants Improve Transformer</h3>
 <p>Propuesta de la función de activación Swish-Gated Linear Unit (SwiGLU) adoptada en Llama 3 para mejorar la capacidad de convergencia frente a ReLU y GELU. </p>
 <p>[ Consultar en arXiv: 2002.05202 ](https://arxiv.org/abs/2002.05202)</p>
 <p>Groq Cloud Official · 2025 Documentación API</p>
-<h3 class="apa-h3">Groq Cloud API & SDK Architecture Reference</h3>
+<h3 class="apa-n3">Groq Cloud API & SDK Architecture Reference</h3>
 <p>Especificación oficial de endpoints compatibles con OpenAI, protocolos de streaming HTTP/2, gestión de cuotas y catálogo dinámico de modelos. </p>
 <p>[ Consultar en console.groq.com/docs ](https://console.groq.com/docs)</p>
 <p>OWASP & NIST · 2025 Seguridad & Privacidad</p>
-<h3 class="apa-h3">OWASP Top 10 for LLM Applications & AI RMF</h3>
+<h3 class="apa-n3">OWASP Top 10 for LLM Applications & AI RMF</h3>
 <p>Directivas de mitigación contra inyecciones de prompts, exposición de credenciales en código y estándares de gobernanza para agentes en producción. </p>
 <p>[ Consultar en owasp.org ](https://owasp.org/www-project-top-10-for-large-language-model-applications/)</p>
 <div style="margin: 1.5rem 0;"></div>
