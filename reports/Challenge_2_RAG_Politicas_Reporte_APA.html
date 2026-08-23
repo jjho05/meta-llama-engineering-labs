@@ -37,8 +37,8 @@
 
 body {
   font-family: 'Times New Roman', Times, Georgia, serif;
-  font-size: 14.5pt;
-  line-height: 1.55;
+  font-size: 14pt;
+  line-height: 1.5;
   color: #111111;
   background: #ffffff;
   margin: 0;
@@ -51,7 +51,7 @@ body {
   break-after: page;
 }
 
-/* PORTADA OFICIAL CENTRADA CON TIPOGRAFÍA GRANDE */
+/* PORTADA OFICIAL CENTRADA */
 .thesis-cover {
   height: 8.8in;
   display: flex;
@@ -190,9 +190,9 @@ h4.apa-n4, h4 {
   page-break-after: avoid;
 }
 
-/* PÁRRAFOS (14.5pt, INTERLINEADO 1.55, ESPACIADO NATURAL) */
+/* PÁRRAFOS (14pt, INTERLINEADO 1.5, ESPACIADO NATURAL) */
 p {
-  font-size: 14.5pt;
+  font-size: 14pt;
   text-indent: 0;
   margin: 0 0 0.85rem 0;
 }
@@ -299,44 +299,56 @@ table.apa-table tr:last-child td, table tr:last-child td {
   page-break-inside: avoid;
 }
 
-/* BLOQUES DE CÓDIGO */
-.code-container {
-  background: #fbfbfb;
-  border: 1pt solid #ccc;
-  border-left: 3.5pt solid #000;
-  border-radius: 4px;
-  padding: 0.8rem 1rem;
-  margin: 1.1rem 0;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11pt;
-  line-height: 1.45;
-  overflow-x: hidden;
+/* CAJAS DE CÓDIGO HOMOLOGADAS (CON ENCABEZADO) */
+.code-box {
+  background: #f8fafc;
+  border: 1pt solid #cbd5e1;
+  border-left: 4pt solid #0f172a;
+  border-radius: 5px;
+  margin: 1.2rem 0;
+  overflow: hidden;
   page-break-inside: avoid;
 }
 
-pre {
-  margin: 0;
-  font-family: inherit;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-code {
+.code-header {
+  background: #f1f5f9;
+  padding: 0.4rem 0.9rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11pt;
+  font-weight: 700;
+  color: #334155;
+  border-bottom: 1pt solid #cbd5e1;
+}
+
+.code-box pre {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11pt;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #0f172a;
+}
+
+.code-box code {
+  font-family: inherit;
+  font-size: inherit;
 }
 
 p code, li code {
-  background: #f4f4f4;
+  background: #f1f5f9;
+  color: #0f172a;
   padding: 0.15rem 0.35rem;
   border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 11.5pt;
 }
 
 ul, ol {
   margin: 0 0 0.9rem 1.5rem;
   padding-left: 0.4in;
-  font-size: 14.5pt;
+  font-size: 14pt;
 }
 
 li { margin-bottom: 0.35rem; }
@@ -643,24 +655,37 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Configuración del Entorno, Cliente Groq & Resolución Dinámica</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Inicialización del Cliente y Manejo de Secrets</h3>
 <p>Instalamos la librería oficial de Groq, leemos la clave de API desde Google Colab Secrets con <code>userdata.get('GROQ_API_KEY')</code> y declaramos la función <code>obtener_modelo(...)</code> para conmutar automáticamente entre modelos disponibles en la infraestructura LPU.</p>
-<p>Celda 1: configuracion_inicial.py</p>
-<h1 class="apa-n1">Instalar cliente de Groq y leer API key desde Colab Secrets</h1>
-<p>!pip install groq --quiet</p>
-<p>import os</p>
-<p>from groq import Groq</p>
-<p>from google.colab import userdata</p>
-<p>client = Groq(api_key=userdata.get('GROQ_API_KEY'))</p>
-<h1 class="apa-n1">Resolución dinámica de modelo según disponibilidad en Groq</h1>
-<p>def obtener_modelo(client, preferido="llama-3.1-8b-instant", alternativo="openai/gpt-oss-20b"):</p>
-<p>try:</p>
-<p>activos = [m.id for m in client.models.list().data]</p>
-<p>return preferido if preferido in activos else alternativo</p>
-<p>except Exception:</p>
-<p>return alternativo</p>
-<p>modelo_llm = obtener_modelo(client, "llama-3.1-8b-instant", "openai/gpt-oss-20b")</p>
-<p>print(f"Entorno configurado correctamente. Modelo activo: {modelo_llm}")</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 1: configuracion_inicial.py</div>
+                  <pre><code># Instalar cliente de Groq y leer API key desde Colab Secrets
+!pip install groq --quiet
+
+import os
+from groq import Groq
+from google.colab import userdata
+
+client = Groq(api_key=userdata.get('GROQ_API_KEY'))
+
+# Resolución dinámica de modelo según disponibilidad en Groq
+def obtener_modelo(client, preferido="llama-3.1-8b-instant", alternativo="openai/gpt-oss-20b"):
+    try:
+        activos = [m.id for m in client.models.list().data]
+        return preferido if preferido in activos else alternativo
+    except Exception:
+        return alternativo
+
+modelo_llm = obtener_modelo(client, "llama-3.1-8b-instant", "openai/gpt-oss-20b")
+print(f"Entorno configurado correctamente. Modelo activo: {modelo_llm}")</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Inicialización Correcta</p>
-<p>Entorno configurado correctamente. Modelo activo: openai/gpt-oss-20b</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Entorno configurado correctamente. Modelo activo: openai/gpt-oss-20b</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico Exhaustivo Línea por Línea 10 instrucciones analizadas</div>
@@ -673,19 +698,30 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Clasificación de Sentimiento en Modo Zero-Shot</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Zero-Shot Prompting (Inferencia sin Ejemplos)</h3>
 <p>En el enfoque <strong>Zero-Shot</strong> , se le pide al modelo ejecutar una tarea cognitiva directamente, confiando exclusivamente en su comprensión semántica previa sin suministrarle ningún par de ejemplo pregunta/respuesta.</p>
-<p>Celda 2: zero_shot_prompting.py</p>
-<h1 class="apa-n1">Prompt de clasificación en modo zero-shot</h1>
-<p>prompt_zero_shot = (</p>
-<p>"Clasifica el sentimiento de esta reseña en Positivo, Negativo o Mixto: "</p>
-<p>"'El envío llegó tarde pero el producto es excelente.' Respuesta muy breve y corta."</p>
-<p>)</p>
-<p>response_zero = client.chat.completions.create(</p>
-<p>model=modelo_llm,</p>
-<p>messages=[{"role": "user", "content": prompt_zero_shot}]</p>
-<p>)</p>
-<p>print("Zero-shot:", response_zero.choices[0].message.content)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 2: zero_shot_prompting.py</div>
+                  <pre><code># Prompt de clasificación en modo zero-shot
+prompt_zero_shot = (
+    "Clasifica el sentimiento de esta reseña en Positivo, Negativo o Mixto: "
+    "'El envío llegó tarde pero el producto es excelente.' Respuesta muy breve y corta."
+)
+
+response_zero = client.chat.completions.create(
+    model=modelo_llm,
+    messages=[{"role": "user", "content": prompt_zero_shot}]
+)
+
+print("Zero-shot:", response_zero.choices[0].message.content)</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Inferencia Zero-Shot</p>
-<p>Zero-shot: Mixto</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Zero-shot: Mixto</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico: ¿Por qué clasifica correctamente como 'Mixto'? Atención Bidireccional</div>
@@ -696,22 +732,36 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Clasificación Guiada con Ejemplos (Few-Shot Prompting)</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Few-Shot Prompting (In-Context Learning)</h3>
 <p>El <strong>Few-Shot Prompting</strong> le proporciona al modelo de 2 a 5 demostraciones resueltas dentro del mismo prompt. Esto fija de manera determinista la taxonomía esperada, la sintaxis de salida y la estructura de categorización.</p>
-<p>Celda 3: few_shot_prompting.py</p>
-<h1 class="apa-n1">Prompt de clasificación en modo few-shot</h1>
-<p>prompt_few_shot = """Clasifica el sentimiento de cada reseña como Positivo, Negativo o Mixto.</p>
-<p>Reseña: "Me encantó, llegó rápido y en perfecto estado."</p>
-<p>Sentimiento: Positivo</p>
-<p>Reseña: "Nunca llegó mi pedido, pésimo servicio."</p>
-<p>Sentimiento: Negativo</p>
-<p>Reseña: "El envío llegó tarde pero el producto es excelente."</p>
-<p>Sentimiento:"""</p>
-<p>response_few = client.chat.completions.create(</p>
-<p>model=modelo_llm,</p>
-<p>messages=[{"role": "user", "content": prompt_few_shot}]</p>
-<p>)</p>
-<p>print("Few-shot:", response_few.choices[0].message.content)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 3: few_shot_prompting.py</div>
+                  <pre><code># Prompt de clasificación en modo few-shot
+prompt_few_shot = """Clasifica el sentimiento de cada reseña como Positivo, Negativo o Mixto.
+
+Reseña: "Me encantó, llegó rápido y en perfecto estado."
+Sentimiento: Positivo
+
+Reseña: "Nunca llegó mi pedido, pésimo servicio."
+Sentimiento: Negativo
+
+Reseña: "El envío llegó tarde pero el producto es excelente."
+Sentimiento:"""
+
+response_few = client.chat.completions.create(
+    model=modelo_llm,
+    messages=[{"role": "user", "content": prompt_few_shot}]
+)
+
+print("Few-shot:", response_few.choices[0].message.content)</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Inferencia Few-Shot</p>
-<p>Few-shot: Mixto</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Few-shot: Mixto</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico Exhaustivo Línea por Línea 8 instrucciones analizadas</div>
@@ -722,23 +772,35 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Razonamiento Secuencial Paso a Paso (Chain-of-Thought)</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Cadena de Pensamiento (CoT) para Problemas Matemáticos</h3>
 <p>Al obligar al modelo a generar los cálculos intermedios antes de emitir la conclusión (_"Muestra tu razonamiento paso a paso..."_), se incrementa dramáticamente la probabilidad de acierto en lógica y física elemental.</p>
-<p>Celda 4: chain_of_thought.py</p>
-<h1 class="apa-n1">Razonamiento paso a paso (chain-of-thought)</h1>
-<p>problema = (</p>
-<p>"Un tren sale de la ciudad A a 80 km/h. Dos horas después, otro tren sale de la misma "</p>
-<p>"ciudad hacia el mismo destino a 120 km/h. ¿Cuánto tiempo tarda el segundo tren en "</p>
-<p>"alcanzar al primero? Muestra tu razonamiento paso a paso antes de dar la respuesta final."</p>
-<p>)</p>
-<p>response_cot = client.chat.completions.create(</p>
-<p>model=modelo_llm,</p>
-<p>messages=[{"role": "user", "content": problema}]</p>
-<p>)</p>
-<p>print(response_cot.choices[0].message.content)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 4: chain_of_thought.py</div>
+                  <pre><code># Razonamiento paso a paso (chain-of-thought)
+problema = (
+    "Un tren sale de la ciudad A a 80 km/h. Dos horas después, otro tren sale de la misma "
+    "ciudad hacia el mismo destino a 120 km/h. ¿Cuánto tiempo tarda el segundo tren en "
+    "alcanzar al primero? Muestra tu razonamiento paso a paso antes de dar la respuesta final."
+)
+
+response_cot = client.chat.completions.create(
+    model=modelo_llm,
+    messages=[{"role": "user", "content": problema}]
+)
+
+print(response_cot.choices[0].message.content)</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Deducción Cinemática</p>
-<p>1. Distancia inicial del primer tren tras 2 horas: 80 km/h * 2 h = 160 km.</p>
-<p>2. Velocidad relativa de alcance: 120 km/h - 80 km/h = 40 km/h.</p>
-<p>3. Tiempo de alcance: 160 km / 40 km/h = 4 horas.</p>
-<p>Respuesta Final: El segundo tren tarda 4 horas en alcanzar al primero.</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>1. Distancia inicial del primer tren tras 2 horas: 80 km/h * 2 h = 160 km.
+2. Velocidad relativa de alcance: 120 km/h - 80 km/h = 40 km/h.
+3. Tiempo de alcance: 160 km / 40 km/h = 4 horas.
+
+Respuesta Final: El segundo tren tarda 4 horas en alcanzar al primero.</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico Exhaustivo Línea por Línea 7 instrucciones analizadas</div>
@@ -749,19 +811,30 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">El Límite del Prompt: Alucinación ante Datos Privados</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Demostración Empírica de Alucinación Sin RAG</h3>
 <p>Ninguna técnica de Prompt Engineering puede suministrar información que el modelo jamás vio en su pre-entrenamiento. Al preguntarle por un evento privado del futuro (ej. _Hackathon DEV.F 2026_), el LLM alucina inventando nombres de equipos o proyectos inexistentes.</p>
-<p>Celda 5: prueba_alucinacion.py</p>
-<h1 class="apa-n1">Preguntar algo que el modelo no pudo haber visto en su entrenamiento y observar si alucina</h1>
-<p>prompt_desconocido = (</p>
-<p>"¿Cuál fue el resultado de la final del hackathon interno de DEV.F del 14 de agosto de "</p>
-<p>"2026? Respuesta muy breve y corta."</p>
-<p>)</p>
-<p>response_alucinacion = client.chat.completions.create(</p>
-<p>model=modelo_llm,</p>
-<p>messages=[{"role": "user", "content": prompt_desconocido}]</p>
-<p>)</p>
-<p>print("Sin RAG (posible alucinación):", response_alucinacion.choices[0].message.content)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 5: prueba_alucinacion.py</div>
+                  <pre><code># Preguntar algo que el modelo no pudo haber visto en su entrenamiento y observar si alucina
+prompt_desconocido = (
+    "¿Cuál fue el resultado de la final del hackathon interno de DEV.F del 14 de agosto de "
+    "2026? Respuesta muy breve y corta."
+)
+
+response_alucinacion = client.chat.completions.create(
+    model=modelo_llm,
+    messages=[{"role": "user", "content": prompt_desconocido}]
+)
+
+print("Sin RAG (posible alucinación):", response_alucinacion.choices[0].message.content)</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Alucinación Detectada</p>
-<p>Sin RAG (posible alucinación): El equipo ganador fue 'CodeCraft' con un proyecto de IA para educación comunitaria.</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Sin RAG (posible alucinación): El equipo ganador fue 'CodeCraft' con un proyecto de IA para educación comunitaria.</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico Exhaustivo Línea por Línea 5 instrucciones analizadas</div>
@@ -772,11 +845,16 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Instalación de Sentence-Transformers & Dependencias Vectoriales</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Modelos Bi-Encoder y Embeddings Multilingües</h3>
 <p>Instalamos la biblioteca <code>sentence-transformers</code> e importamos <code>numpy</code> para realizar álgebra lineal y cálculo matricial de similitud en tiempo récord.</p>
-<p>Celda 6: instalar_sentence_transformers.py</p>
-<h1 class="apa-n1">Instalar sentence-transformers</h1>
-<p>!pip install sentence-transformers --quiet</p>
-<p>from sentence_transformers import SentenceTransformer</p>
-<p>import numpy as np</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 6: instalar_sentence_transformers.py</div>
+                  <pre><code># Instalar sentence-transformers
+!pip install sentence-transformers --quiet
+
+from sentence_transformers import SentenceTransformer
+import numpy as np</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico Exhaustivo Línea por Línea 3 instrucciones analizadas</div>
@@ -787,18 +865,29 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Definición de Base Documental & Matriz de Embeddings</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Vectorización de Políticas de Devolución</h3>
 <p>Cargamos el modelo <code>paraphrase-multilingual-MiniLM-L12-v2</code> y generamos la matriz de embeddings densos de 384 dimensiones para cada política de prueba.</p>
-<p>Celda 7: vectorizacion_documentos.py</p>
-<h1 class="apa-n1">Definir la base de conocimiento (política de devoluciones) y generar sus embeddings</h1>
-<p>modelo_embeddings = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')</p>
-<p>documentos = [</p>
-<p>"Las devoluciones se aceptan hasta 30 días después de la compra, con el producto en su empaque original.",</p>
-<p>"Los envíos internacionales no tienen devolución gratuita; el cliente cubre el costo de envío de regreso.",</p>
-<p>"Los productos en oferta o liquidación no son elegibles para devolución ni reembolso."</p>
-<p>]</p>
-<p>embeddings_documentos = modelo_embeddings.encode(documentos)</p>
-<p>print(f"Embeddings generados: {embeddings_documentos.shape}")</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 7: vectorizacion_documentos.py</div>
+                  <pre><code># Definir la base de conocimiento (política de devoluciones) y generar sus embeddings
+modelo_embeddings = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+
+documentos = [
+    "Las devoluciones se aceptan hasta 30 días después de la compra, con el producto en su empaque original.",
+    "Los envíos internacionales no tienen devolución gratuita; el cliente cubre el costo de envío de regreso.",
+    "Los productos en oferta o liquidación no son elegibles para devolución ni reembolso."
+]
+
+embeddings_documentos = modelo_embeddings.encode(documentos)
+print(f"Embeddings generados: {embeddings_documentos.shape}")</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Tensor Shape</p>
-<p>Embeddings generados: (3, 384)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Embeddings generados: (3, 384)</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico Exhaustivo Línea por Línea 6 instrucciones analizadas</div>
@@ -809,28 +898,44 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Recuperación por Similitud Coseno e Inferencia RAG</h2>
 <h3 class="apa-n3">1\. Contexto & Fundamento Pipeline RAG Completo de Demostración</h3>
 <p>Buscamos el fragmento más similar mediante producto punto y lo inyectamos delimitado en el prompt enviado a Groq LPU.</p>
-<p>Celda 8: inferencia_rag_completa.py</p>
-<h1 class="apa-n1">Definir una función que calcule la similitud entre la pregunta y cada fragmento</h1>
-<p>def buscar_fragmento(pregunta):</p>
-<p>embedding_pregunta = modelo_embeddings.encode([pregunta])</p>
-<p>similitudes = np.dot(embeddings_documentos, embedding_pregunta.T).flatten()</p>
-<p>indice_mas_similar = np.argmax(similitudes)</p>
-<p>return documentos[indice_mas_similar]</p>
-<p>pregunta = "¿Puedo devolver un artículo que compré en descuento hace 2 semanas?"</p>
-<p>fragmento = buscar_fragmento(pregunta)</p>
-<p>prompt_rag = f"""Responde la pregunta del cliente usando SOLO la siguiente política de la tienda. Si la política no cubre la pregunta, dilo claramente.</p>
-<p>Política: {fragmento}</p>
-<p>Pregunta: {pregunta}</p>
-<p>Respuesta muy breve y corta."""</p>
-<p>response_rag = client.chat.completions.create(</p>
-<p>model=modelo_llm,</p>
-<p>messages=[{"role": "user", "content": prompt_rag}]</p>
-<p>)</p>
-<p>print("Fragmento recuperado:", fragmento)</p>
-<p>print("Con RAG:", response_rag.choices[0].message.content)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Celda 8: inferencia_rag_completa.py</div>
+                  <pre><code># Definir una función que calcule la similitud entre la pregunta y cada fragmento
+def buscar_fragmento(pregunta):
+    embedding_pregunta = modelo_embeddings.encode([pregunta])
+    similitudes = np.dot(embeddings_documentos, embedding_pregunta.T).flatten()
+    indice_mas_similar = np.argmax(similitudes)
+    return documentos[indice_mas_similar]
+
+pregunta = "¿Puedo devolver un artículo que compré en descuento hace 2 semanas?"
+fragmento = buscar_fragmento(pregunta)
+
+prompt_rag = f"""Responde la pregunta del cliente usando SOLO la siguiente política de la tienda. Si la política no cubre la pregunta, dilo claramente.
+
+Política: {fragmento}
+
+Pregunta: {pregunta}
+
+Respuesta muy breve y corta."""
+
+response_rag = client.chat.completions.create(
+    model=modelo_llm,
+    messages=[{"role": "user", "content": prompt_rag}]
+)
+
+print("Fragmento recuperado:", fragmento)
+print("Con RAG:", response_rag.choices[0].message.content)</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Síntesis RAG Verídica</p>
-<p>Fragmento recuperado: Los productos en oferta o liquidación no son elegibles para devolución ni reembolso.</p>
-<p>Con RAG: No, los productos en oferta o liquidación no tienen devolución ni reembolso.</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Fragmento recuperado: Los productos en oferta o liquidación no son elegibles para devolución ni reembolso.
+Con RAG: No, los productos en oferta o liquidación no tienen devolución ni reembolso.</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico Exhaustivo Línea por Línea 12 instrucciones analizadas</div>
@@ -844,32 +949,45 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Configuración de Librerías y Selector Multi-Modelo</h2>
 <h3 class="apa-n3">1\. Inicialización Carga de Dependencias y Credenciales de Groq</h3>
 <p>Importamos las librerías científicas y de inferencia, leemos la API Key desde Colab Secrets y preparamos el selector de modelos con soporte para <code>openai/gpt-oss-20b</code>, <code>openai/gpt-oss-120b</code> y <code>qwen/qwen3.6-27b</code>.</p>
-<p>Challenge Celda 1: imports_y_modelo.py</p>
-<p>import os</p>
-<p>import re</p>
-<p>import time</p>
-<p>import numpy as np</p>
-<p>from groq import Groq</p>
-<p>from google.colab import userdata</p>
-<p>from sentence_transformers import SentenceTransformer</p>
-<p>api_key = userdata.get('GROQ_API_KEY')</p>
-<p>client = Groq(api_key=api_key)</p>
-<h1 class="apa-n1">Selector dinámico de modelos de última generación</h1>
-<p>MODELOS_DISPONIBLES = {</p>
-<p>"ligero": "openai/gpt-oss-20b",</p>
-<p>"grande": "openai/gpt-oss-120b",</p>
-<p>"qwen": "qwen/qwen3.6-27b"</p>
-<p>}</p>
-<p>modelo_challenge_llm = MODELOS_DISPONIBLES["ligero"]</p>
-<p>modelo_challenge_emb = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')</p>
-<p>def limpiar_respuesta(texto):</p>
-<p>if not texto: return ""</p>
-<p>if "<think>" in texto and "</think>" in texto:</p>
-<p>return re.sub(r"<think>.*?</think>", "", texto, flags=re.DOTALL).strip()</p>
-<p>return texto.strip()</p>
-<p>print(f"Modelos listos. LLM: {modelo_challenge_llm} | Embeddings: MiniLM-L12-v2")</p>
+
+                <div class="code-box">
+                  <div class="code-header">Challenge Celda 1: imports_y_modelo.py</div>
+                  <pre><code>import os
+import re
+import time
+import numpy as np
+from groq import Groq
+from google.colab import userdata
+from sentence_transformers import SentenceTransformer
+
+api_key = userdata.get('GROQ_API_KEY')
+client = Groq(api_key=api_key)
+
+# Selector dinámico de modelos de última generación
+MODELOS_DISPONIBLES = {
+    "ligero": "openai/gpt-oss-20b",
+    "grande": "openai/gpt-oss-120b",
+    "qwen": "qwen/qwen3.6-27b"
+}
+modelo_challenge_llm = MODELOS_DISPONIBLES["ligero"]
+modelo_challenge_emb = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+
+def limpiar_respuesta(texto):
+    if not texto: return ""
+    if "&lt;think&gt;" in texto and "&lt;/think&gt;" in texto:
+        return re.sub(r"&lt;think&gt;.*?&lt;/think&gt;", "", texto, flags=re.DOTALL).strip()
+    return texto.strip()
+
+print(f"Modelos listos. LLM: {modelo_challenge_llm} | Embeddings: MiniLM-L12-v2")</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Inicialización Challenge</p>
-<p>Modelos listos. LLM: openai/gpt-oss-20b | Embeddings: MiniLM-L12-v2</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Modelos listos. LLM: openai/gpt-oss-20b | Embeddings: MiniLM-L12-v2</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico: Inicialización de Modelos y Embeddings 8 instrucciones analizadas</div>
@@ -929,17 +1047,27 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
     
 <h3 class="apa-n3">1\. Vectorización Embeddings Normalizados con `normalize_embeddings=True`</h3>
 <p>Cargamos los 3 documentos oficiales del reglamento del curso y generamos su matriz de vectores densos normalizados a norma euclidiana unitaria ($\|\mathbf{v}\|_2 = 1$).</p>
-<p>Challenge Celda 2: base_conocimiento_reglamento.py</p>
-<h1 class="apa-n1">Construimos la base de conocimiento con el reglamento oficial del curso</h1>
-<p>documentos = [</p>
-<p>"Criterios de Evaluación y Calificación Mínima: La calificación final del curso se compone de Challenges prácticos semanales (40%), Proyecto Integrador con Llama y RAG (50%), y Participación en masterclasses (10%). La calificación mínima aprobatoria para acreditar el curso y obtener la certificación es de 80 sobre 100 puntos.",</p>
-<p>"Política de Entregas Tardías y Penalizaciones: La fecha límite de entrega de cada Challenge es el domingo a las 23:59 hrs (hora CDMX). Las entregas realizadas con hasta 24 horas de retraso tienen una penalización de 15 puntos sobre la calificación obtenida. Las entregas entre 24 y 48 horas de retraso tienen una penalización de 30 puntos. Pasadas las 48 horas no se aceptan entregas y la calificación asignada será 0.",</p>
-<p>"Integridad Académica y Asistencia: Se exige un mínimo de 80% de asistencia a las sesiones sincrónicas para mantener el derecho a evaluación. Todo código entregado en Colab debe ser de autoría propia y funcional; cualquier copia no autorizada o plagio entre alumnos resultará en la baja definitiva del programa."</p>
-<p>]</p>
-<p>embeddings_documentos = modelo_challenge_emb.encode(documentos, normalize_embeddings=True)</p>
-<p>print(f"Base de conocimiento vectorizada: {embeddings_documentos.shape[0]} fragmentos de {embeddings_documentos.shape[1]} dimensiones.")</p>
+
+                <div class="code-box">
+                  <div class="code-header">Challenge Celda 2: base_conocimiento_reglamento.py</div>
+                  <pre><code># Construimos la base de conocimiento con el reglamento oficial del curso
+documentos = [
+    "Criterios de Evaluación y Calificación Mínima: La calificación final del curso se compone de Challenges prácticos semanales (40%), Proyecto Integrador con Llama y RAG (50%), y Participación en masterclasses (10%). La calificación mínima aprobatoria para acreditar el curso y obtener la certificación es de 80 sobre 100 puntos.",
+    "Política de Entregas Tardías y Penalizaciones: La fecha límite de entrega de cada Challenge es el domingo a las 23:59 hrs (hora CDMX). Las entregas realizadas con hasta 24 horas de retraso tienen una penalización de 15 puntos sobre la calificación obtenida. Las entregas entre 24 y 48 horas de retraso tienen una penalización de 30 puntos. Pasadas las 48 horas no se aceptan entregas y la calificación asignada será 0.",
+    "Integridad Académica y Asistencia: Se exige un mínimo de 80% de asistencia a las sesiones sincrónicas para mantener el derecho a evaluación. Todo código entregado en Colab debe ser de autoría propia y funcional; cualquier copia no autorizada o plagio entre alumnos resultará en la baja definitiva del programa."
+]
+
+embeddings_documentos = modelo_challenge_emb.encode(documentos, normalize_embeddings=True)
+print(f"Base de conocimiento vectorizada: {embeddings_documentos.shape[0]} fragmentos de {embeddings_documentos.shape[1]} dimensiones.")</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Vector Array Shape</p>
-<p>Base de conocimiento vectorizada: 3 fragmentos de 384 dimensiones.</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Base de conocimiento vectorizada: 3 fragmentos de 384 dimensiones.</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico: Vectorización y Normalización L2 Normalización Unitaria</div>
@@ -950,23 +1078,33 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Función de Recuperación Semántica con Similitud Coseno</h2>
 <h3 class="apa-n3">1\. Búsqueda Vectorial Producto Punto en Espacios Normalizados ($\mathbf{u} \cdot \mathbf{v}$)</h3>
 <p>Definimos la función <code>buscar_fragmento(pregunta)</code> que proyecta la pregunta al espacio vectorial, calcula el producto punto matricial con <code>np.dot()</code> y retorna el documento con mayor puntuación semántica.</p>
-<p>Challenge Celda 3: buscar_fragmento.py</p>
-<p>def buscar_fragmento(pregunta):</p>
-<p>"""</p>
-<p>Calcula la similitud coseno entre el embedding de la pregunta</p>
-<p>y los embeddings de la base de conocimiento, retornando el fragmento más relevante.</p>
-<p>"""</p>
-<p>embedding_pregunta = modelo_challenge_emb.encode([pregunta], normalize_embeddings=True)</p>
-<h1 class="apa-n1">Producto punto de vectores unitarios == Similitud Coseno</h1>
-<p>similitudes = np.dot(embeddings_documentos, embedding_pregunta.T).flatten()</p>
-<p>indice_mas_similar = int(np.argmax(similitudes))</p>
-<p>return documentos[indice_mas_similar], float(similitudes[indice_mas_similar]), indice_mas_similar</p>
-<h1 class="apa-n1">Pregunta de prueba oficial del challenge</h1>
-<p>pregunta = "¿Cuál es la penalización por entregar un challenge con 20 horas de retraso y cuál es la calificación mínima para aprobar el curso?"</p>
-<p>frag_test, score_test, idx_test = buscar_fragmento(pregunta)</p>
-<p>print(f"Fragmento recuperado: Documento #{idx_test + 1} (Score: {score_test:.4f})")</p>
+
+                <div class="code-box">
+                  <div class="code-header">Challenge Celda 3: buscar_fragmento.py</div>
+                  <pre><code>def buscar_fragmento(pregunta):
+    """
+    Calcula la similitud coseno entre el embedding de la pregunta
+    y los embeddings de la base de conocimiento, retornando el fragmento más relevante.
+    """
+    embedding_pregunta = modelo_challenge_emb.encode([pregunta], normalize_embeddings=True)
+    # Producto punto de vectores unitarios == Similitud Coseno
+    similitudes = np.dot(embeddings_documentos, embedding_pregunta.T).flatten()
+    indice_mas_similar = int(np.argmax(similitudes))
+    return documentos[indice_mas_similar], float(similitudes[indice_mas_similar]), indice_mas_similar
+
+# Pregunta de prueba oficial del challenge
+pregunta = "¿Cuál es la penalización por entregar un challenge con 20 horas de retraso y cuál es la calificación mínima para aprobar el curso?"
+frag_test, score_test, idx_test = buscar_fragmento(pregunta)
+print(f"Fragmento recuperado: Documento #{idx_test + 1} (Score: {score_test:.4f})")</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Recuperación Exitosa</p>
-<p>Fragmento recuperado: Documento #2 (Score: 0.6384)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>Fragmento recuperado: Documento #2 (Score: 0.6384)</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico: Búsqueda Semántica con np.dot y np.argmax Recuperación O(N)</div>
@@ -977,32 +1115,41 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
 <h2 class="apa-n2">Consulta Directa SIN RAG vs Generación Aumentada CON RAG</h2>
 <h3 class="apa-n3">1\. Experimentación Contraste de Inferencia y Supresión de Alucinaciones</h3>
 <p>Enviamos la misma consulta al modelo bajo dos condiciones: primero en modo directo sin contexto (observando cómo el LLM desconoce las reglas internas), y luego con el fragmento recuperado delimitado por triple comilla.</p>
-<p>Challenge Celda 4: consulta_sin_vs_con_rag.py</p>
-<h1 class="apa-n1">1. Consulta SIN RAG</h1>
-<p>inicio_sin = time.time()</p>
-<p>res_sin_raw = client.chat.completions.create(</p>
-<p>model=modelo_challenge_llm,</p>
-<p>messages=[{"role": "user", "content": pregunta}],</p>
-<p>max_tokens=800</p>
-<p>)</p>
-<p>latencia_sin = time.time() - inicio_sin</p>
-<p>respuesta_sin_rag = limpiar_respuesta(res_sin_raw.choices[0].message.content)</p>
-<h1 class="apa-n1">2. Consulta CON RAG</h1>
-<p>fragmento_recuperado, score, idx = buscar_fragmento(pregunta)</p>
-<p>prompt_con_rag = f"""Responde la pregunta del estudiante basándote ÚNICAMENTE en el siguiente fragmento del reglamento del curso. Si algún dato no aparece en el fragmento, acláralo honestamente y no lo inventes.</p>
-<p>Reglamento Oficial:</p>
-<p>\"\"\"{fragmento_recuperado}\"\"\"</p>
-<p>Pregunta del Alumno:</p>
-<p>{pregunta}</p>
-<p>Respuesta estructurada y precisa:"""</p>
-<p>inicio_con = time.time()</p>
-<p>res_con_raw = client.chat.completions.create(</p>
-<p>model=modelo_challenge_llm,</p>
-<p>messages=[{"role": "user", "content": prompt_con_rag}],</p>
-<p>max_tokens=800</p>
-<p>)</p>
-<p>latencia_con = time.time() - inicio_con</p>
-<p>respuesta_con_rag = limpiar_respuesta(res_con_raw.choices[0].message.content)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Challenge Celda 4: consulta_sin_vs_con_rag.py</div>
+                  <pre><code># 1. Consulta SIN RAG
+inicio_sin = time.time()
+res_sin_raw = client.chat.completions.create(
+    model=modelo_challenge_llm,
+    messages=[{"role": "user", "content": pregunta}],
+    max_tokens=800
+)
+latencia_sin = time.time() - inicio_sin
+respuesta_sin_rag = limpiar_respuesta(res_sin_raw.choices[0].message.content)
+
+# 2. Consulta CON RAG
+fragmento_recuperado, score, idx = buscar_fragmento(pregunta)
+prompt_con_rag = f"""Responde la pregunta del estudiante basándote ÚNICAMENTE en el siguiente fragmento del reglamento del curso. Si algún dato no aparece en el fragmento, acláralo honestamente y no lo inventes.
+
+Reglamento Oficial:
+\"\"\"{fragmento_recuperado}\"\"\"
+
+Pregunta del Alumno:
+{pregunta}
+
+Respuesta estructurada y precisa:"""
+
+inicio_con = time.time()
+res_con_raw = client.chat.completions.create(
+    model=modelo_challenge_llm,
+    messages=[{"role": "user", "content": prompt_con_rag}],
+    max_tokens=800
+)
+latencia_con = time.time() - inicio_con
+respuesta_con_rag = limpiar_respuesta(res_con_raw.choices[0].message.content)</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico: Contraste de Inferencia y Telemetría Benchmark A/B</div>
@@ -1066,30 +1213,48 @@ La implementación de sistemas RAG es un imperativo para cualquier organización
     
 <h3 class="apa-n3">1\. Evaluación Final Consolidación de Métricas y Conclusiones</h3>
 <p>Imprimimos la tabla comparativa de telemetría y redactamos el veredicto formal sobre la precisión de la regla y la prevención total de alucinaciones.</p>
-<p>Challenge Celda 5: tabla_comparativa_y_conclusion.py</p>
-<p>print("=" * 120)</p>
-<p>print(f"TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: {modelo_challenge_llm})")</p>
-<p>print("=" * 120)</p>
-<p>print(f"| {'Métrica / Aspecto':<26} | {'SIN RAG (Zero-Shot Genérico)':<42} | {'CON RAG (Retrieval-Augmented)':<45} |")</p>
-<p>print("|----------------------------|--------------------------------------------|-----------------------------------------------|")</p>
-<p>print(f"| {'Precisión de la Regla':<26} | {'[Error] Nula (Desconoce normativa interna)':<42} | {'Exacta (15 pts por <24h de retraso)':<45} |")</p>
-<p>print(f"| {'Prevención Alucinación':<26} | {'[Aviso] Evasiva / Suposiciones hipotéticas':<42} | {'Totalmente auditada en el documento':<45} |")</p>
-<p>print(f"| {'Fragmento Fuente':<26} | {'Ninguno (Memoria interna de pesos)':<42} | {f'Fragmento #{idx + 1} (Score: {score:.4f})':<45} |")</p>
-<p>print(f"| {'Latencia de Respuesta':<26} | {f'{latencia_sin:.2f} segundos':<42} | {f'{latencia_con:.2f} segundos':<45} |")</p>
-<p>print("=" * 120)</p>
-<p>print("\n[SIN RAG] RESPUESTA SIN RAG:\n", respuesta_sin_rag)</p>
-<p>print("\n[CON RAG] RESPUESTA CON RAG:\n", respuesta_con_rag)</p>
+
+                <div class="code-box">
+                  <div class="code-header">Challenge Celda 5: tabla_comparativa_y_conclusion.py</div>
+                  <pre><code>print("=" * 120)
+print(f"TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: {modelo_challenge_llm})")
+print("=" * 120)
+print(f"| {'Métrica / Aspecto':&lt;26} | {'SIN RAG (Zero-Shot Genérico)':&lt;42} | {'CON RAG (Retrieval-Augmented)':&lt;45} |")
+print("|----------------------------|--------------------------------------------|-----------------------------------------------|")
+print(f"| {'Precisión de la Regla':&lt;26} | {'[Error] Nula (Desconoce normativa interna)':&lt;42} | {'Exacta (15 pts por &lt;24h de retraso)':&lt;45} |")
+print(f"| {'Prevención Alucinación':&lt;26} | {'[Aviso] Evasiva / Suposiciones hipotéticas':&lt;42} | {'Totalmente auditada en el documento':&lt;45} |")
+print(f"| {'Fragmento Fuente':&lt;26} | {'Ninguno (Memoria interna de pesos)':&lt;42} | {f'Fragmento #{idx + 1} (Score: {score:.4f})':&lt;45} |")
+print(f"| {'Latencia de Respuesta':&lt;26} | {f'{latencia_sin:.2f} segundos':&lt;42} | {f'{latencia_con:.2f} segundos':&lt;45} |")
+print("=" * 120)
+
+print("\n[SIN RAG] RESPUESTA SIN RAG:\n", respuesta_sin_rag)
+print("\n[CON RAG] RESPUESTA CON RAG:\n", respuesta_con_rag)</code></pre>
+                </div>
+                
 <p>Terminal de Salida [STDOUT] Evaluación Comparativa</p>
-<p>========================================================================================================================</p>
-<p>TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: openai/gpt-oss-20b)</p>
-<p>========================================================================================================================</p>
-<p>========================================================================================================================</p>
-<p>[SIN RAG] RESPUESTA SIN RAG:</p>
-<p>La penalización depende del reglamento institucional de tu universidad o plataforma, ya que suele variar entre un 10% y un 20%. Te sugiero consultar el programa académico.</p>
-<p>[CON RAG] RESPUESTA CON RAG:</p>
-<p>Basado en la Política de Entregas Tardías y Penalizaciones (Doc #2):</p>
-<p>1. Penalización por 20 horas de retraso: Es de 15 puntos sobre la calificación obtenida (aplica para entregas con hasta 24 horas de retraso).</p>
-<p>2. Calificación mínima para aprobar: El fragmento proporcionado no contiene información sobre la calificación mínima aprobatoria del curso.</p>
+
+                <div class="code-box">
+                  <div class="code-header">Código Fuente Python</div>
+                  <pre><code>========================================================================================================================
+TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: openai/gpt-oss-20b)
+========================================================================================================================
+| Métrica / Aspecto          | SIN RAG (Zero-Shot Genérico)               | CON RAG (Retrieval-Augmented)                 |
+|----------------------------|--------------------------------------------|-----------------------------------------------|
+| Precisión de la Regla      | [Error] Nula (Desconoce normativa interna)      | Exacta (15 pts por &lt;24h de retraso)        |
+| Prevención Alucinación     | [Aviso] Evasiva / Suposiciones hipotéticas      | Totalmente auditada en el documento       |
+| Fragmento Fuente           | Ninguno (Memoria interna de pesos)         | Fragmento #2 (Score: 0.6384)                  |
+| Latencia de Respuesta      | 0.79 segundos                              | 0.62 segundos                                 |
+========================================================================================================================
+
+[SIN RAG] RESPUESTA SIN RAG:
+La penalización depende del reglamento institucional de tu universidad o plataforma, ya que suele variar entre un 10% y un 20%. Te sugiero consultar el programa académico.
+
+[CON RAG] RESPUESTA CON RAG:
+Basado en la Política de Entregas Tardías y Penalizaciones (Doc #2):
+1. Penalización por 20 horas de retraso: Es de 15 puntos sobre la calificación obtenida (aplica para entregas con hasta 24 horas de retraso).
+2. Calificación mínima para aprobar: El fragmento proporcionado no contiene información sobre la calificación mínima aprobatoria del curso.</code></pre>
+                </div>
+                
 
             <div class="breakdown-box">
               <div class="breakdown-title">Desglose Técnico: Matriz Comparativa y Métricas de Auditoría Validación de Entrega</div>
