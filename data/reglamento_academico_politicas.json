@@ -1,0 +1,32 @@
+[
+  {
+    "id": "POL-001",
+    "categoria": "Calificaciones y Aprobación",
+    "titulo": "Escala de Calificaciones y Calificación Mínima Aprobatoria",
+    "contenido": "La escala oficial de calificaciones es de 0 a 100 puntos. La calificación mínima aprobatoria en cualquier materia o módulo es de 70/100. Calificaciones inferiores a 70 requieren presentar examen extraordinario o recursamiento según el reglamento vigente."
+  },
+  {
+    "id": "POL-002",
+    "categoria": "Asistencia y Puntualidad",
+    "titulo": "Requisito Mínimo de Asistencia para Derecho a Examen",
+    "contenido": "Todo estudiante debe cumplir con un mínimo del 80% de asistencia presencial o en sesiones síncronas para mantener derecho a evaluación final ordinaria. Porcentajes entre 60% y 79% canalizan al alumno a período extraordinario. Asistencias menores al 60% causan baja académica automática de la asignatura."
+  },
+  {
+    "id": "POL-003",
+    "categoria": "Bajas y Modificaciones",
+    "titulo": "Plazos Límites para la Baja Temporal de Materias",
+    "contenido": "El período límite para solicitar la baja temporal formal de una asignatura sin penalización en el promedio general vence exactamente al término de la Semana 4 del período académico en curso. Solicitudes posteriores serán rechazadas administrativamente."
+  },
+  {
+    "id": "POL-004",
+    "categoria": "Integridad Académica",
+    "titulo": "Política Institucional sobre Plagio y Uso Indebido de IA",
+    "contenido": "El plagio en tareas, exámenes, proyectos o el uso no acreditado de modelos generativos de IA en entregables individuales será sancionado con calificación automática de 0 (cero) en la actividad evaluativa y turno inmediato al Comité de Ética Institucional."
+  },
+  {
+    "id": "POL-005",
+    "categoria": "Servicio Social y Prácticas",
+    "titulo": "Requisitos para el Inicio de Prácticas Profesionales",
+    "contenido": "El alumno únicamente puede iniciar el trámite de Prácticas Profesionales o Servicio Social tras haber acreditado formalmente al menos el 70% del total de créditos del plan de estudios curricular."
+  }
+]
