@@ -10,19 +10,19 @@
 
 @page {
   size: 8.5in 11in;
-  margin: 1in;
+  margin: 0.9in 0.9in 0.9in 0.9in;
   @top-left {
     content: "INVESTIGACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3";
     font-family: 'Times New Roman', Times, Georgia, serif;
     font-size: 9pt;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #333;
+    color: #444;
   }
   @top-right {
     content: counter(page);
     font-family: 'Times New Roman', Times, Georgia, serif;
-    font-size: 10.5pt;
+    font-size: 11pt;
     color: #000;
   }
 }
@@ -36,9 +36,9 @@
 
 body {
   font-family: 'Times New Roman', Times, Georgia, serif;
-  font-size: 12pt;
-  line-height: 2.0;
-  color: #000000;
+  font-size: 13pt;
+  line-height: 1.5;
+  color: #111111;
   background: #ffffff;
   margin: 0;
   padding: 0;
@@ -50,7 +50,7 @@ body {
   break-after: page;
 }
 
-/* PORTADA OFICIAL CENTRADA (16pt TÍTULO) */
+/* PORTADA OFICIAL CENTRADA CON ESPACIADO EQUILIBRADO */
 .thesis-cover {
   height: 8.6in;
   display: flex;
@@ -59,16 +59,16 @@ body {
   align-items: center;
   text-align: center;
   page-break-after: always;
-  line-height: 1.45;
+  line-height: 1.35;
   margin: 0 auto;
   padding: 0;
 }
 
 .institution-title {
-  font-size: 13.5pt;
+  font-size: 14pt;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   margin-bottom: 0.4rem;
 }
 
@@ -76,14 +76,14 @@ body {
   font-size: 12pt;
   font-weight: 700;
   text-transform: uppercase;
-  color: #111;
-  margin-bottom: 3.2rem;
+  color: #222;
+  margin-bottom: 2.5rem;
 }
 
 .thesis-main-title {
-  font-size: 16pt;
+  font-size: 16.5pt;
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.3;
   margin-bottom: 1.2rem;
   max-width: 95%;
 }
@@ -91,17 +91,17 @@ body {
 .thesis-subtitle {
   font-size: 13pt;
   font-style: italic;
-  margin-bottom: 3.2rem;
+  margin-bottom: 2.5rem;
   max-width: 90%;
-  color: #222;
+  color: #333;
 }
 
 .thesis-purpose {
-  font-size: 12pt;
+  font-size: 12.5pt;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 3.2rem;
+  margin-bottom: 2.5rem;
 }
 
 .thesis-author {
@@ -112,8 +112,8 @@ body {
 
 .thesis-degree {
   font-size: 12pt;
-  color: #222;
-  margin-bottom: 3.2rem;
+  color: #333;
+  margin-bottom: 2.5rem;
 }
 
 .thesis-date-place {
@@ -129,7 +129,7 @@ body {
 
 .toc-title {
   text-align: center;
-  font-size: 14pt;
+  font-size: 14.5pt;
   font-weight: 700;
   margin-bottom: 0.8rem;
 }
@@ -138,13 +138,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.12rem;
   font-size: 10pt;
 }
 
 .toc-row.toc-main {
   font-weight: 700;
-  margin-top: 0.25rem;
+  margin-top: 0.22rem;
   font-size: 10.5pt;
 }
 
@@ -156,34 +156,34 @@ body {
 
 .toc-page { font-weight: 700; font-size: 10pt; }
 
-/* TÍTULOS (14pt CENTRADOS, SALTO DE PÁGINA) */
+/* TÍTULOS (14.5pt - 15pt CENTRADOS, SALTO DE PÁGINA) */
 h1.apa-n1, h1.chapter-title {
   text-align: center;
-  font-size: 14pt;
+  font-size: 15pt;
   font-weight: 700;
-  margin-top: 2rem;
-  margin-bottom: 1.1rem;
+  margin-top: 1.4rem;
+  margin-bottom: 0.8rem;
   page-break-before: always;
   page-break-after: avoid;
 }
 
-/* SUBTÍTULOS (12pt EN NEGRITA / CURSIVA) */
+/* SUBTÍTULOS (13pt - 12.5pt) */
 h2.apa-n2, h2 {
   text-align: left;
-  font-size: 12pt;
+  font-size: 13pt;
   font-weight: 700;
-  margin-top: 1.6rem;
-  margin-bottom: 0.6rem;
+  margin-top: 1.2rem;
+  margin-bottom: 0.4rem;
   page-break-after: avoid;
 }
 
 h3.apa-n3, h3 {
   text-align: left;
-  font-size: 12pt;
+  font-size: 12.5pt;
   font-weight: 700;
   font-style: italic;
-  margin-top: 1.4rem;
-  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.35rem;
   page-break-after: avoid;
 }
 
@@ -191,50 +191,50 @@ h4.apa-n4, h4 {
   text-align: left;
   font-size: 12pt;
   font-weight: 700;
-  margin-top: 1.2rem;
-  margin-bottom: 0.4rem;
+  margin-top: 0.9rem;
+  margin-bottom: 0.3rem;
   page-break-after: avoid;
 }
 
-/* PÁRRAFOS (12pt, INTERLINEADO 2.0, SIN SANGRÍA) */
+/* PÁRRAFOS (13pt, INTERLINEADO 1.5, ESPACIADO NATURAL) */
 p {
-  font-size: 12pt;
+  font-size: 13pt;
   text-indent: 0;
-  margin: 0 0 1.2rem 0;
+  margin: 0 0 0.8rem 0;
 }
 
 /* TABLAS FORMALES APA 7 */
 .table-container {
-  margin: 2rem 0;
+  margin: 1.4rem 0;
   page-break-inside: avoid;
 }
 
 .table-number {
   font-weight: 700;
   font-size: 11.5pt;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.1rem;
   text-indent: 0;
 }
 
 .table-title {
   font-style: italic;
   font-size: 11.5pt;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   text-indent: 0;
 }
 
 table.apa-table, table {
   width: 100%;
   border-collapse: collapse;
-  margin: 0.4rem 0 0.6rem 0;
+  margin: 0.3rem 0 0.5rem 0;
   font-size: 10.5pt;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 table.apa-table th, table th {
   border-top: 1.5pt solid #000;
   border-bottom: 1pt solid #000;
-  padding: 7px 9px;
+  padding: 6px 8px;
   text-align: left;
   font-weight: 700;
   color: #000;
@@ -243,7 +243,7 @@ table.apa-table th, table th {
 }
 
 table.apa-table td, table td {
-  padding: 7px 9px;
+  padding: 6px 8px;
   border-bottom: 0.5pt solid #e0e0e0;
 }
 
@@ -253,19 +253,19 @@ table.apa-table tr:last-child td, table tr:last-child td {
 
 .table-note {
   font-size: 10pt;
-  line-height: 1.4;
-  margin-top: 0.4rem;
+  line-height: 1.35;
+  margin-top: 0.3rem;
   text-indent: 0;
 }
 
 /* CAJA ELEGANTE PARA DESGLOSE TÉCNICO */
 .breakdown-box {
-  background: #fafafa;
+  background: #fbfbfb;
   border: 1pt solid #cbd5e1;
   border-left: 3.5pt solid #1e3a8a;
   border-radius: 4px;
-  padding: 1rem 1.2rem;
-  margin: 1.4rem 0;
+  padding: 0.8rem 1rem;
+  margin: 1rem 0;
   page-break-inside: avoid;
 }
 
@@ -273,15 +273,15 @@ table.apa-table tr:last-child td, table tr:last-child td {
   font-size: 11.5pt;
   font-weight: 700;
   color: #1e3a8a;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .breakdown-item {
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.4rem;
   font-size: 11.5pt;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 
 .line-tag {
@@ -299,9 +299,9 @@ table.apa-table tr:last-child td, table tr:last-child td {
 /* FÓRMULAS MATEMÁTICAS */
 .math-eq {
   text-align: center;
-  margin: 1.4rem 0;
-  padding: 0.4rem;
-  font-size: 12.5pt;
+  margin: 1.1rem 0;
+  padding: 0.3rem;
+  font-size: 13pt;
   page-break-inside: avoid;
 }
 
@@ -311,11 +311,11 @@ table.apa-table tr:last-child td, table tr:last-child td {
   border: 1pt solid #ccc;
   border-left: 3pt solid #000;
   border-radius: 4px;
-  padding: 0.9rem 1.1rem;
-  margin: 1.3rem 0;
+  padding: 0.7rem 0.9rem;
+  margin: 1rem 0;
   font-family: 'JetBrains Mono', monospace;
   font-size: 10pt;
-  line-height: 1.5;
+  line-height: 1.45;
   overflow-x: hidden;
   page-break-inside: avoid;
 }
@@ -334,25 +334,25 @@ code {
 
 p code, li code {
   background: #f4f4f4;
-  padding: 0.15rem 0.35rem;
+  padding: 0.12rem 0.3rem;
   border-radius: 3px;
-  font-size: 10pt;
+  font-size: 10.5pt;
 }
 
 ul, ol {
-  margin: 0 0 1.2rem 1.8rem;
-  padding-left: 0.5in;
-  font-size: 12pt;
+  margin: 0 0 0.9rem 1.5rem;
+  padding-left: 0.4in;
+  font-size: 13pt;
 }
 
-li { margin-bottom: 0.4rem; }
+li { margin-bottom: 0.3rem; }
 
 .ref-item {
   padding-left: 0.5in;
   text-indent: -0.5in;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.8rem;
   font-size: 11.5pt;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 </style>
@@ -564,7 +564,7 @@ La presente investigación aporta datos empíricos sobre la inferencia en silici
 
 <p><div align="center"></p>
 <p></div></p>
-<div style="margin: 1.5rem 0;"></div>
+<div style="margin: 1.2rem 0;"></div>
 <p>MÓDULO 1 CHALLENGE 1 · COMPARADOR MULTI-MODELO DE LENGUAJE</p>
 <h1 class="apa-n1">Comparador de Modelos Llama & Benchmarking de Inferencia</h1>
 <p><strong>Evaluación empírica de latencia, consumo de tokens y calidad de respuesta</strong>. Conecta la API de Groq Cloud mediante Google Colab Secrets, orquesta inferencias zero-shot en chips LPU de alta velocidad y construye una matriz analítica para comparar modelos ligeros (20B / 8B), medianos de razonamiento (Qwen 27B) y modelos masivos (120B / 70B).</p>
@@ -1336,7 +1336,7 @@ La presente investigación aporta datos empíricos sobre la inferencia en silici
 <h3 class="apa-n3">OWASP Top 10 for LLM Applications & AI RMF</h3>
 <p>Directivas de mitigación contra inyecciones de prompts, exposición de credenciales en código y estándares de gobernanza para agentes en producción.</p>
 <p>[ Consultar en owasp.org ](https://owasp.org/www-project-top-10-for-large-language-model-applications/)</p>
-<div style="margin: 1.5rem 0;"></div>
+<div style="margin: 1.2rem 0;"></div>
 <p><div align="center"></p>
 <p></div></p>
 
