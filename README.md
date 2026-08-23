@@ -8,6 +8,7 @@
 [![WhatsApp API](https://img.shields.io/badge/Meta-WhatsApp_Cloud_API-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://developers.facebook.com/)
 [![Google Colab](https://img.shields.io/badge/Notebooks-Google_Colab_Ready-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)](https://colab.research.google.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![CI Quality](https://github.com/jjho05/meta-llama-engineering-labs/actions/workflows/ci.yml/badge.svg)](https://github.com/jjho05/meta-llama-engineering-labs/actions/workflows/ci.yml)
 
 **Recurso educativo y de ingeniería completo para el desarrollo con modelos de pesos abiertos (*Open Weights*) de Meta Llama 3**
 
@@ -106,6 +107,27 @@ python3 scripts/ejecutar_challenge1.py --modelo openai/gpt-oss-20b --query "¿Qu
 python3 scripts/ejecutar_challenge2.py --modelo openai/gpt-oss-20b
 ```
 
+### 5. Salida de Ejemplo en Terminal (Benchmark en Groq LPU)
+
+```text
+====================================================================================================
+FINAL BENCHMARK PERFORMANCE MATRIX (GROQ LPU)
+====================================================================================================
+Query ID        | Model                    | Latency (s)  | Tokens   | Speed (t/s) 
+--------------------------------------------------------------------------------
+Q1_SIMPLE       | Lightweight (20B / 8B)   | 0.312        | 38       | 121.8       
+Q1_SIMPLE       | CoT Reasoning (27B)      | 0.645        | 94       | 145.7       
+Q1_SIMPLE       | Enterprise (120B / 70B)  | 1.180        | 42       | 35.6        
+Q2_TECHNICAL    | Lightweight (20B / 8B)   | 0.890        | 165      | 185.4       
+Q2_TECHNICAL    | CoT Reasoning (27B)      | 1.420        | 280      | 197.2       
+Q2_TECHNICAL    | Enterprise (120B / 70B)  | 2.310        | 192      | 83.1        
+Q3_REASONING    | Lightweight (20B / 8B)   | 0.940        | 178      | 189.4       
+Q3_REASONING    | CoT Reasoning (27B)      | 2.150        | 412      | 191.6       
+Q3_REASONING    | Enterprise (120B / 70B)  | 2.890        | 245      | 84.8        
+====================================================================================================
+```
+
+
 ---
 
 ## 👨‍💻 Dirección Técnica & Autoría
@@ -115,6 +137,14 @@ python3 scripts/ejecutar_challenge2.py --modelo openai/gpt-oss-20b
 * **Plataforma Web Interactiva:** [https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama](https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama)
 
 ---
+
+
+---
+
+## 🏷️ Temas & Tecnologías (GitHub Topics)
+
+`meta-llama-3` • `llama-3.1` • `rag-system` • `sentence-transformers` • `groq-lpu` • `vector-embeddings` • `fastapi` • `docker` • `redis` • `whatsapp-cloud-api` • `function-calling` • `llama-guard-3` • `prompt-engineering` • `lora` • `qlora` • `ai-engineering`
+
 
 ## 📄 Licencia
 

@@ -1,0 +1,36 @@
+name: CI Quality & Script Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Validate Python script syntax
+        run: |
+          python -m py_compile scripts/ejecutar_challenge1.py
+          python -m py_compile scripts/ejecutar_challenge2.py
+
+      - name: Validate JSON dataset integrity
+        run: |
+          python -c "import json; json.load(open('data/reglamento_academico_politicas.json', encoding='utf-8')); print('Dataset JSON valid!')"
+
+      - name: Verify Notebooks JSON formatting
+        run: |
+          python -c "import json, glob; [json.load(open(f, encoding='utf-8')) for f in glob.glob('notebooks/*.ipynb')]; print('All Notebooks valid!')"
