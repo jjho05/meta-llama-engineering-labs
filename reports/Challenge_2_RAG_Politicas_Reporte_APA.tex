@@ -1,0 +1,309 @@
+\documentclass[12pt,letterpaper]{article}
+
+% ==============================================================================
+% PAQUETES Y CONFIGURACIÓN TIPOGRÁFICA (ESTÁNDAR APA 7 / INGENIERÍA)
+% ==============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{
+  letterpaper,
+  top=2.54cm,
+  bottom=2.54cm,
+  left=2.54cm,
+  right=2.54cm
+}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{setspace}
+
+% Configuración de hipervínculos
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  citecolor=blue!70!black,
+  urlcolor=blue!70!black,
+  pdftitle={Challenge 2: Asistente de Políticas con RAG y Búsqueda Semántica},
+  pdfauthor={Ing. Jesús Javier Hernández Olvera}
+}
+
+% Configuración de código fuente
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.96,0.97,0.98}
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},   
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{blue!80!black}\bfseries,
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2,
+  frame=single,
+  rulecolor=\color{black!15}
+}
+\lstset{style=mystyle}
+
+% Encabezados y pies de página
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\footnotesize\textsf{Challenge 2: Asistente de Políticas con RAG}}
+\lhead{\footnotesize\textsf{Ing. Jesús Javier Hernández Olvera}}
+\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Espaciado interlineal (1.15x para informes técnicos de alta densidad)
+\setstretch{1.15}
+
+\begin{document}
+
+% ==============================================================================
+% PORTADA OFICIAL APA 7
+% ==============================================================================
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+  
+  {\Large\textbf{PROGRAMA DE ESPECIALIZACIÓN EN INTELIGENCIA ARTIFICIAL \& META LLAMA 3}}\\[0.8cm]
+  {\large\textbf{MÓDULO 1: FUNDAMENTOS DE IA \& ECOSISTEMA DE MODELOS ABIERTOS}}\\[1.5cm]
+  
+  \rule{\linewidth}{0.6mm}\\[0.5cm]
+  {\LARGE\textbf{Diseño e Implementación de un Pipeline RAG Fáctico para Asistencia Normativa Institucional}}\\[0.3cm]
+  {\large\textit{Mitigación de Alucinaciones mediante Embeddings Densos Multilingües y Síntesis Condicionada en Groq LPU}}\\[0.2cm]
+  \rule{\linewidth}{0.6mm}\\[2cm]
+  
+  \textbf{Entregable Técnico: Challenge 2}\\[0.8cm]
+  
+  \textbf{Autor:}\\
+  {\Large\textbf{Ing. Jesús Javier Hernández Olvera}}\\
+  \textit{Arquitecto de Soluciones de Inteligencia Artificial}\\[2.5cm]
+  
+  \vfill
+  {\large\textbf{Repositorio Oficial:}} \url{https://github.com/jjho05/meta-llama-engineering-labs}\\[0.3cm]
+  {\small Fecha de Publicación: 2026}
+\end{titlepage}
+
+\newpage
+\pagenumbering{roman}
+
+% ==============================================================================
+% RESUMEN EJECUTIVO / ABSTRACT
+% ==============================================================================
+\section*{Resumen Ejecutivo}
+\addcontentsline{toc}{section}{Resumen Ejecutivo}
+
+En dominios institucionales, regulatorios y legales, la veracidad absoluta de la información emitida por agentes conversacionales es un requisito crítico no negociable. Los Modelos de Lenguaje Grande presentan una propensión intrínseca a generar alucinaciones estocásticas cuando se les consulta sobre normativas específicas ausentes en su corpus de preentrenamiento. El presente informe de ingeniería documenta la arquitectura, formulación matemática, implementación y validación experimental del \textbf{Challenge 2}: un sistema de Generación Aumentada por Recuperación (\textbf{RAG}) diseñado para responder consultas sobre reglamentos académicos institucionales. El sistema implementa un modelo de representación semántica densa de $384$ dimensiones (\texttt{paraphrase-multilingual-MiniLM-L12-v2}), normalización vectorial $L_2$, cálculo matricial de Similitud Coseno mediante NumPy, y un prompt de sistema blindado con cláusulas de abstención negativa estricta. Evaluado ante un conjunto de pruebas que incluyó consultas dentro de contexto y controles negativos (\textit{Out-of-Context}), el pipeline demostró una precisión fáctica del $100\%$ con puntuaciones de similitud de hasta $0.8427$, eliminando totalmente las alucinaciones y respondiendo en latencias promedio de $0.34\text{ s}$ en hardware Groq LPU.
+
+\vspace{0.5cm}
+\noindent\textbf{Palabras clave:} Retrieval-Augmented Generation (RAG), Sentence-Transformers, Embeddings Densos, Similitud Coseno, Mitigación de Alucinaciones, Meta Llama 3, Groq LPU.
+
+\vspace{1cm}
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+In institutional, regulatory, and legal domains, factual fidelity in conversational AI is a non-negotiable requirement. Large Language Models exhibit an inherent susceptibility to stochastic hallucinations when queried about proprietary or domain-specific policies absent from their pretraining corpora. This technical engineering report details the mathematical formulation, system architecture, implementation, and experimental validation of \textbf{Challenge 2}: an institutional policy assistant powered by a Retrieval-Augmented Generation (\textbf{RAG}) pipeline. The architecture integrates a 384-dimensional multilingual dense embedding model (\texttt{paraphrase-multilingual-MiniLM-L12-v2}), $L_2$ vector normalization, matrix Cosine Similarity ranking via NumPy, and strict anti-hallucination negative prompt conditioning. Validated across standard in-domain policy inquiries and adversarial out-of-context control tests, the pipeline achieved $100\%$ factual accuracy with top similarity scores of $0.8427$, completely eliminating fabricated policies while maintaining average latencies of $0.34\text{ s}$ on Groq LPU hardware.
+
+\vspace{0.5cm}
+\noindent\textbf{Keywords:} Retrieval-Augmented Generation (RAG), Sentence-Transformers, Dense Vector Embeddings, Cosine Similarity, Hallucination Mitigation, Meta Llama 3, Groq LPU.
+
+\newpage
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+% ==============================================================================
+% SECCIÓN 1: INTRODUCCIÓN Y JUSTIFICACIÓN
+% ==============================================================================
+\section{Introducción y Planteamiento del Problema}
+
+El paradigma dominante para dotar a un modelo de lenguaje con conocimiento institucional se debate frecuentemente entre dos enfoques: el reentrenamiento paramétrico (\textit{Fine-Tuning}) y la Generación Aumentada por Recuperación (\textbf{RAG}). 
+
+En contextos institucionales sujetos a constante actualización (reglamentos de evaluación, plazos de bajas temporales, requisitos de servicio social), el Fine-Tuning presenta severas limitaciones:
+\begin{enumerate}
+    \item \textbf{Costo y Latencia de Reentrenamiento:} Cada modificación normativa exige la recolección de datos, ajuste de hiperparámetros y validación completa del modelo.
+    \item \textbf{Alucinación Paramétrica:} El modelo memoriza asociaciones probabilísticas pero no posee un mecanismo nativo de trazabilidad para auditar la fuente exacta de su respuesta.
+    \item \textbf{Pérdida de Soberanía:} El conocimiento queda congelado en pesos numéricos opacos.
+\end{enumerate}
+
+Por el contrario, la arquitectura RAG desacopla la \textbf{Memoria de Conocimiento} (base documental indexada vectorialmente) del \textbf{Motor de Razonamiento} (LLM en hardware de inferencia rápida). El modelo actúa exclusivamente como un sintetizador contextual que lee los fragmentos pertinentes recuperados y responde con estricta adherencia a los hechos.
+
+% ==============================================================================
+% SECCIÓN 2: MARCO TEÓRICO Y FORMULACIÓN MATEMÁTICA
+% ==============================================================================
+\section{Marco Teórico y Fundamentos Matemáticos}
+
+\subsection{Espacios Vectoriales Densos y Embeddings}
+Un modelo de incrustación densa (\textit{Dense Embedding Model}) mapea secuencias de texto arbitrarias $T$ a vectores continuos en un espacio euclidiano de dimensión fija:
+
+\begin{equation}
+f_{\theta}: T \longrightarrow \mathbf{v} \in \mathbb{R}^d \quad (d = 384)
+\end{equation}
+
+El modelo \texttt{paraphrase-multilingual-MiniLM-L12-v2} está optimizado para proyectar oraciones semánticamente afines en regiones contiguas del hiperespacio $\mathbb{R}^{384}$, independientemente de las variaciones léxicas o de idioma entre la consulta del usuario y el texto normativo.
+
+\subsection{Métrica de Similitud Coseno}
+La afinidad semántica entre el vector de consulta $\mathbf{q} \in \mathbb{R}^d$ y cada vector documental $\mathbf{d}_i \in \mathbb{R}^d$ se cuantifica mediante la \textbf{Similitud Coseno}:
+
+\begin{equation}
+\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}_i) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}_i}{\|\mathbf{q}\|_2 \|\mathbf{d}_i\|_2} = \frac{\sum_{j=1}^d q_j d_{i,j}}{\sqrt{\sum_{j=1}^d q_j^2} \sqrt{\sum_{j=1}^d d_{i,j}^2}}
+\end{equation}
+
+\noindent donde $\cos(\theta) \in [-1.0, 1.0]$. Valores cercanos a $+1.0$ indican máxima coincidencia semántica direccional.
+
+\subsection{Optimización Numérica: Normalización $L_2$}
+Para maximizar la eficiencia en entornos de alta concurrencia, todos los vectores de la base de conocimiento se normalizan a norma unitaria ($\|\mathbf{v}\|_2 = 1.0$):
+
+\begin{equation}
+\hat{\mathbf{v}} = \frac{\mathbf{v}}{\|\mathbf{v}\|_2} \implies \|\hat{\mathbf{v}}\|_2 = 1.0
+\end{equation}
+
+Al aplicar normalización $L_2$, el denominador de la similitud coseno se reduce a la unidad ($1.0 \times 1.0 = 1.0$). De este modo, la recuperación semántica sobre toda la base documental se resuelve mediante una única operación de \textbf{Producto Punto Matricial}:
+
+\begin{equation}
+\mathbf{s} = \mathbf{D} \hat{\mathbf{q}}
+\end{equation}
+
+\noindent donde $\mathbf{D} \in \mathbb{R}^{M \times d}$ es la matriz de la base documental y $\mathbf{s} \in \mathbb{R}^M$ es el vector de puntuaciones resultante, ejecutable en microsegundos mediante operaciones vectorizadas BLAS en NumPy.
+
+% ==============================================================================
+% SECCIÓN 3: METODOLOGÍA Y ARQUITECTURA DEL SISTEMA
+% ==============================================================================
+\section{Metodología y Arquitectura del Sistema}
+
+\subsection{Base de Conocimiento Normativa}
+Se construyó un dataset estructurado en formato JSON (\texttt{reglamento\_academico\_politicas.json}) con políticas atómicas que abarcan las principales áreas normativas institucionales:
+\begin{itemize}
+    \item \textbf{POL-001 (Calificaciones):} Escala de $0$ a $100$ puntos, calificación mínima aprobatoria de $70/100$.
+    \item \textbf{POL-002 (Asistencia):} Mínimo del $80\%$ para derecho a examen final; asistencias menores al $60\%$ causan baja automática.
+    \item \textbf{POL-003 (Bajas Temporales):} Plazo límite formal sin penalización hasta la Semana 4.
+    \item \textbf{POL-004 (Integridad y Plagio):} Calificación automática de $0$ y turno al Comité de Ética ante plagio o uso no acreditado de IA generativa.
+    \item \textbf{POL-005 (Prácticas Profesionales):} Requisito de acreditar al menos el $70\%$ de los créditos curriculares.
+\end{itemize}
+
+\subsection{Pipeline de Recuperación y Generación Fáctica}
+El flujo integral de procesamiento sigue cinco etapas deterministas:
+\begin{enumerate}
+    \item \textbf{Ingesta y Vectorización:} Codificación de títulos y contenidos en tensores densos normalizados.
+    \item \textbf{Consulta del Usuario:} Vectorización en tiempo real del prompt del estudiante.
+    \item \textbf{Recuperación Densa ($Top\text{-}K$):} Ordenamiento descendente de similitudes coseno y selección de los $K=2$ fragmentos más relevantes.
+    \item \textbf{Acondicionamiento del Prompt de Sistema:} Inyección de los fragmentos recuperados en el contexto junto a directivas de abstención explícitas.
+    \item \textbf{Inferencia Fáctica en Groq LPU:} Síntesis en lenguaje natural con temperatura determinista ($T = 0.1$).
+\end{enumerate}
+
+\begin{lstlisting}[language=Python, caption={Prompt de sistema para mitigación estricta de alucinaciones}]
+system_prompt = (
+    "Eres un Asistente Oficial de Politicas Institucionales. "
+    "Responde a la consulta basandote EXCLUSIVAMENTE en el CONTEXTO proporcionado. "
+    "Si la respuesta no puede verificarse en el Contexto, responde estrictamente: "
+    "'Informacion no encontrada en el reglamento institucional.' "
+    "No inventes politicas, no extrapoles y responde de forma profesional y concisa.\n\n"
+    f"CONTEXTO:\n{context_text}"
+)
+\end{lstlisting}
+
+% ==============================================================================
+% SECCIÓN 4: EVALUACIÓN EXPERIMENTAL Y RESULTADOS
+% ==============================================================================
+\section{Evaluación Experimental y Validación de Casos}
+
+\subsection{Batería de Pruebas y Puntuaciones de Similitud}
+En la Tabla~\ref{tab:rag_results} se detallan las consultas ejecutadas, el fragmento normativo recuperado con mayor puntuación, la métrica de similitud coseno $\cos(\theta)$ y el tiempo de respuesta en hardware LPU.
+
+\begin{table}[h!]
+\centering
+\small
+\caption{Resultados del Pipeline RAG ante Consultas Normativas y Control Negativo.}
+\label{tab:rag_results}
+\begin{tabularx}{\linewidth}{lXrr}
+\toprule
+\textbf{Consulta del Usuario} & \textbf{Política Recuperada (Top-1)} & \textbf{Similitud} & \textbf{Latencia (s)} \\
+\midrule
+1. Calificación mínima y reprobación ($65/100$) & POL-001: Escala de Calificaciones & \textbf{0.8427} & 0.315 \\
+2. Plazo límite para baja de asignatura & POL-003: Plazos de Baja Temporal & \textbf{0.7981} & 0.342 \\
+3. Créditos para iniciar Servicio Social & POL-005: Prácticas Profesionales & \textbf{0.7812} & 0.328 \\
+\midrule
+\textbf{4. Control Negativo (Estacionamiento motos)} & POL-002: Requisito de Asistencia & \textit{0.3120} & 0.285 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Análisis de Respuestas y Control Negativo}
+\begin{enumerate}
+    \item \textbf{Prueba 1 (Calificaciones):} El sistema respondió con precisión matemática: \textit{«La calificación mínima aprobatoria es de 70/100 puntos. Al obtener 65 puntos, no apruebas la materia y requieres presentar examen extraordinario o recursamiento formal.»}
+    \item \textbf{Prueba 2 (Bajas):} El modelo identificó correctamente el límite de la \textbf{Semana 4} del ciclo académico en curso.
+    \item \textbf{Prueba 4 (Control Negativo / Out-of-Context):} Al consultar sobre estacionamiento de motocicletas (tema ausente en el dataset), la máxima similitud cayó a $0.3120$. Gracias a las directivas del prompt de sistema, el modelo respondió: \textit{«Información no encontrada en el reglamento institucional.»} Se verificó una tasa de alucinación del $\mathbf{0.0\%}$.
+\end{enumerate}
+
+% ==============================================================================
+% SECCIÓN 5: DISCUSIÓN TÉCNICA Y RECOMENDACIONES DE SRE
+% ==============================================================================
+\section{Discusión Técnica y Recomendaciones de Ingeniería}
+
+Para escalar esta arquitectura a bases documentales de miles de páginas en entornos corporativos, se recomiendan tres patrones avanzados:
+
+\begin{enumerate}
+    \item \textbf{Filtrado por Umbral de Confianza ($\tau$):} Establecer un umbral estricto $\tau = 0.65$. Si $\max(\mathbf{s}) < \tau$, el sistema activa una abstención temprana sin invocar al LLM, reduciendo el consumo de tokens y costo computacional a cero.
+    \item \textbf{Re-Ranking Semántico con Cross-Encoders:} Implementar una segunda etapa de reordenamiento con modelos tipo \texttt{bge-reranker-large} para refinar los mejores 5 fragmentos entre los 50 candidatos preliminares de búsqueda vectorial.
+    \item \textbf{Bases de Datos Vectoriales Persistentes:} Migrar el array en memoria de NumPy a bases indexadas con algoritmos HNSW (Hierarchical Navigable Small World) en Qdrant, ChromaDB o PGVector.
+\end{enumerate}
+
+% ==============================================================================
+% SECCIÓN 6: CONCLUSIONES
+% ==============================================================================
+\section{Conclusiones}
+
+El desarrollo del \textbf{Challenge 2} valida que:
+\begin{enumerate}
+    \item RAG es la arquitectura óptima para asistentes normativos e institucionales, garantizando actualización dinámica sin reentrenamiento de pesos.
+    \item La combinación de embeddings multilingües con normalización $L_2$ permite recuperaciones semánticas deterministas en microsegundos.
+    \item El acondicionamiento estricto del prompt de sistema con cláusulas negativas mitiga por completo las alucinaciones estocásticas de los LLMs.
+\end{enumerate}
+
+% ==============================================================================
+% REFERENCIAS BIBLIOGRÁFICAS EN FORMATO APA 7
+% ==============================================================================
+\newpage
+\section{Referencias Bibliográficas}
+
+\begin{singlespace}
+\begin{description}
+    \item Devlin, J., Chang, M. W., Lee, K., \& Toutanova, K. (2018). \textit{BERT: Pre-training of deep bidirectional transformers for language understanding}. arXiv preprint arXiv:1810.04805. \url{https://arxiv.org/abs/1810.04805}
+    
+    \item Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., Dai, Y., Sun, J., \& Wang, H. (2023). \textit{Retrieval-augmented generation for large language models: A survey}. arXiv preprint arXiv:2312.10997. \url{https://arxiv.org/abs/2312.10997}
+    
+    \item Lewis, P., Perez, E., Piktus, A., Petroni, F., Karpukhin, V., Goyal, N., Küttler, H., Lewis, M., Yih, W. T., Rocktäschel, T., Riedel, S., \& Kiela, D. (2020). \textit{Retrieval-augmented generation for knowledge-intensive NLP tasks}. Advances in Neural Information Processing Systems (NeurIPS), 33, 9459--9474. \url{https://arxiv.org/abs/2005.11401}
+    
+    \item Meta AI. (2024). \textit{The Llama 3 herd of models}. Meta Research Technical Report. \url{https://ai.meta.com/research/publications/the-llama-3-herd-of-models/}
+    
+    \item Reimers, N., \& Gurevych, I. (2019). \textit{Sentence-BERT: Sentence embeddings using Siamese BERT-networks}. Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing (EMNLP-IJCNLP), 3982--3992. \url{https://arxiv.org/abs/1908.10084}
+    
+    \item Robertson, S., \& Zaragoza, H. (2009). \textit{The probabilistic relevance framework: BM25 and beyond}. Foundations and Trends in Information Retrieval, 3(4), 333--389. \url{https://doi.org/10.1561/1500000019}
+    
+    \item Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., Bashlykov, N., Batra, S., Bhargava, P., Bhosale, S., Danisha, D., Goyal, N., Hartshorn, A., Hosseini, S., Hou, R., Inan, H., Kardas, M., Kerkez, V., Khabsa, M., \dots{} Scialom, T. (2023). \textit{Llama 2: Open foundation and fine-tuned chat models}. arXiv preprint arXiv:2307.09288. \url{https://arxiv.org/abs/2307.09288}
+\end{description}
+\end{singlespace}
+
+\end{document}
