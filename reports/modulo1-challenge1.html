@@ -1942,13 +1942,14 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
             <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" style="color: var(--meta-blue);"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
             <div>
               <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary);">Motor de Inferencia: <span id="bench-engine-status" style="color: var(--meta-blue);">Vercel Serverless / Groq LPU</span></div>
-              <div id="bench-engine-subtext" style="font-size: 0.74rem; color: var(--text-secondary);">Procesamiento en tiempo real sobre hardware LPU en servidores seguros de Vercel.</div>
+              <div id="bench-engine-subtext" style="font-size: 0.74rem; color: var(--text-secondary);">Inferencia en tiempo real sobre clústeres Groq LPU gestionados de forma segura en Vercel.</div>
             </div>
           </div>
-          <div style="display: flex; gap: 0.5rem; align-items: center; flex: 1; max-width: 440px; min-width: 250px;">
-            <input type="password" id="bench-api-key-input" placeholder="gsk_tu_api_key_aqui (opcional)..." style="flex: 1; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 0.45rem 0.75rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.8rem;"/>
-            <button class="btn-sm" id="btn-save-bench-key" style="background: var(--meta-blue); color: #fff; border: none; padding: 0.45rem 0.9rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">Conectar</button>
-            <button class="btn-sm" id="btn-clear-bench-key" style="display:none; background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary); padding: 0.45rem 0.7rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">Desconectar</button>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(34, 197, 94, 0.12); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.35rem 0.8rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block;"></span>
+              Conexión Vercel Activa
+            </span>
           </div>
         </div>
 
