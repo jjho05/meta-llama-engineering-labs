@@ -82,6 +82,35 @@ graph TD
 | **Consumo de VRAM (Modelo 8B)** | > 64 GB (Clúster A100) | ~18 GB VRAM | **~12 GB VRAM** | **~6 GB (GPU Comercial)** |
 | **Almacenamiento del Checkpoint** | ~16 GB por versión | ~500 MB | **~10 MB - 30 MB** | **~10 MB - 30 MB** |
 | **Riesgo de Olvido Catastrófico** | Severo (degrada lógica general) | Moderado | **Nulo (Pesos base congelados)** | **Nulo (Pesos base congelados)** |
+| **Velocidad Forward / Backward** | 1.0x (Línea base) | 1.3x | **1.05x (Casi nativo)** | **1.25x (Cuantización dinámica)** |
+
+---
+
+### Análisis Técnico Profundo de la Matriz de Adaptación
+
+#### 1. Preservación de Memoria VRAM y Optimizador AdamW
+En el reentrenamiento completo (Full Fine-Tuning), el optimizador **AdamW** almacena momentos de primer y segundo orden para cada parámetro entrenable en punto flotante de 32 bits ($m_t, v_t \in \mathbb{R}$, requiriendo $4 + 4 = 8	ext{ bytes/parámetro}$). Para un modelo de 8 mil millones de parámetros, almacenar los pesos base en FP16 ($16	ext{ GB}$), los gradientes ($16	ext{ GB}$) y el estado del optimizador ($64	ext{ GB}$) exige más de **96 GB de VRAM**, obligando al uso de clústeres multi-GPU (NVIDIA A100/H100). LoRA congela el **99.898%** de los pesos y entrena únicamente **1.12M parámetros**, reduciendo la huella de memoria del optimizador a **~9 MB** y permitiendo su ejecución completa en una GPU Tesla T4 de 15 GB.
+
+#### 2. Cero Sobrecarga de Latencia en Producción (`merge_and_unload`)
+A diferencia de los adaptadores seriales tradicionales (Houlsby et al., 2019) que insertan capas no lineales adicionales en el grafo de ejecución y provocan una penalización de latencia del 15% al 25%, LoRA explota la linealidad matricial:
+
+$$W_{\text{final}} = W_0 + \frac{\alpha}{r} (B \times A)$$
+
+Al exportar el modelo para inferencia, se ejecuta la operación `merge_and_unload()`, sumando los pesos adaptados directamente a los pesos base $W_0$. El modelo resultante es estructuralmente idéntico al original, ejecutándose a velocidad nativa en vLLM, TGI y Ollama.
+
+#### 3. Criterios de Selección: LoRA vs QLoRA vs RAG
+- **LoRA (FP16):** Recomendado para GPUs con al menos 12-16 GB de VRAM cuando se busca convergencia rápida y estabilidad numérica.
+- **QLoRA (NF4 4-bit):** Recomendado para adaptar modelos grandes (8B a 70B) en GPUs comerciales de 6 a 24 GB.
+- **RAG:** Recomendado cuando la información es dinámica o requiere citas fácticas auditables.
+- **Arquitectura Híbrida (RAG + LoRA):** El estándar de la industria: LoRA fija el formato estricto (JSON/SQL) y RAG inyecta el conocimiento actualizado.
+
+| Dimensión de Ingeniería | Full Fine-Tuning | Adapters Seriales | LoRA (PEFT) | QLoRA (4-bit PEFT) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Parámetros Entrenables** | 100% de la red | 1.0% - 3.0% | **0.05% - 0.20%** | **0.05% - 0.20%** |
+| **Latencia Adicional en Inferencia** | 0% | +15% a +25% (capas extra) | **0% (fusión estática en $W_0$)** | **0% (fusión estática en $W_0$)** |
+| **Consumo de VRAM (Modelo 8B)** | > 64 GB (Clúster A100) | ~18 GB VRAM | **~12 GB VRAM** | **~6 GB (GPU Comercial)** |
+| **Almacenamiento del Checkpoint** | ~16 GB por versión | ~500 MB | **~10 MB - 30 MB** | **~10 MB - 30 MB** |
+| **Riesgo de Olvido Catastrófico** | Severo (degrada lógica general) | Moderado | **Nulo (Pesos base congelados)** | **Nulo (Pesos base congelados)** |
 | **Hardware Mínimo Requerido** | Clúster Multi-GPU | GPU Servidor (24 GB) | **GPU Gratuita T4 (15 GB)** | **GPU Comercial (8 GB)** |
 
 ---
