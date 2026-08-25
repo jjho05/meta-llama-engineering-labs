@@ -6,6 +6,24 @@
 
 ---
 
+# **HANDS - ON: FINE-TUNING Y EVALUACIÓN DE MODELOS**
+
+**Alumno:** Ing. Jesús Javier Hernández Olvera  
+**Módulo:** IA Aplicada con Modelos Abiertos  
+**Challenge:** Fine-Tuning de Modelos Llama con LoRA y Medición de Pérdida  
+
+> [!IMPORTANT]
+> ### 🔒 AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY & EDIT GUIDE)
+>
+> **Este cuaderno oficial se encuentra en modo de solo lectura (*View Only*) para preservar la solución maestra.**
+>
+> **Para ejecutar las celdas, experimentar o ingresar tu propia clave de API:**
+> 1. 💾 **Guardar una Copia Personal:** En el menú superior de Google Colab, haz clic en **Archivo $\rightarrow$ Guardar una copia en Drive** (*File $\rightarrow$ Save a copy in Drive*).
+> 2. 🔑 **Configurar Clave Secreta:** En tu copia, ve al panel lateral izquierdo $\rightarrow$ icono de llave (**Secrets / Secretos**) $\rightarrow$ agrega el nombre `HF_TOKEN` con tu valor secreto y activa el permiso de acceso para este cuaderno.
+> 3. 💻 **Descarga Local:** Si prefieres ejecutarlo en tu computadora con VS Code o JupyterLab, ve a **Archivo $\rightarrow$ Descargar $\rightarrow$ Descargar .ipynb**.
+
+---
+
 MÓDULO 1 CHALLENGE 3 · FINE-TUNING CON LORA & EVALUACIÓN DE MODELOS
 
 # Fine-Tuning de Modelos Llama con LoRA & Medición de Pérdida
