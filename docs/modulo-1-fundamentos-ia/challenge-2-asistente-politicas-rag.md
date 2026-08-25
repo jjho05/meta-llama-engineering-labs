@@ -946,6 +946,25 @@ En documentos extensos se utilizan segmentaciones semánticas con solapamiento (
 
 Para casos de alta complejidad fáctica, la industria combina **Búsqueda Híbrida (Dense Vector + Sparse BM25)** con algoritmos de **Re-ranking mediante Cross-Encoders** (como `bge-reranker-large` o Cohere Rerank) para reordenar los 20 mejores fragmentos recuperados y seleccionar los 3 de mayor densidad informacional. Además, **HyDE (Hypothetical Document Embeddings)** genera primero una respuesta hipotética con el LLM para buscar vectores en el espacio de respuestas en lugar de preguntas.
 
+---
+
+## Glosario Técnico Oficial de Arquitectura RAG & Búsqueda Vectorial
+
+1. **RAG (Retrieval-Augmented Generation):** Patrón arquitectónico que complementa el conocimiento paramétrico de un LLM mediante la recuperación dinámica de fragmentos relevantes desde una base de datos externa para inyectarlos en el prompt en tiempo de inferencia. Elimina alucinaciones fácticas sin reentrenar el modelo.
+2. **Dense Embeddings (Incrustaciones Densas):** Representaciones vectoriales en un espacio continuo de $d$ dimensiones (ej. $d=384$ con `all-MiniLM-L6-v2`) donde textos con significado semántico afín quedan situados a corta distancia euclidiana o angular.
+3. **Similitud Coseno (Cosine Similarity):** Medida métrica que evalúa el coseno del ángulo entre dos vectores no nulos ($\cos \theta = \frac{u \cdot v}{\|u\| \|v\|}$). Al estar normalizados a longitud unitaria ($\|u\|=1$), equivale directamente al producto punto escalar.
+4. **Chunking (Segmentación de Documentos):** División algorítmica de documentos extensos en fragmentos de longitud controlada (ej. $200$ a $500$ tokens) con solapamiento (overlap) para preservar el contexto gramatical en los límites.
+5. **FAISS (Facebook AI Similarity Search):** Librería de código abierto de Meta AI optimizada en C++ y CUDA para búsqueda y agrupamiento extremadamente rápido de vectores densos en colecciones de millones de elementos (`IndexFlatIP`, `IndexIVFFlat`).
+6. **Top-K Retrieval:** Estrategia de selección que extrae los $k$ fragmentos con mayor puntuación de similitud semántica respecto a la consulta del usuario para conformar el contexto documental ($k=2$ o $k=3$ óptimo).
+7. **System Prompt & Grounding:** Instrucción del sistema que condiciona al LLM a responder exclusivamente fundamentado en los fragmentos provistos, declarando explícitamente desconocimiento si la información no está en el contexto.
+8. **Mitigación de Alucinaciones:** Garantía de que las afirmaciones del modelo pueden ser auditadas y rastreadas directamente a una cláusula o política corporativa real presente en el índice documental.
+9. **Hybrid Search (Búsqueda Híbrida):** Combinación de búsqueda densa semántica (embeddings) con búsqueda dispersa léxica (BM25 / TF-IDF) para capturar tanto conceptos conceptuales como códigos y números de referencia exactos.
+10. **RAG Triad (Fidelidad, Relevancia y Precisión):** Marco de evaluación que audita tres pilares: Relevancia del Contexto Recuperado, Fidelidad de la Respuesta al Contexto y Relevancia de la Respuesta respecto a la Pregunta.
+11. **Reranking (Reordenamiento con Cross-Encoder):** Etapa secundaria que procesa los pares (consulta, fragmento) de forma conjunta mediante un Cross-Encoder para refinar el orden de relevancia antes de construir el prompt final.
+12. **Vector DB Serverless:** Servicio administrado de base de datos vectorial (Pinecone, Chroma, Milvus, Qdrant) con escalado horizontal y persistencia en disco para aplicaciones empresariales.
+
+---
+
 Evidencia Científica & Recursos Oficiales
 
 ## Fuentes de Información Reales & Referencias Académicas
