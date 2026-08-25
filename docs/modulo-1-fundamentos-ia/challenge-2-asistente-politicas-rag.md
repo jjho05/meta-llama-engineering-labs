@@ -1052,6 +1052,6 @@ Directivas de fiabilidad, trazabilidad y mitigación de alucinaciones en sistema
 
 <div align="center">
 
-[⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
+[⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](challenge-3-fine-tuning-lora.md)
 
 </div>
