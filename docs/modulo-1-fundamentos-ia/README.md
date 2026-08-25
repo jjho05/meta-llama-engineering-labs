@@ -4,7 +4,7 @@
 
 **Arquitectura Transformer, Prompting Avanzado, Embeddings, RAG y Fine-Tuning con LoRA**
 
-[🏠 Inicio](../../README.md) • [📚 Módulo 2](../modulo-2-automatizacion-agentes-whatsapp/README.md) • [🧪 Challenge 1](../../notebooks/01_Challenge1_MultiModel_Benchmark_Groq.ipynb) • [🧪 Challenge 2](../../notebooks/02_Challenge2_RAG_Politicas_SentenceTransformers.ipynb)
+[🏠 Inicio](../../README.md) • [📚 Módulo 2](../modulo-2-automatizacion-agentes-whatsapp/README.md) • [🧪 Challenge 1](../../notebooks/01_Challenge1_MultiModel_Benchmark_Groq.ipynb) • [🧪 Challenge 2](../../notebooks/02_Challenge2_RAG_Politicas_SentenceTransformers.ipynb) • [🧪 Challenge 3](../../notebooks/03_Challenge3_FineTuning_LoRA_Llama.ipynb)
 
 </div>
 
@@ -38,5 +38,6 @@ En este primer módulo dominarás la física matemática y la ingeniería detrá
 
 ## 🧪 Laboratorios Prácticos & Challenges
 
-* **[Challenge 1 · Multi-Model Benchmark Groq LPU](../../notebooks/01_Challenge1_MultiModel_Benchmark_Groq.ipynb):** Evaluación de latencia, throughput y calidad en modelos de 20B, 27B CoT y 120B.
-* **[Challenge 2 · Asistente de Políticas con RAG Semántico](../../notebooks/02_Challenge2_RAG_Politicas_SentenceTransformers.ipynb):** Pipeline RAG con Sentence-Transformers, cálculo matricial en NumPy y síntesis condicionada.
+* **[Challenge 1 · Multi-Model Benchmark Groq LPU](../../notebooks/01_Challenge1_MultiModel_Benchmark_Groq.ipynb) ([Guía Markdown](challenge-1-benchmark-multi-modelo.md)):** Evaluación de latencia, throughput y calidad en modelos de 20B, 27B CoT y 120B.
+* **[Challenge 2 · Asistente de Políticas con RAG Semántico](../../notebooks/02_Challenge2_RAG_Politicas_SentenceTransformers.ipynb) ([Guía Markdown](challenge-2-asistente-politicas-rag.md)):** Pipeline RAG con Sentence-Transformers, cálculo matricial en NumPy y síntesis condicionada.
+* **[Challenge 3 · Fine-Tuning con LoRA & Evaluación](../../notebooks/03_Challenge3_FineTuning_LoRA_Llama.ipynb) ([Guía Markdown](challenge-3-fine-tuning-lora.md)):** Adaptación supervisada (PEFT) con SFTTrainer en GPU T4 y cuantificación de reducción de pérdida.

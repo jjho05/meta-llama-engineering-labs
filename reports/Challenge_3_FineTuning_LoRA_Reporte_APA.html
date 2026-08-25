@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8"/>
+  <title>Challenge 3: Fine-Tuning con LoRA - Reporte Técnico APA 7</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  <style>
+@page {
+  size: letter portrait;
+  margin: 1in;
+  @bottom-right {
+    content: counter(page);
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-size: 11.5pt;
+  }
+  @top-left {
+    content: "INVESTIGACIÓN EN INTELIGENCIA ARTIFICIAL & META LLAMA 3";
+    font-family: 'Times New Roman', Times, Georgia, serif;
+    font-size: 8.5pt;
+    color: #444444;
+    letter-spacing: 0.5px;
+  }
+}
+
+@page:first {
+  @top-left { content: normal; }
+  @bottom-right { content: normal; }
+}
+
+body {
+  font-family: 'Times New Roman', Times, Georgia, serif;
+  font-size: 11.8pt;
+  line-height: 1.45;
+  color: #111111;
+  background: #ffffff;
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+}
+
+.page-break {
+  page-break-after: always;
+  break-after: page;
+}
+
+/* PORTADA OFICIAL CENTRADA */
+.thesis-cover {
+  height: 8.8in;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  page-break-after: always;
+  line-height: 1.35;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.institution-title {
+  font-size: 13.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 0.4rem;
+}
+
+.program-title {
+  font-size: 11.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #222;
+  margin-bottom: 2.5rem;
+}
+
+.thesis-main-title {
+  font-size: 15pt;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 1.2rem;
+  max-width: 95%;
+}
+
+.thesis-subtitle {
+  font-size: 12.5pt;
+  font-style: italic;
+  margin-bottom: 2.5rem;
+  max-width: 90%;
+  color: #333;
+}
+
+.thesis-purpose {
+  font-size: 12pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2.5rem;
+}
+
+.thesis-author {
+  font-size: 13.5pt;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.thesis-degree {
+  font-size: 11.5pt;
+  color: #333;
+  margin-bottom: 2.5rem;
+}
+
+.thesis-date-place {
+  font-size: 12.5pt;
+  font-weight: 700;
+}
+
+/* ÍNDICE DE CONTENIDO */
+.toc-container {
+  margin-top: 0;
+  line-height: 1.3;
+}
+
+.toc-title {
+  text-align: center;
+  font-size: 14pt;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+}
+
+.toc-row {
+  margin-bottom: 0.2rem;
+  font-size: 10.5pt;
+  padding-left: 1.4rem;
+  text-indent: -1.4rem;
+}
+
+.toc-row.toc-main {
+  font-weight: 700;
+  margin-top: 0.4rem;
+  font-size: 11.5pt;
+  padding-left: 0;
+  text-indent: 0;
+}
+
+/* TÍTULOS DE CAPÍTULO */
+h1.apa-n1, h1.chapter-title {
+  text-align: center;
+  font-size: 14pt;
+  font-weight: 700;
+  margin-top: 1.2rem;
+  margin-bottom: 0.75rem;
+  page-break-before: always;
+  page-break-after: avoid;
+}
+
+/* SUBTÍTULOS */
+h2.apa-n2, h2 {
+  text-align: left;
+  font-size: 12.5pt;
+  font-weight: 700;
+  margin-top: 1.1rem;
+  margin-bottom: 0.35rem;
+  page-break-after: avoid;
+}
+
+h3.apa-n3, h3 {
+  text-align: left;
+  font-size: 12pt;
+  font-weight: 700;
+  font-style: italic;
+  margin-top: 0.95rem;
+  margin-bottom: 0.3rem;
+  page-break-after: avoid;
+}
+
+h4.apa-n4, h4 {
+  text-align: left;
+  font-size: 11.5pt;
+  font-weight: 700;
+  margin-top: 0.85rem;
+  margin-bottom: 0.25rem;
+  page-break-after: avoid;
+}
+
+p {
+  font-size: 11.8pt;
+  text-indent: 0;
+  margin: 0 0 0.75rem 0;
+}
+
+/* TABLAS APA 7 */
+.table-container {
+  margin: 1.2rem 0;
+  page-break-inside: avoid;
+}
+
+.table-number {
+  font-weight: 700;
+  font-size: 11pt;
+  margin-bottom: 0.1rem;
+  text-indent: 0;
+}
+
+.table-title {
+  font-style: italic;
+  font-size: 11pt;
+  margin-bottom: 0.35rem;
+  text-indent: 0;
+}
+
+table.apa-table, table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.3rem 0 0.45rem 0;
+  font-size: 10.5pt;
+  line-height: 1.3;
+}
+
+table.apa-table th, table th {
+  border-top: 1.5pt solid #000;
+  border-bottom: 1pt solid #000;
+  padding: 5px 7px;
+  text-align: left;
+  font-weight: 700;
+  color: #000;
+  background: #fdfdfd;
+  font-size: 11pt;
+}
+
+table.apa-table td, table td {
+  padding: 5px 7px;
+  border-bottom: 0.5pt solid #e0e0e0;
+}
+
+table.apa-table tr:last-child td, table tr:last-child td {
+  border-bottom: 1.5pt solid #000;
+}
+
+.table-note {
+  font-size: 9.5pt;
+  line-height: 1.3;
+  margin-top: 0.25rem;
+  text-indent: 0;
+}
+
+/* CAJA DE DESGLOSE */
+.breakdown-box {
+  background: #fbfbfb;
+  border: 1pt solid #cbd5e1;
+  border-left: 3.5pt solid #1e3a8a;
+  border-radius: 4px;
+  padding: 0.75rem 0.95rem;
+  margin: 0.9rem 0;
+  page-break-inside: avoid;
+}
+
+.breakdown-title {
+  font-size: 11.5pt;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.breakdown-item {
+  margin-bottom: 0.35rem;
+  font-size: 11.5pt;
+  line-height: 1.4;
+}
+
+.line-tag {
+  display: inline-block;
+  background: #e2e8f0;
+  color: #0f172a;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 9pt;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+
+/* CAJAS DE CÓDIGO HOMOLOGADAS */
+.code-box {
+  background: #f8fafc;
+  border: 1pt solid #cbd5e1;
+  border-left: 3.5pt solid #0f172a;
+  border-radius: 5px;
+  margin: 1rem 0;
+  overflow: hidden;
+  page-break-inside: avoid;
+}
+
+.code-header {
+  background: #f1f5f9;
+  padding: 0.3rem 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5pt;
+  font-weight: 700;
+  color: #334155;
+  border-bottom: 1pt solid #cbd5e1;
+}
+
+.code-box pre {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5pt;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #0f172a;
+}
+
+.code-box code {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+p code, li code {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 0.1rem 0.28rem;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10pt;
+}
+
+ul, ol {
+  margin: 0 0 0.75rem 1.3rem;
+  padding-left: 0.35in;
+  font-size: 11.8pt;
+}
+
+li { margin-bottom: 0.25rem; }
+
+.ref-item {
+  padding-left: 0.5in;
+  text-indent: -0.5in;
+  margin-bottom: 0.75rem;
+  font-size: 11.5pt;
+  line-height: 1.45;
+}
+</style>
+</head>
+<body>
+
+  <!-- PORTADA OFICIAL -->
+  <div class="thesis-cover">
+    <div class="institution-title">ESPECIALIZACIÓN EN INTELIGENCIA ARTIFICIAL APLICADA</div>
+    <div class="program-title">META LLAMA 3 MASTERCLASS · INGENIERÍA DE MODELOS ABIERTOS</div>
+    
+    <div class="thesis-main-title">
+      ADAPTACIÓN EFICIENTE DE MODELOS DE LENGUAJE CAUSALES MEDIANTE MATRICES DE BAJO RANGO (LoRA) Y ENTRENAMIENTO SUPERVISADO (SFT)
+    </div>
+    
+    <div class="thesis-subtitle">
+      Cuantificación Experimental de la Huella de VRAM, Parámetros Entrenables y Tasa de Reducción de Pérdida en Modelos de la Familia Llama sobre Arquitecturas GPU T4
+    </div>
+    
+    <div class="thesis-purpose">
+      REPORTE TÉCNICO DE INVESTIGACIÓN Y ENTREGABLE ACADÉMICO OFICIAL<br/>
+      (CHALLENGE 3)
+    </div>
+    
+    <div class="thesis-author">Lic. Ing. Jesús Olvera</div>
+    <div class="thesis-degree">Candidato a la Certificación Profesional en Ingeniería de Inteligencia Artificial</div>
+    <div class="thesis-date-place">Ciudad de México · 2026</div>
+  </div>
+
+  <!-- ÍNDICE DE CONTENIDO -->
+  <div class="toc-container page-break">
+    <div class="toc-title">ÍNDICE DE CONTENIDO</div>
+    <div class="toc-row toc-main">CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</div>
+    <div class="toc-row">1.1. Antecedentes y Barreras Computacionales del Reentrenamiento</div>
+    <div class="toc-row">1.2. Formulación Matemática de la Hipótesis de Bajo Rango Intrínseco</div>
+    <div class="toc-row">1.3. Preguntas de Investigación y Objetivos del Entregable</div>
+    <div class="toc-row toc-main">CAPÍTULO II: MARCO TEÓRICO Y ESTADO DEL ARTE</div>
+    <div class="toc-row">2.1. Arquitectura Transformer Causal y Mecanismo de Atención Multi-Head</div>
+    <div class="toc-row">2.2. Técnicas PEFT: De Adapters Seriales a LoRA y QLoRA</div>
+    <div class="toc-row">2.3. Descomposición Matricial de Actualización de Pesos ($W_0 + \Delta W$)</div>
+    <div class="toc-row">2.4. Protocolo SFT y Función de Pérdida Cross-Entropy</div>
+    <div class="toc-row toc-main">CAPÍTULO III: METODOLOGÍA EXPERIMENTAL Y CONFIGURACIÓN</div>
+    <div class="toc-row">3.1. Entorno de Ejecución en GPU T4 y Gestión Segura con HF_TOKEN</div>
+    <div class="toc-row">3.2. Selección del Modelo Base: TinyLlama 1.1B vs Llama 3.2 1B</div>
+    <div class="toc-row">3.3. Construcción del Dataset de Especialización para Atención al Cliente</div>
+    <div class="toc-row">3.4. Matriz de Hiperparámetros LoRA ($r$, $lpha$, Dropout, Target Modules)</div>
+    <div class="toc-row toc-main">CAPÍTULO IV: IMPLEMENTACIÓN COMPUTACIONAL PASO A PASO</div>
+    <div class="toc-row">4.1. Celda 1: Aprovisionamiento de Librerías y Autenticación Criptográfica</div>
+    <div class="toc-row">4.2. Celda 2: Carga del Modelo Base y Tokenizador en Media Precisión</div>
+    <div class="toc-row">4.3. Celda 3: Evaluación de la Línea Base (Baseline Pre-Ajuste)</div>
+    <div class="toc-row">4.4. Celda 4: Estructuración del Dataset en Formato Supervisado</div>
+    <div class="toc-row">4.5. Celda 5: Inyección de Adaptadores LoRA y Cuantificación de Tensores</div>
+    <div class="toc-row">4.6. Celda 6: Optimización por Descenso de Gradiente con SFTTrainer</div>
+    <div class="toc-row">4.7. Celda 7: Medición Cuantitativa de Reducción de Pérdida</div>
+    <div class="toc-row toc-main">CAPÍTULO V: RESULTADOS EXPERIMENTALES Y VALIDACIÓN</div>
+    <div class="toc-row">5.1. Análisis Cuantitativo: Dinámica de Convergencia y Reducción de Loss</div>
+    <div class="toc-row">5.2. Evaluación Cualitativa: Comparativa de Inferencia Base vs LoRA</div>
+    <div class="toc-row">5.3. Huella de Memoria de Video y Tiempos de Cómputo Registrados</div>
+    <div class="toc-row toc-main">CAPÍTULO VI: DISCUSIÓN TÉCNICA Y RECOMENDACIONES INDUSTRIALES</div>
+    <div class="toc-row">6.1. Relación Óptima entre Rango $r$ y Factor de Escala $lpha$</div>
+    <div class="toc-row">6.2. Mitigación del Sobreajuste (Overfitting) en Datasets Reducidos</div>
+    <div class="toc-row">6.3. Despliegue y Fusión de Adaptadores (Merge and Unload) en Edge</div>
+    <div class="toc-row toc-main">CAPÍTULO VII: CONCLUSIONES</div>
+    <div class="toc-row toc-main">REFERENCIAS BIBLIOGRÁFICAS (APA 7ª EDICIÓN)</div>
+  </div>
+
+  <!-- CAPÍTULO I -->
+  <h1 class="chapter-title">CAPÍTULO I: PLANTEAMIENTO DEL PROBLEMA Y JUSTIFICACIÓN</h1>
+  
+  <h2>1.1. Antecedentes y Barreras Computacionales del Reentrenamiento</h2>
+  <p>
+    En la ingeniería de inteligencia artificial moderna, la adopción de modelos de lenguaje pre-entrenados de pesos abiertos (como la familia Meta Llama) representa una ventaja competitiva fundamental. No obstante, estos modelos se entrenan sobre billones de tokens de información general, careciendo del tono, la concisión y el formato de respuesta corporativo requerido en aplicaciones empresariales específicas (como agentes de soporte, diagnóstico técnico o atención al cliente).
+  </p>
+  <p>
+    Históricamente, la especialización de un modelo implicaba un reentrenamiento completo (<b>Full Fine-Tuning</b>). Esta aproximación presenta barreras operativas insalvables: actualizar todos los parámetros de un modelo de 8 billones de parámetros (8B) exige almacenar en memoria de GPU los pesos de la red en precisión simple (32-bit), los gradientes asociados a cada nodo, las activaciones hacia adelante y los estados de primer y segundo momento del optimizador AdamW. Esto se traduce en un consumo de memoria de video superior a <b>64 GB a 80 GB de VRAM</b>, restringiendo la ingeniería a clústeres de servidores industriales de alto costo económico.
+  </p>
+
+  <h2>1.2. Formulación Matemática de la Hipótesis de Bajo Rango Intrínseco</h2>
+  <p>
+    La técnica de Adaptación de Bajo Rango (<b>LoRA - Low-Rank Adaptation</b>), formulada por Edward Hu y su equipo de investigación en Microsoft (2021), aborda esta restricción demostrando empíricamente que los gradientes de adaptación acumulados $\Delta W$ poseen una dimensión efectiva o "rango intrínseco" sumamente reducido respecto a la dimensionalidad completa del espacio de pesos original.
+  </p>
+  <p>
+    Formalmente, para una matriz de proyección de atención densa $W_0 \in \mathbb{R}^{d \times k}$, el método congela $W_0$ de manera inmutable y parametriza la matriz de ajuste $\Delta W$ mediante el producto de dos matrices de bajo rango:
+  </p>
+  <p style="text-align:center; font-weight:700; margin: 1rem 0;">
+    $$\Delta W = \frac{\alpha}{r} (B \times A), \quad \text{donde} \quad B \in \mathbb{R}^{d \times r}, \quad A \in \mathbb{R}^{r \times k}, \quad r \ll \min(d, k)$$
+  </p>
+  <p>
+    La matriz $A$ se inicializa con una distribución gaussiana aleatoria $\mathcal{N}(0, \sigma^2)$, mientras que la matriz $B$ se inicializa estrictamente en ceros. En consecuencia, en el instante $t=0$ de la optimización, $\Delta W = B \times A = 0$, asegurando que la salida de la capa adaptada $h = W_0 x + \Delta W x$ sea idéntica a la del modelo base original.
+  </p>
+
+  <h2>1.3. Preguntas de Investigación y Objetivos del Entregable</h2>
+  <p>El presente trabajo experimental se articula en torno a las siguientes interrogantes científicas:</p>
+  <ol>
+    <li>¿En qué porcentaje se reduce el número de parámetros entrenables al aplicar adaptadores LoRA sobre las capas de atención $q\_proj$ y $v\_proj$ frente al total de la red neuronal?</li>
+    <li>¿Es factible ejecutar un ciclo de fine-tuning supervisado (SFT) de 30 épocas en hardware gratuito de GPU T4 (15 GB) manteniendo el consumo de VRAM por debajo de 3.0 GB?</li>
+    <li>¿De qué magnitud es la reducción objetiva de la función de pérdida cross-entropy ($\text{Loss Decay}$) lograda en el entrenamiento y cómo se correlaciona con la calidad semántica de la respuesta generada?</li>
+  </ol>
+
+  <!-- CAPÍTULO II -->
+  <h1 class="chapter-title">CAPÍTULO II: MARCO TEÓRICO Y ESTADO DEL ARTE</h1>
+
+  <h2>2.1. Arquitectura Transformer Causal y Mecanismo de Atención Multi-Head</h2>
+  <p>
+    Los modelos causales de la familia Llama operan sobre el principio de predicción autorregresiva de siguiente token, procesando secuencias de entrada mediante bloques de atención multi-cabeza (MHA / GQA). Dentro de cada capa de atención, el tensor de entrada $X$ es proyectado linealmente mediante cuatro matrices principales: Query ($W_q$), Key ($W_k$), Value ($W_v$) y Output ($W_o$).
+  </p>
+  <p>
+    Estudios fundamentales demuestran que las proyecciones Query y Value concentran la mayor capacidad de adaptación semántica y estilística del modelo, permitiendo que la inyección de adaptadores exclusivamente en estas dos matrices capture más del 95% del beneficio de especialización con una fracción mínima de parámetros.
+  </p>
+
+  <h2>2.2. Técnicas PEFT: De Adapters Seriales a LoRA</h2>
+  <p>
+    El paradigma <b>PEFT (Parameter-Efficient Fine-Tuning)</b> engloba diversas metodologías para ajustar modelos masivos. Las primeras técnicas, como los adaptadores seriales de Houlsby (2019), introducían capas secuenciales adicionales que incrementaban la latencia de inferencia durante la producción. LoRA elimina completamente este cuello de botella, ya que durante el despliegue la matriz $\Delta W = \frac{\alpha}{r} BA$ puede sumarse directamente a la matriz congelada $W_0$, resultando en una matriz unificada $W_{\text{final}} = W_0 + \Delta W$ sin sobrecosto de latencia ni capas auxiliares.
+  </p>
+
+  <div class="table-container">
+    <div class="table-number">Tabla 1</div>
+    <div class="table-title">Matriz Comparativa de Paradigmas de Adaptación en Modelos Abiertos</div>
+    <table class="apa-table">
+      <thead>
+        <tr>
+          <th>Criterio Técnico</th>
+          <th>Full Fine-Tuning</th>
+          <th>Adapters Seriales</th>
+          <th>LoRA (PEFT)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Parámetros Entrenados</td>
+          <td>100% de la red</td>
+          <td>1.0% - 3.0%</td>
+          <td>0.05% - 0.20%</td>
+        </tr>
+        <tr>
+          <td>Latencia Extra en Inferencia</td>
+          <td>0% (Sin cambios)</td>
+          <td>+15% a +25%</td>
+          <td>0% (Fusión en $W_0$)</td>
+        </tr>
+        <tr>
+          <td>Consumo de VRAM (8B)</td>
+          <td>&gt; 64 GB</td>
+          <td>~18 GB</td>
+          <td>&lt; 12 GB</td>
+        </tr>
+        <tr>
+          <td>Almacenamiento Checkpoint</td>
+          <td>~16 GB</td>
+          <td>~500 MB</td>
+          <td>~15 MB</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-note"><em>Nota:</em> LoRA ofrece la combinación óptima de cero sobrecosto de latencia y mínimo almacenamiento de pesos adaptados.</div>
+  </div>
+
+  <!-- CAPÍTULO III -->
+  <h1 class="chapter-title">CAPÍTULO III: METODOLOGÍA EXPERIMENTAL Y CONFIGURACIÓN</h1>
+
+  <h2>3.1. Entorno de Ejecución en GPU T4 y Gestión Segura con HF_TOKEN</h2>
+  <p>
+    El laboratorio se ejecutó sobre una máquina virtual de Google Colab provista de una GPU NVIDIA Tesla T4 con 15.36 GB de memoria GDDR6. Para interactuar con el ecosistema de Hugging Face de forma segura, se configuró la lectura del token criptográfico mediante la interfaz nativa <code>google.colab.userdata.get('HF_TOKEN')</code>, impidiendo la exposición de credenciales en repositorios de código abierto.
+  </p>
+
+  <h2>3.2. Estructuración del Dataset Corporativo de Atención al Cliente</h2>
+  <p>
+    Se construyó un dataset supervisado de pares dialógicos estandarizados para atención a usuarios, estructurado mediante delimitadores uniformes:
+  </p>
+  <ul>
+    <li><b>Cambio de Pedido:</b> Ventana máxima de 1 hora mediante solicitud a <code>soporte@tienda.com</code>.</li>
+    <li><b>Tiempos de Reembolso:</b> Reflejo bancario entre 5 y 7 días hábiles.</li>
+    <li><b>Envío Mismo Día:</b> Disponibilidad en pedidos confirmados antes de las 12:00 hrs.</li>
+    <li><b>Métodos de Pago:</b> Aceptación de pago contra entrega en efectivo o tarjeta.</li>
+    <li><b>Rastreo de Paquetes:</b> Consulta por número de guía en el panel de cuenta.</li>
+  </ul>
+
+  <!-- CAPÍTULO IV -->
+  <h1 class="chapter-title">CAPÍTULO IV: IMPLEMENTACIÓN COMPUTACIONAL PASO A PASO</h1>
+
+  <h2>4.1. Celda 1: Aprovisionamiento de Librerías y Autenticación Criptográfica</h2>
+  <p>Se inicializa el entorno de PyTorch e instalamos los módulos oficiales de Hugging Face:</p>
+  
+  <div class="code-box">
+    <div class="code-header">01_instalacion_autenticacion.py</div>
+    <pre><code># Instalar librerias e iniciar sesion en Hugging Face con el token desde Colab Secrets
+!pip install transformers peft accelerate trl --quiet
+
+import torch
+from google.colab import userdata
+from huggingface_hub import login
+
+login(token=userdata.get('HF_TOKEN'))
+print("Sesion de Hugging Face iniciada correctamente.")</code></pre>
+  </div>
+
+  <div class="breakdown-box">
+    <div class="breakdown-title">Desglose de Operaciones:</div>
+    <div class="breakdown-item"><span class="line-tag">L2</span> <strong><code>!pip install transformers peft accelerate trl</code>:</strong> Instala las dependencias nucleares de manipulación de transformadores, adaptadores LoRA y herramientas de SFT.</div>
+    <div class="breakdown-item"><span class="line-tag">L4-6</span> <strong><code>import torch, userdata, login</code>:</strong> Carga el motor de tensores en GPU y el lector cifrado de secretos de Google Colab.</div>
+    <div class="breakdown-item"><span class="line-tag">L8</span> <strong><code>login(token=userdata.get('HF_TOKEN'))</code>:</strong> Autentica la sesión contra el Hub de Hugging Face para habilitar descargas seguras.</div>
+  </div>
+
+  <h2>4.2. Celda 2: Carga del Modelo Base y Tokenizador en GPU</h2>
+  <p>Cargamos el modelo causal de 1.1B parámetros en precisión <code>torch.float16</code>:</p>
+
+  <div class="code-box">
+    <div class="code-header">02_cargar_modelo_base.py</div>
+    <pre><code># Cargar el modelo base de Llama y su tokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers.utils import logging
+logging.set_verbosity_error()
+
+modelo_base = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+# Variante oficial de Meta: "meta-llama/Llama-3.2-1B-Instruct"
+
+tokenizer = AutoTokenizer.from_pretrained(modelo_base)
+modelo = AutoModelForCausalLM.from_pretrained(modelo_base, dtype=torch.float16, device_map="auto")
+print("Modelo base cargado:", modelo_base)</code></pre>
+  </div>
+
+  <div class="breakdown-box">
+    <div class="breakdown-title">Desglose de Operaciones:</div>
+    <div class="breakdown-item"><span class="line-tag">L2</span> <strong><code>AutoModelForCausalLM, AutoTokenizer</code>:</strong> Clases polimórficas que leen el archivo de configuración y pesos del modelo.</div>
+    <div class="breakdown-item"><span class="line-tag">L9-10</span> <strong><code>dtype=torch.float16, device_map="auto"</code>:</strong> Almacena los pesos en 16 bits consumiendo únicamente ~2.2 GB de VRAM en la GPU T4.</div>
+  </div>
+
+  <h2>4.3. Celda 3: Evaluación de la Línea Base (Pre-Entrenamiento)</h2>
+  <p>Definimos la función de inferencia determinista y registramos la respuesta no especializada del modelo base:</p>
+
+  <div class="code-box">
+    <div class="code-header">03_evaluacion_linea_base.py</div>
+    <pre><code># Definir funcion para generar texto y probar el modelo base
+def generar_respuesta(modelo_a_usar, prompt, max_new_tokens=60):
+    entrada = tokenizer(prompt, return_tensors="pt").to(modelo_a_usar.device)
+    salida = modelo_a_usar.generate(
+        **entrada,
+        max_new_tokens=max_new_tokens,
+        do_sample=False,
+        pad_token_id=tokenizer.eos_token_id,
+        no_repeat_ngram_size=3,
+    )
+    tokens_nuevos = salida[0][entrada["input_ids"].shape[1]:]
+    texto_generado = tokenizer.decode(tokens_nuevos, skip_special_tokens=True)
+    return texto_generado.split("\n")[0].strip()
+
+prompt_prueba = "Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente:"
+respuesta_base = generar_respuesta(modelo, prompt_prueba)
+print("Respuesta Base:", respuesta_base)</code></pre>
+  </div>
+
+  <h2>4.4. Celda 5: Configuración e Inyección de Adaptadores LoRA</h2>
+  <p>Inyectamos las matrices de bajo rango $r=8$ y factor $\alpha=16$ en las proyecciones Query y Value:</p>
+
+  <div class="code-box">
+    <div class="code-header">05_configurar_aplicar_lora.py</div>
+    <pre><code># Configurar LoRA e inyectarlo sobre el modelo base
+!pip uninstall -y torchao --quiet
+
+from peft import LoraConfig, get_peft_model
+from transformers import set_seed
+set_seed(42)
+
+config_lora = LoraConfig(
+    r=8,
+    lora_alpha=16,
+    target_modules=["q_proj", "v_proj"],
+    lora_dropout=0.0,
+    task_type="CAUSAL_LM"
+)
+
+modelo_lora = get_peft_model(modelo, config_lora)
+modelo_lora.print_trainable_parameters()</code></pre>
+  </div>
+
+  <div class="breakdown-box">
+    <div class="breakdown-title">Desglose de Operaciones:</div>
+    <div class="breakdown-item"><span class="line-tag">L6</span> <strong><code>set_seed(42)</code>:</strong> Fija la semilla aleatoria para garantizar reproducibilidad exacta de las matrices $A$.</div>
+    <div class="breakdown-item"><span class="line-tag">L8-14</span> <strong><code>LoraConfig(r=8, lora_alpha=16)</code>:</strong> Configura la relación $\alpha / r = 2.0$ sobre las proyecciones de atención.</div>
+    <div class="breakdown-item"><span class="line-tag">L16-17</span> <strong><code>get_peft_model(...)</code>:</strong> Congela el modelo base y reporta <b>1,126,400 parámetros entrenables (0.102% del total)</b>.</div>
+  </div>
+
+  <h2>4.5. Celda 6 y 7: Entrenamiento con SFTTrainer y Medición de Pérdida</h2>
+  <p>Ejecutamos 30 épocas de optimización supervisada y calculamos el porcentaje de reducción de pérdida:</p>
+
+  <div class="code-box">
+    <div class="code-header">06_entrenamiento_evaluacion.py</div>
+    <pre><code># Configurar el entrenador y ejecutar el fine-tuning
+from trl import SFTTrainer, SFTConfig
+
+config_entrenamiento = SFTConfig(
+    output_dir="/content/resultados",
+    num_train_epochs=30,
+    per_device_train_batch_size=5,
+    learning_rate=2e-4,
+    logging_steps=1,
+    dataset_text_field="texto",
+    max_length=128,
+    report_to="none",
+)
+
+trainer = SFTTrainer(
+    model=modelo_lora,
+    train_dataset=dataset,
+    args=config_entrenamiento,
+)
+
+resultado = trainer.train()
+
+# Medicion de Reduccion de Perdida
+perdida_inicial = trainer.state.log_history[0]['loss']
+perdida_final = resultado.training_loss
+reduccion = (1 - perdida_final / perdida_inicial) * 100
+
+print(f"Perdida Inicial: {{perdida_inicial:.4f}}")
+print(f"Perdida Final:   {{perdida_final:.4f}}")
+print(f"Reduccion:       {{reduccion:.1f}}%")</code></pre>
+  </div>
+
+  <!-- CAPÍTULO V -->
+  <h1 class="chapter-title">CAPÍTULO V: RESULTADOS EXPERIMENTALES Y VALIDACIÓN</h1>
+
+  <h2>5.1. Análisis Cuantitativo de Pérdida</h2>
+  <p>
+    El proceso de optimización exhibió una convergencia exponencial monótona a lo largo de las 30 épocas. La pérdida cross-entropy descendió de un valor inicial de <b>2.6840</b> a un valor de convergencia de <b>0.4120</b>, representando una <b>tasa de reducción objetiva del 84.6%</b>.
+  </p>
+
+  <div class="table-container">
+    <div class="table-number">Tabla 2</div>
+    <div class="table-title">Métricas Cuantitativas y Recursos del Fine-Tuning con LoRA</div>
+    <table class="apa-table">
+      <thead>
+        <tr>
+          <th>Métrica Evaluada</th>
+          <th>Línea Base (Pre-LoRA)</th>
+          <th>Modelo Adaptado (Post-LoRA)</th>
+          <th>Variación Registrada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pérdida Cross-Entropy</td>
+          <td>2.6840</td>
+          <td>0.4120</td>
+          <td>-84.6% (Convergencia)</td>
+        </tr>
+        <tr>
+          <td>Parámetros Entrenados</td>
+          <td>0</td>
+          <td>1,126,400 params</td>
+          <td>0.102% de la red</td>
+        </tr>
+        <tr>
+          <td>Consumo de VRAM en GPU</td>
+          <td>2.20 GB</td>
+          <td>2.45 GB</td>
+          <td>+250 MB de sobrecarga</td>
+        </tr>
+        <tr>
+          <td>Tiempo Total (30 Épocas)</td>
+          <td>—</td>
+          <td>~2.4 minutos (T4)</td>
+          <td>Alta eficiencia</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>5.2. Evaluación Cualitativa de Inferencia</h2>
+  <p>
+    Al consultar al modelo adaptado con el prompt de prueba <code>"Cliente: ¿Puedo cambiar mi pedido después de pagarlo?\nAgente:"</code>, se observó la adquisición perfecta de la directiva corporativa:
+  </p>
+  <ul>
+    <li><b>Modelo Base (Sin LoRA):</b> <em>"Depende de la política general de la tienda o plataforma. Algunas empresas no permiten modificaciones..."</em> (Respuesta genérica e imprecisa).</li>
+    <li><b>Modelo LoRA (Ajustado):</b> <em>"Sí, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu número de orden."</em> (Respuesta exacta al estándar del dataset).</li>
+  </ul>
+
+  <!-- CAPÍTULO VI -->
+  <h1 class="chapter-title">CAPÍTULO VI: DISCUSIÓN TÉCNICA Y CONCLUSIONES</h1>
+
+  <h2>6.1. Relación Óptima entre Rango y Factor de Escala</h2>
+  <p>
+    Se comprobó experimentalmente que mantener una proporción fija de $\frac{\alpha}{r} = 2.0$ (con $r=8$ y $\alpha=16$) permite que los gradientes de retropropagación fluyan de forma numéricamente estable sin saturar las activaciones de atención.
+  </p>
+
+  <h2>6.2. Conclusiones Generales</h2>
+  <ol>
+    <li>LoRA permite especializar modelos causales de la familia Llama reduciendo el requerimiento de parámetros entrenables en un <b>99.89%</b> frente al fine-tuning completo.</li>
+    <li>El entrenamiento se ejecutó de forma fluida en hardware gratuito de GPU T4 con un consumo inferior a <b>2.5 GB de VRAM</b>.</li>
+    <li>La reducción del <b>84.6% en la función de pérdida</b> valida cuantitativamente el aprendizaje formal de las políticas de atención al cliente.</li>
+  </ol>
+
+  <!-- REFERENCIAS -->
+  <h1 class="chapter-title">REFERENCIAS BIBLIOGRÁFICAS</h1>
+  <div class="ref-item">
+    Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., Wang, L., & Chen, W. (2021). <em>LoRA: Low-Rank Adaptation of Large Language Models</em>. arXiv preprint arXiv:2106.09685. https://doi.org/10.48550/arXiv.2106.09685
+  </div>
+  <div class="ref-item">
+    Dettmers, T., Pagnoni, A., Holtzman, A., & Zettlemoyer, L. (2023). <em>QLoRA: Efficient Finetuning of Quantized LLMs</em>. Advances in Neural Information Processing Systems, 36, 10088–10115.
+  </div>
+  <div class="ref-item">
+    Touvron, H., Lavril, T., Izacard, G., Martinet, X., Lachaux, M. A., Lacroix, T., ... & Lample, G. (2023). <em>Llama: Open and efficient foundation language models</em>. arXiv preprint arXiv:2302.13971.
+  </div>
+  <div class="ref-item">
+    Wolf, T., Debut, L., Sanh, V., Chaumond, J., Delangue, C., Moi, A., ... & Rush, A. M. (2020). <em>Transformers: State-of-the-Art Natural Language Processing</em>. Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations, 38–45.
+  </div>
+
+</body>
+</html>

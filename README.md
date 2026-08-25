@@ -48,18 +48,22 @@ Al completar este programa de ingeniería serás capaz de:
 |---|---|---|---|
 | **01** | **Challenge 1 · Multi-Model Benchmark** | Comparador empírico de latencia, throughput y calidad de respuesta entre modelos SLM (20B), CoT Reasoning (27B) y LLM masivo (120B) en chips Groq LPU con Google Colab Secrets. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/01_Challenge1_MultiModel_Benchmark_Groq.ipynb) |
 | **02** | **Challenge 2 · Asistente de Políticas con RAG** | Pipeline RAG completo con embeddings multilingües de `sentence-transformers`, cálculo matricial con NumPy y síntesis fáctica condicionada anti-alucinación. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/02_Challenge2_RAG_Politicas_SentenceTransformers.ipynb) |
+| **03** | **Challenge 3 · Fine-Tuning con LoRA & Evaluación** | Adaptación supervisada de bajo rango (PEFT) con `peft`, `trl` y `SFTTrainer` sobre GPU T4, cuantificando la reducción objetiva de la función de pérdida cross-entropy. | [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/03_Challenge3_FineTuning_LoRA_Llama.ipynb) |
 
 ---
 
 ## 📚 Contenido del Programa
 
 ### [Módulo 1: Fundamentos de IA & Ecosistema de Modelos Abiertos](docs/modulo-1-fundamentos-ia/README.md)
-**4 manuales de ingeniería • 2 challenges prácticos en Colab**
+**4 manuales de ingeniería • 3 challenges prácticos en Colab**
 
 - [1.1 Arquitectura Transformer & Llama 3](docs/modulo-1-fundamentos-ia/01-arquitectura-transformer-llama3.md) — Tokenización BPE, tensores, GQA, RoPE y soberanía tecnológica.
 - [1.2 Prompt Engineering & Sistemas RAG](docs/modulo-1-fundamentos-ia/02-prompt-engineering-avanzado-rag.md) — Zero-Shot, Few-Shot, Chain-of-Thought y mitigación de alucinaciones.
 - [1.3 Fine-Tuning LoRA / QLoRA & Evaluación](docs/modulo-1-fundamentos-ia/03-fine-tuning-lora-qlora-evaluacion.md) — Matrices de bajo rango $\Delta W = B \cdot A$, cuantización NF4 y métricas Perplexity/BLEU.
 - [1.4 Del Prototipo al Pipeline Productivo](docs/modulo-1-fundamentos-ia/04-del-prototipo-al-pipeline-productivo.md) — Microservicios FastAPI, endpoints de inferencia y Docker.
+- [Challenge 1 · Multi-Model Benchmark](docs/modulo-1-fundamentos-ia/challenge-1-benchmark-multi-modelo.md) — Benchmarking y análisis de latencia en Groq LPU.
+- [Challenge 2 · Asistente RAG con Políticas](docs/modulo-1-fundamentos-ia/challenge-2-asistente-politicas-rag.md) — Sistema RAG determinista y similitud coseno.
+- [Challenge 3 · Fine-Tuning con LoRA](docs/modulo-1-fundamentos-ia/challenge-3-fine-tuning-lora.md) — Adaptación PEFT con SFTTrainer y medición de pérdida.
 
 **Cuadernos Colab:** [Ver carpeta notebooks/](notebooks/)
 

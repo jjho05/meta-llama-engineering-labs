@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [Siguiente ➡️](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
+[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [Siguiente ➡️](challenge-3-fine-tuning-lora.md)
 
 </div>
 
