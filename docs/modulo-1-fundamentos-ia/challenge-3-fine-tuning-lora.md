@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](challenge-2-asistente-politicas-rag.md) • [Siguiente ➡️](../modulo-2-whatsapp-agentes/01-whatsapp-cloud-api-webhooks.md)
+[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](challenge-2-asistente-politicas-rag.md) • [Siguiente ➡️ (Hackathon)](hackathon-guia-participante.md)
 
 </div>
 
