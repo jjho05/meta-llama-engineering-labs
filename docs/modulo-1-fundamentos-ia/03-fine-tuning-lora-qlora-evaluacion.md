@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](02-prompt-engineering-avanzado-rag.md) • [Siguiente ➡️](04-del-prototipo-al-pipeline-productivo.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [⬅️ Anterior](02-prompt-engineering-avanzado-rag.md) • [Siguiente ️](04-del-prototipo-al-pipeline-productivo.md)
 
 </div>
 
@@ -108,7 +108,7 @@ Tolerancia a Alucinaciones: Cero Tolerancia
 
 Cero (Auditoría Estricta) Alta (Modo Creativo)
 
-####  Enfoque Recomendado: RAG Semántico (Retrieval-Augmented Generation) 
+#### Enfoque Recomendado: RAG Semántico (Retrieval-Augmented Generation) 
 
 100% RAG Puro
 
@@ -808,7 +808,7 @@ Una vez completado el entrenamiento con QLoRA, el modelo no está listo para pro
 
 1
 
-#####  Merge: Fusión de Adaptadores LoRA en Pesos Base 
+##### Merge: Fusión de Adaptadores LoRA en Pesos Base 
 
 El método `model.merge_and_unload()` suma matemáticamente los pesos LoRA al modelo base ($W_{\text{final}} = W_0 + \frac{\alpha}{r}BA$) y produce un checkpoint consolidado en `.safetensors` con cero sobrecarga computacional en inferencia. 
 
@@ -830,7 +830,7 @@ merge_lora.py (Fusión Definitiva)
 
 2
 
-#####  Cuantización GGUF para Despliegue Local con Ollama / llama.cpp 
+##### Cuantización GGUF para Despliegue Local con Ollama / llama.cpp 
 
 Convertimos el modelo fusionado a formato GGUF con cuantización `Q4_K_M` (4.5 bits por peso con k-quants), reduciendo la huella de memoria de Llama 3 8B de 16 GB (FP16) a ~4.8 GB con nula degradación de calidad. 
 
@@ -845,7 +845,7 @@ convert_gguf.sh (Conversión y Cuantización a 4 bits)
 
 3
 
-#####  Servicio en Producción: Modelfile de Ollama y Servidor vLLM 
+##### Servicio en Producción: Modelfile de Ollama y Servidor vLLM 
 
 Para uso local o edge usamos un `Modelfile` declarativo en Ollama. Para APIs de alta concurrencia usamos el servidor de **vLLM** con _PagedAttention_ y _Continuous Batching_. 
 
@@ -945,8 +945,7 @@ dataset_sft_postgresql.jsonl
     
     
     {
-      "messages": [
-        {
+      "messages": [{
           "role": "system",
           "content": "Eres un DBA senior experto en PostgreSQL. Proporciona diagnósticos con EXPLAIN ANALYZE e índices concisos."
         },
@@ -957,8 +956,7 @@ dataset_sft_postgresql.jsonl
         {
           "role": "assistant",
           "content": "1. Crea índice compuesto B-Tree:\nCREATE INDEX idx_ord ON ordenes (cliente_id, estado);\n2. Ejecuta: ANALYZE ordenes;\n3. El Seq Scan pasará a Index Scan en <5ms."
-        }
-      ]
+        }]
     }
 
 2
@@ -1019,7 +1017,7 @@ Ver Criterio de Solución & Script DPO Completo
 
 $$
 
-\mathcal{L}_{\text{DPO}}(\pi_\theta;\, \pi_{\text{ref}}) = -\mathbb{E}_{(x,\, y_w,\, y_l) \sim \mathcal{D}} \left[ \log \sigma \\!\left( \beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)} \right) \right]$$ 
+\mathcal{L}_{\text{DPO}}(\pi_\theta;\, \pi_{\text{ref}}) = -\mathbb{E}_{(x,\, y_w,\, y_l) \sim \mathcal{D}} \left[\log \sigma \\!\left( \beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)} \right) \right]$$ 
 
   * **$\pi_\theta$** — política en entrenamiento (Llama 3 + LoRA activo).
   * **$\pi_{\text{ref}}$** — política de referencia congelada: el checkpoint SFT sin gradientes.
@@ -1271,7 +1269,7 @@ Microsoft Research · 2021 Paper Fundacional PEFT
 
 El artículo seminal de Edward Hu et al. que introdujo la descomposición $W_0 + \frac{\alpha}{r}(BA)$, reduciendo los parámetros entrenables en un 99.8% sin introducir latencia en inferencia. 
 
-[ Consultar en arXiv: 2106.09685 ](https://arxiv.org/abs/2106.09685)
+[Consultar en arXiv: 2106.09685](https://arxiv.org/abs/2106.09685)
 
 Univ. of Washington · 2023 Cuantización 4-bit NF4
 
@@ -1279,7 +1277,7 @@ Univ. of Washington · 2023 Cuantización 4-bit NF4
 
 Tim Dettmers et al. introducen el tipo de dato 4-bit NormalFloat, Double Quantization y Paged Optimizers para entrenar modelos de 70B en GPUs de 48GB y de 8B en GPUs de 8GB. 
 
-[ Consultar en arXiv: 2305.14314 ](https://arxiv.org/abs/2305.14314)
+[Consultar en arXiv: 2305.14314](https://arxiv.org/abs/2305.14314)
 
 Meta AI Research · 2020 Dimensión Intrínseca
 
@@ -1287,7 +1285,7 @@ Meta AI Research · 2020 Dimensión Intrínseca
 
 Aghajanyan et al. demuestran que los modelos grandes de lenguaje operan en subespacios de baja dimensión, fundamentando la base teórica de la adaptación de bajo rango. 
 
-[ Consultar en arXiv: 2012.13255 ](https://arxiv.org/abs/2012.13255)
+[Consultar en arXiv: 2012.13255](https://arxiv.org/abs/2012.13255)
 
 Stanford University · 2023 Alineación DPO
 
@@ -1295,7 +1293,7 @@ Stanford University · 2023 Alineación DPO
 
 Rafailov et al. formulan matemáticamente cómo alinear modelos a partir de pares de preferencias humanas mediante optimización directa sin entrenar un modelo de recompensa separado. 
 
-[ Consultar en arXiv: 2305.18290 ](https://arxiv.org/abs/2305.18290)
+[Consultar en arXiv: 2305.18290](https://arxiv.org/abs/2305.18290)
 
 Meta AI · 2023 Seguridad & Moderación
 
@@ -1303,7 +1301,7 @@ Meta AI · 2023 Seguridad & Moderación
 
 Documento técnico oficial de Llama Guard, detallando la taxonomía de 14 riesgos de seguridad, el entrenamiento del clasificador y su integración en pipelines corporativos. 
 
-[ Consultar en arXiv: 2312.06674 ](https://arxiv.org/abs/2312.06674)
+[Consultar en arXiv: 2312.06674](https://arxiv.org/abs/2312.06674)
 
 LMSYS & UC Berkeley · 2023 Evaluación con Juez IA
 
@@ -1311,7 +1309,7 @@ LMSYS & UC Berkeley · 2023 Evaluación con Juez IA
 
 Zheng et al. evalúan la consistencia de modelos como evaluadores automáticos frente a humanos, identificando técnicas para mitigar sesgos de posición y verbosidad. 
 
-[ Consultar en arXiv: 2306.05685 ](https://arxiv.org/abs/2306.05685)
+[Consultar en arXiv: 2306.05685](https://arxiv.org/abs/2306.05685)
 
 IBM Research · 2002 Métrica Clásica BLEU
 
@@ -1319,7 +1317,7 @@ IBM Research · 2002 Métrica Clásica BLEU
 
 Papineni et al. presentan la formulación de precisión n-grama con Brevity Penalty, el estándar histórico para evaluación de traducción y generación estructurada. 
 
-[ Consultar en ACL: P02-1040 ](https://aclanthology.org/P02-1040/)
+[Consultar en ACL: P02-1040](https://aclanthology.org/P02-1040/)
 
 Univ. of Southern California · 2004 Métrica de Resumen ROUGE
 
@@ -1327,7 +1325,7 @@ Univ. of Southern California · 2004 Métrica de Resumen ROUGE
 
 Chin-Yew Lin introduce las métricas de solapamiento de n-gramas orientadas a recall y el algoritmo de Longest Common Subsequence (ROUGE-L). 
 
-[ Consultar en ACL: W04-1013 ](https://aclanthology.org/W04-1013/)
+[Consultar en ACL: W04-1013](https://aclanthology.org/W04-1013/)
 
 UC Berkeley · 2020 Benchmark Multitarea MMLU
 
@@ -1335,7 +1333,7 @@ UC Berkeley · 2020 Benchmark Multitarea MMLU
 
 Hendrycks et al. construyen el benchmark estandarizado MMLU con 57 materias académicas y profesionales para medir conocimiento general en modelos de lenguaje. 
 
-[ Consultar en arXiv: 2009.03300 ](https://arxiv.org/abs/2009.03300)
+[Consultar en arXiv: 2009.03300](https://arxiv.org/abs/2009.03300)
 
 Unsloth AI · 2024 Motor de Inferencia y Fine-Tuning
 
@@ -1343,7 +1341,7 @@ Unsloth AI · 2024 Motor de Inferencia y Fine-Tuning
 
 Kernel personalizado en Triton y CUDA que acelera el entrenamiento de LoRA/QLoRA en Llama 3 hasta 2x y reduce el consumo de memoria en un 70%. 
 
-[ Consultar en GitHub: unsloth ](https://github.com/unslothai/unsloth)
+[Consultar en GitHub: unsloth](https://github.com/unslothai/unsloth)
 
 Hugging Face · 2022 Librería PEFT Oficial
 
@@ -1351,7 +1349,7 @@ Hugging Face · 2022 Librería PEFT Oficial
 
 Documentación técnica y suite de herramientas de Hugging Face para inyección y fusión de adaptadores LoRA, prefix tuning y quantizadores bitsandbytes. 
 
-[ Consultar en Hugging Face: peft ](https://github.com/huggingface/peft)
+[Consultar en Hugging Face: peft](https://github.com/huggingface/peft)
 
 OpenAI · 2022 SFT e Instruct Tuning
 
@@ -1359,7 +1357,7 @@ OpenAI · 2022 SFT e Instruct Tuning
 
 Ouyang et al. (InstructGPT) detallan el proceso de Supervised Fine-Tuning (SFT) y recolección de datasets de demostración para alinear modelos autorregresivos. 
 
-[ Consultar en arXiv: 2203.02155 ](https://arxiv.org/abs/2203.02155)
+[Consultar en arXiv: 2203.02155](https://arxiv.org/abs/2203.02155)
 
 Qdrant Systems · 2024 Base Vectorial
 
@@ -1367,7 +1365,7 @@ Qdrant Systems · 2024 Base Vectorial
 
 Motor de búsqueda vectorial en Rust con soporte para filtrado geoespacial y atributos estructurados integrado con Llama 3 RAG. 
 
-[ Consultar Qdrant Docs ](https://qdrant.tech/documentation/)
+[Consultar Qdrant Docs](https://qdrant.tech/documentation/)
 
 Cohere AI · 2024 Re-Ranking Neuronal
 
@@ -1375,7 +1373,7 @@ Cohere AI · 2024 Re-Ranking Neuronal
 
 Modelo cross-encoder de alta precisión que reordena los 20 mejores resultados de búsqueda densa antes de inyectarlos en el contexto de Llama 3. 
 
-[ Consultar Cohere Rerank ](https://docs.cohere.com/docs/reranking)
+[Consultar Cohere Rerank](https://docs.cohere.com/docs/reranking)
 
 LlamaIndex Core Framework RAG
 
@@ -1383,7 +1381,7 @@ LlamaIndex Core Framework RAG
 
 Herramientas avanzadas de ingesta de datos, chunking semántico y enrutamiento jerárquico de consultas sobre documentos no estructurados. 
 
-[ Consultar LlamaIndex ](https://docs.llamaindex.ai/)
+[Consultar LlamaIndex](https://docs.llamaindex.ai/)
 
 BAAI Research · 2024 Modelo de Embeddings
 
@@ -1391,12 +1389,12 @@ BAAI Research · 2024 Modelo de Embeddings
 
 Modelo líder en el benchmark MTEB para representaciones vectoriales densas y dispersas con soporte para más de 100 idiomas incluyendo español. 
 
-[ Consultar BGE GitHub ](https://github.com/FlagOpen/FlagEmbedding)
+[Consultar BGE GitHub](https://github.com/FlagOpen/FlagEmbedding)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](02-prompt-engineering-avanzado-rag.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](04-del-prototipo-al-pipeline-productivo.md)
+[⬅️ Anterior](02-prompt-engineering-avanzado-rag.md) • [Inicio](../../README.md) • [Módulo 1](README.md) • [Siguiente ️](04-del-prototipo-al-pipeline-productivo.md)
 
 </div>

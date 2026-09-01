@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [Siguiente ➡️](challenge-3-fine-tuning-lora.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [Siguiente ️](challenge-3-fine-tuning-lora.md)
 
 </div>
 
@@ -425,11 +425,9 @@ Celda 7: vectorizacion_documentos.py
     # Definir la base de conocimiento (política de devoluciones) y generar sus embeddings
     modelo_embeddings = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
     
-    documentos = [
-        "Las devoluciones se aceptan hasta 30 días después de la compra, con el producto en su empaque original.",
+    documentos = ["Las devoluciones se aceptan hasta 30 días después de la compra, con el producto en su empaque original.",
         "Los envíos internacionales no tienen devolución gratuita; el cliente cubre el costo de envío de regreso.",
-        "Los productos en oferta o liquidación no son elegibles para devolución ni reembolso."
-    ]
+        "Los productos en oferta o liquidación no son elegibles para devolución ni reembolso."]
     
     embeddings_documentos = modelo_embeddings.encode(documentos)
     print(f"Embeddings generados: {embeddings_documentos.shape}")
@@ -590,11 +588,9 @@ Challenge Celda 2: base_conocimiento_reglamento.py
     
     
     # Construimos la base de conocimiento con el reglamento oficial del curso
-    documentos = [
-        "Criterios de Evaluación y Calificación Mínima: La calificación final del curso se compone de Challenges prácticos semanales (40%), Proyecto Integrador con Llama y RAG (50%), y Participación en masterclasses (10%). La calificación mínima aprobatoria para acreditar el curso y obtener la certificación es de 80 sobre 100 puntos.",
+    documentos = ["Criterios de Evaluación y Calificación Mínima: La calificación final del curso se compone de Challenges prácticos semanales (40%), Proyecto Integrador con Llama y RAG (50%), y Participación en masterclasses (10%). La calificación mínima aprobatoria para acreditar el curso y obtener la certificación es de 80 sobre 100 puntos.",
         "Política de Entregas Tardías y Penalizaciones: La fecha límite de entrega de cada Challenge es el domingo a las 23:59 hrs (hora CDMX). Las entregas realizadas con hasta 24 horas de retraso tienen una penalización de 15 puntos sobre la calificación obtenida. Las entregas entre 24 y 48 horas de retraso tienen una penalización de 30 puntos. Pasadas las 48 horas no se aceptan entregas y la calificación asignada será 0.",
-        "Integridad Académica y Asistencia: Se exige un mínimo de 80% de asistencia a las sesiones sincrónicas para mantener el derecho a evaluación. Todo código entregado en Colab debe ser de autoría propia y funcional; cualquier copia no autorizada o plagio entre alumnos resultará en la baja definitiva del programa."
-    ]
+        "Integridad Académica y Asistencia: Se exige un mínimo de 80% de asistencia a las sesiones sincrónicas para mantener el derecho a evaluación. Todo código entregado en Colab debe ser de autoría propia y funcional; cualquier copia no autorizada o plagio entre alumnos resultará en la baja definitiva del programa."]
     
     embeddings_documentos = modelo_challenge_emb.encode(documentos, normalize_embeddings=True)
     print(f"Base de conocimiento vectorizada: {embeddings_documentos.shape[0]} fragmentos de {embeddings_documentos.shape[1]} dimensiones.")
@@ -799,7 +795,7 @@ Modelo LLM Generador:  openai/gpt-oss-20b (Ligero 20B) openai/gpt-oss-120b (Gran
 
 Listo para recuperar fragmentos y comparar 
 
-#####  Ranking de Similitud Coseno de Fragmentos (Vector Dot Product $\mathbf{u} \cdot \mathbf{v}$): 
+##### Ranking de Similitud Coseno de Fragmentos (Vector Dot Product $\mathbf{u} \cdot \mathbf{v}$): 
 
 Documento #1 (Criterios de Evaluación y Calificación Mínima) 0.3120
 
@@ -881,11 +877,9 @@ ejecutar_challenge2.py
     modelo_embeddings = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
     
     # 3. Base de Conocimiento
-    documentos = [
-        "Criterios de Evaluación y Calificación Mínima: La calificación final del curso se compone de Challenges prácticos semanales (40%), Proyecto Integrador con Llama y RAG (50%), y Participación en masterclasses (10%). La calificación mínima aprobatoria para acreditar el curso y obtener la certificación es de 80 sobre 100 puntos.",
+    documentos = ["Criterios de Evaluación y Calificación Mínima: La calificación final del curso se compone de Challenges prácticos semanales (40%), Proyecto Integrador con Llama y RAG (50%), y Participación en masterclasses (10%). La calificación mínima aprobatoria para acreditar el curso y obtener la certificación es de 80 sobre 100 puntos.",
         "Política de Entregas Tardías y Penalizaciones: La fecha límite de entrega de cada Challenge es el domingo a las 23:59 hrs (hora CDMX). Las entregas realizadas con hasta 24 horas de retraso tienen una penalización de 15 puntos sobre la calificación obtenida. Las entregas entre 24 y 48 horas de retraso tienen una penalización de 30 puntos. Pasadas las 48 horas no se aceptan entregas y la calificación asignada será 0.",
-        "Integridad Académica y Asistencia: Se exige un mínimo de 80% de asistencia a las sesiones sincrónicas para mantener el derecho a evaluación. Todo código entregado en Colab debe ser de autoría propia y funcional; cualquier copia no autorizada o plagio entre alumnos resultará en la baja definitiva del programa."
-    ]
+        "Integridad Académica y Asistencia: Se exige un mínimo de 80% de asistencia a las sesiones sincrónicas para mantener el derecho a evaluación. Todo código entregado en Colab debe ser de autoría propia y funcional; cualquier copia no autorizada o plagio entre alumnos resultará en la baja definitiva del programa."]
     
     embeddings_documentos = modelo_embeddings.encode(documentos, normalize_embeddings=True)
     
@@ -977,7 +971,7 @@ Lewis et al. / Meta AI · 2020 Paper Fundacional RAG
 
 Artículo científico fundacional que formula el paradigma RAG combinando generadores pre-entrenados con recuperadores densos indexados por similitud. 
 
-[ Consultar en arXiv: 2005.11401 ](https://arxiv.org/abs/2005.11401)
+[Consultar en arXiv: 2005.11401](https://arxiv.org/abs/2005.11401)
 
 Reimers & Gurevych · 2019 Sentence-BERT
 
@@ -985,7 +979,7 @@ Reimers & Gurevych · 2019 Sentence-BERT
 
 Arquitectura de redes siamesas que permite mapear oraciones a espacios vectoriales densos donde la similitud coseno preserva la afinidad semántica. 
 
-[ Consultar en arXiv: 1908.10084 ](https://arxiv.org/abs/1908.10084)
+[Consultar en arXiv: 1908.10084](https://arxiv.org/abs/1908.10084)
 
 Malkov & Yashunin · 2018 Índices Vectoriales HNSW
 
@@ -993,7 +987,7 @@ Malkov & Yashunin · 2018 Índices Vectoriales HNSW
 
 Estructura de grafos navegables en capas jerárquicas adoptada por bases vectoriales modernas para búsqueda de vecinos más cercanos con complejidad $O(\log N)$. 
 
-[ Consultar en arXiv: 1603.09320 ](https://arxiv.org/abs/1603.09320)
+[Consultar en arXiv: 1603.09320](https://arxiv.org/abs/1603.09320)
 
 Johnson, Douze & Jégou · 2019 Búsqueda Masiva FAISS
 
@@ -1001,7 +995,7 @@ Johnson, Douze & Jégou · 2019 Búsqueda Masiva FAISS
 
 Biblioteca de investigación de Meta AI para indexación vectorial acelerada por hardware, cuantización de producto (PQ) y clustering de embeddings a escala masiva. 
 
-[ Consultar en arXiv: 1702.08734 ](https://arxiv.org/abs/1702.08734)
+[Consultar en arXiv: 1702.08734](https://arxiv.org/abs/1702.08734)
 
 Gao et al. · 2023 Taxonomía RAG Survey
 
@@ -1009,7 +1003,7 @@ Gao et al. · 2023 Taxonomía RAG Survey
 
 Estado del arte exhaustivo sobre RAG Ingenuo, RAG Avanzado y RAG Modular, detallando técnicas de re-ranking, filtrado contextual y alineación post-retrieval. 
 
-[ Consultar en arXiv: 2312.10997 ](https://arxiv.org/abs/2312.10997)
+[Consultar en arXiv: 2312.10997](https://arxiv.org/abs/2312.10997)
 
 Asai et al. / Univ. Washington · 2024 Auto-Reflexión Self-RAG
 
@@ -1017,7 +1011,7 @@ Asai et al. / Univ. Washington · 2024 Auto-Reflexión Self-RAG
 
 Entrenamiento de modelos con tokens especiales de reflexión para decidir cuándo recuperar información y evaluar dinámicamente la fidelidad fáctica de las citas. 
 
-[ Consultar en arXiv: 2310.11511 ](https://arxiv.org/abs/2310.11511)
+[Consultar en arXiv: 2310.11511](https://arxiv.org/abs/2310.11511)
 
 Wang et al. / Microsoft · 2022 Modelos MiniLM & E5
 
@@ -1025,7 +1019,7 @@ Wang et al. / Microsoft · 2022 Modelos MiniLM & E5
 
 Metodología de destilación y pre-entrenamiento débil para generar representaciones vectoriales densas ultra-eficientes de 384 y 768 dimensiones. 
 
-[ Consultar en arXiv: 2212.03533 ](https://arxiv.org/abs/2212.03533)
+[Consultar en arXiv: 2212.03533](https://arxiv.org/abs/2212.03533)
 
 Meta AI Research · 2024 Modelos Abiertos Llama 3
 
@@ -1033,7 +1027,7 @@ Meta AI Research · 2024 Modelos Abiertos Llama 3
 
 Reporte técnico de Meta AI sobre la arquitectura de 8B a 405B parámetros, el soporte de 128k tokens de contexto y la integración de mecanismos GQA. 
 
-[ Consultar en arXiv: 2407.21783 ](https://arxiv.org/abs/2407.21783)
+[Consultar en arXiv: 2407.21783](https://arxiv.org/abs/2407.21783)
 
 Abts et al. / Groq Inc. · 2022 Inferencia Ultra-Rápida
 
@@ -1041,7 +1035,7 @@ Abts et al. / Groq Inc. · 2022 Inferencia Ultra-Rápida
 
 Diseño de microarquitectura LPU para procesamiento streaming determinista sin colas de espera en DRAM, logrando latencias de RAG menores a 0.65 s. 
 
-[ Consultar en IEEE Micro: 9772967 ](https://ieeexplore.ieee.org/document/9772967)
+[Consultar en IEEE Micro: 9772967](https://ieeexplore.ieee.org/document/9772967)
 
 Robertson & Zaragoza · 2009 Recuperación Léxica BM25
 
@@ -1049,7 +1043,7 @@ Robertson & Zaragoza · 2009 Recuperación Léxica BM25
 
 Fundamento matemático de la recuperación por frecuencia inversa de términos (TF-IDF / BM25) para búsquedas léxicas exactas en esquemas híbridos. 
 
-[ Consultar en nowpublishers.com ](https://www.nowpublishers.com/article/Details/INR-019)
+[Consultar en nowpublishers.com](https://www.nowpublishers.com/article/Details/INR-019)
 
 Hugging Face & UKP Lab · 2025 Framework de Embeddings
 
@@ -1057,7 +1051,7 @@ Hugging Face & UKP Lab · 2025 Framework de Embeddings
 
 Documentación técnica de la suite de embeddings multilingües y el Massive Text Embedding Benchmark (MTEB) para evaluación de tareas semánticas. 
 
-[ Consultar en sbert.net ](https://sbert.net)
+[Consultar en sbert.net](https://sbert.net)
 
 NIST & ISO/IEC · 2025 Estándares de IA
 
@@ -1065,12 +1059,12 @@ NIST & ISO/IEC · 2025 Estándares de IA
 
 Directivas de fiabilidad, trazabilidad y mitigación de alucinaciones en sistemas de inteligencia artificial generativa con acceso a bases de conocimiento. 
 
-[ Consultar en nist.gov ](https://www.nist.gov/itl/ai-risk-management-framework)
+[Consultar en nist.gov](https://www.nist.gov/itl/ai-risk-management-framework)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](challenge-3-fine-tuning-lora.md)
+[⬅️ Anterior](challenge-1-benchmark-multi-modelo.md) • [Inicio](../../README.md) • [Módulo 1](README.md) • [Siguiente ️](challenge-3-fine-tuning-lora.md)
 
 </div>

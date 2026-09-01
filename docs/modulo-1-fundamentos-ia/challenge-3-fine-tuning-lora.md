@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](challenge-2-asistente-politicas-rag.md) • [Siguiente ➡️ (Hackathon)](hackathon-guia-participante.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [⬅️ Anterior](challenge-2-asistente-politicas-rag.md) • [Siguiente ️ (Hackathon)](hackathon-guia-participante.md)
 
 </div>
 
@@ -44,11 +44,11 @@ Eliminando cualquier sobrecosto de latencia o memoria en servidores productivos.
 ---
 
 > [!NOTE]
-> ### 💡 ¿No entendiste? Te lo explico fácil: Las notas adhesivas sobre la enciclopedia
+> ### ¿No entendiste? Te lo explico fácil: Las notas adhesivas sobre la enciclopedia
 > El **Full Fine-Tuning** es como imprimir de nuevo una enciclopedia entera de 1,000 páginas solo para actualizar 3 números de teléfono de atención a clientes. **LoRA** es como dejar la enciclopedia intacta y pegar pequeñas notas adhesivas transparentes (*Post-its*) en las páginas clave: cambias el comportamiento exacto usando casi cero papel y sin alterar el libro original.
 
 > [!TIP]
-> ### 🚀 Consejo Pro de Ingeniería: Módulos Objetivo de Atención
+> ### Consejo Pro de Ingeniería: Módulos Objetivo de Atención
 > Para tareas conversacionales estándar y estilo de respuesta, inyectar LoRA en las matrices de proyección de atención `q_proj` y `v_proj` ofrece la relación óptima entre reducción de memoria GPU y retención de capacidades cognitivas. Si requieres aprendizaje profundo de hechos o razonamiento complejo, extiende los adaptadores a todas las capas lineales: `["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]`.
 
 ---
@@ -236,13 +236,11 @@ Construimos un corpus dialógico supervisado con delimitadores consistentes `Cli
 # Celda 4: Dataset estructurado de politicas corporativas
 from datasets import Dataset
 
-datos = [
-    {"texto": "Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."},
+datos = [{"texto": "Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."},
     {"texto": "Cliente: ¿Cuanto tarda en llegar mi reembolso?\nAgente: El reembolso se refleja en tu cuenta en un plazo de 5 a 7 dias habiles tras la validacion."},
     {"texto": "Cliente: ¿Tienen servicio de envio el mismo dia?\nAgente: Si, disponible en zonas seleccionadas si el pedido se confirma antes de las 12:00 hrs."},
     {"texto": "Cliente: ¿Puedo pagar en efectivo al recibir mi producto?\nAgente: Si, aceptamos pago contra entrega en efectivo o tarjeta directamente con el repartidor."},
-    {"texto": "Cliente: ¿Como puedo rastrear el estado de mi paquete?\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."},
-]
+    {"texto": "Cliente: ¿Como puedo rastrear el estado de mi paquete?\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."},]
 
 dataset = Dataset.from_dict({"texto": [d["texto"] for d in datos]})
 print("Total de muestras supervisadas:", len(dataset))
@@ -397,13 +395,11 @@ tok = AutoTokenizer.from_pretrained(modelo_id)
 base_model = AutoModelForCausalLM.from_pretrained(modelo_id, dtype=torch.float16, device_map="auto")
 
 # 3. Dataset del Reto
-datos_challenge = [
-    {"texto": "Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."},
+datos_challenge = [{"texto": "Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."},
     {"texto": "Cliente: ¿Cuanto tarda en llegar mi reembolso?\nAgente: El reembolso se refleja en tu cuenta en un plazo de 5 a 7 dias habiles tras la validacion."},
     {"texto": "Cliente: ¿Tienen servicio de envio el mismo dia?\nAgente: Si, disponible en zonas seleccionadas si el pedido se confirma antes de las 12:00 hrs."},
     {"texto": "Cliente: ¿Puedo pagar en efectivo al recibir mi producto?\nAgente: Si, aceptamos pago contra entrega en efectivo o tarjeta directamente con el repartidor."},
-    {"texto": "Cliente: ¿Como puedo rastrear el estado de mi paquete?\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."},
-]
+    {"texto": "Cliente: ¿Como puedo rastrear el estado de mi paquete?\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."},]
 ds_reto = Dataset.from_dict({"texto": [d["texto"] for d in datos_challenge]})
 
 # 4. Inyectar Adaptador LoRA

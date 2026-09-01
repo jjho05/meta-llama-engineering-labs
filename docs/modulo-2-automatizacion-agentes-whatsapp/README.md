@@ -1,22 +1,22 @@
-# 🚀 Módulo 2: Automatización con Llama & WhatsApp Cloud API
+# Módulo 2: Automatización con Llama & WhatsApp Cloud API
 
 <div align="center">
 
 **Webhooks Asíncronos, Memoria de Sesión con Redis, Function Calling y Blindaje con Llama Guard**
 
-[🏠 Inicio](../../README.md) • [📚 Módulo 1](../modulo-1-fundamentos-ia/README.md) • [💻 Scripts de Producción](../../scripts/)
+[Inicio](../../README.md) • [Módulo 1](../modulo-1-fundamentos-ia/README.md) • [Scripts de Producción](../../scripts/)
 
 </div>
 
 ---
 
-## 📋 Descripción del Módulo
+## Descripción del Módulo
 
 En este segundo módulo conectarás la inteligencia generativa de Meta Llama 3 con el canal de mensajería más utilizado del mundo: la **WhatsApp Cloud API oficial de Meta**. Construirás agentes autónomos multi-turno con retención de contexto en Redis, capacidad de invocar funciones del mundo real (*Function Calling*) y blindaje de nivel empresarial con **Llama Guard 3** y **Prompt Guard**.
 
 ---
 
-## 🎯 Competencias Específicas
+## Competencias Específicas
 
 1. **Infraestructura de Mensajería:** Configurar la WhatsApp Cloud API, handshake criptográfico GET y recepción de webhooks POST.
 2. **Memoria de Sesión Multi-Turno:** Persistir el hilo conversacional con identificadores de teléfono y ventanas de contexto deslizantes.
@@ -25,7 +25,7 @@ En este segundo módulo conectarás la inteligencia generativa de Meta Llama 3 c
 
 ---
 
-## 📚 Temario y Documentación
+## Temario y Documentación
 
 | Tema | Título del Contenido | Enfoque de Ingeniería | Script Asociado |
 |---|---|---|---|
@@ -36,7 +36,7 @@ En este segundo módulo conectarás la inteligencia generativa de Meta Llama 3 c
 
 ---
 
-## 💻 Scripts de Terminal
+## Scripts de Terminal
 
 * `scripts/ejecutar_challenge1.py`: Benchmark de inferencia en hardware LPU.
 * `scripts/ejecutar_challenge2.py`: Pipeline RAG semántico en terminal.

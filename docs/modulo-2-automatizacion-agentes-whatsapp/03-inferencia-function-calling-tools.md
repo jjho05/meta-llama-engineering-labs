@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](02-agentes-conversacionales-memoria-redis.md) • [Siguiente ➡️](04-produccion-seguridad-llama-guard.md)
+[Inicio](../../README.md) • [Módulo 2](README.md) • [⬅️ Anterior](02-agentes-conversacionales-memoria-redis.md) • [Siguiente ️](04-produccion-seguridad-llama-guard.md)
 
 </div>
 
@@ -788,7 +788,7 @@ JSON Schema Org · 2024 Estándar IETF
 
 Especificación técnica del estándar de validación de objetos, tipos primitivos, campos obligatorios y enums para Function Calling.
 
-[ Consultar json-schema.org ](https://json-schema.org/)
+[Consultar json-schema.org](https://json-schema.org/)
 
 Meta AI · 2024 Guía de Inferencia
 
@@ -796,7 +796,7 @@ Meta AI · 2024 Guía de Inferencia
 
 Guía oficial de sintaxis para inyección de esquemas de funciones y procesamiento de tokens especiales del entorno de ejecución ipython.
 
-[ Consultar Llama 3 Prompt Formats ](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/)
+[Consultar Llama 3 Prompt Formats](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/)
 
 Pydantic · 2024 Validación Tipada
 
@@ -804,7 +804,7 @@ Pydantic · 2024 Validación Tipada
 
 Generación automática de esquemas JSON compatibles con OpenAPI a partir de clases BaseModel y validación defensiva en microsegundos.
 
-[ Consultar Docs Pydantic Schema ](https://docs.pydantic.dev/latest/concepts/json_schema/)
+[Consultar Docs Pydantic Schema](https://docs.pydantic.dev/latest/concepts/json_schema/)
 
 PostgreSQL Global Group Base de Datos
 
@@ -812,7 +812,7 @@ PostgreSQL Global Group Base de Datos
 
 Driver de conexión asíncrona de alto rendimiento para ejecución de consultas parametrizadas en milisegundos bajo alta concurrencia.
 
-[ Consultar Documentación asyncpg ](https://magicstack.github.io/asyncpg/current/)
+[Consultar Documentación asyncpg](https://magicstack.github.io/asyncpg/current/)
 
 Tenacity Library · Python Resiliencia
 
@@ -820,7 +820,7 @@ Tenacity Library · Python Resiliencia
 
 Librería estándar para manejo de reintentos en llamadas a herramientas externas para evitar colapsos en cascada.
 
-[ Consultar Tenacity Docs ](https://tenacity.readthedocs.io/)
+[Consultar Tenacity Docs](https://tenacity.readthedocs.io/)
 
 OpenAI API Compatibility Estándar de Inferencia
 
@@ -828,7 +828,7 @@ OpenAI API Compatibility Estándar de Inferencia
 
 Implementación del endpoint /v1/chat/completions con soporte de herramientas estructuradas para modelos Llama 3.
 
-[ Consultar vLLM Server API ](https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html)
+[Consultar vLLM Server API](https://docs.vllm.ai/en/latest/serving/openai_compatible_server.html)
 
 HTTPX Async Client Cliente HTTP
 
@@ -836,7 +836,7 @@ HTTPX Async Client Cliente HTTP
 
 Cliente HTTP asíncrono con soporte HTTP/2 y connection pooling para comunicación con Meta Graph API en submilisegundos.
 
-[ Consultar HTTPX Docs ](https://www.python-httpx.org/)
+[Consultar HTTPX Docs](https://www.python-httpx.org/)
 
 Meta Graph API v20.0 Mensajería Interactiva
 
@@ -844,7 +844,7 @@ Meta Graph API v20.0 Mensajería Interactiva
 
 Especificación para formatear respuestas generadas por herramientas en botones de selección rápida y listas en WhatsApp.
 
-[ Consultar Interactive Messages ](https://developers.facebook.com/docs/whatsapp/guides/interactive-messages)
+[Consultar Interactive Messages](https://developers.facebook.com/docs/whatsapp/guides/interactive-messages)
 
 Redlock Distributed Lock Algoritmo Distribuido
 
@@ -852,7 +852,7 @@ Redlock Distributed Lock Algoritmo Distribuido
 
 Implementación de bloqueos distribuidos para garantizar que llamadas a funciones transaccionales (pagos, reservas) sean estrictamente atómicas.
 
-[ Consultar Redlock Algorithm ](https://redis.io/docs/latest/develop/use/patterns/distributed-locks/)
+[Consultar Redlock Algorithm](https://redis.io/docs/latest/develop/use/patterns/distributed-locks/)
 
 Outlines / Guidance Gramáticas Estructuradas
 
@@ -860,7 +860,7 @@ Outlines / Guidance Gramáticas Estructuradas
 
 Técnicas de muestreo guiado mediante autómatas de estado finito que garantizan 100% de conformidad sintáctica en salidas JSON.
 
-[ Consultar Outlines GitHub ](https://github.com/dottxt-ai/outlines)
+[Consultar Outlines GitHub](https://github.com/dottxt-ai/outlines)
 
 OpenAPI 3.1.0 Specification Estándar API
 
@@ -868,7 +868,7 @@ OpenAPI 3.1.0 Specification Estándar API
 
 Alineación del catálogo de herramientas de Llama 3 con las especificaciones de OpenAPI para autogeneración de SDKs cliente.
 
-[ Consultar OpenAPI Spec ](https://spec.openapis.org/oas/latest.html)
+[Consultar OpenAPI Spec](https://spec.openapis.org/oas/latest.html)
 
 Python Asyncio Pool Concurrencia
 
@@ -876,7 +876,7 @@ Python Asyncio Pool Concurrencia
 
 Control de concurrencia mediante semáforos asíncronos para proteger APIs externas de saturación por ráfagas de usuarios en WhatsApp.
 
-[ Consultar Asyncio Sync Docs ](https://docs.python.org/3/library/asyncio-sync.html)
+[Consultar Asyncio Sync Docs](https://docs.python.org/3/library/asyncio-sync.html)
 
 PostgreSQL Transactions ACID Transactions
 
@@ -884,7 +884,7 @@ PostgreSQL Transactions ACID Transactions
 
 Aislamiento de transacciones de base de datos para prevenir anomalías de lectura fantasma en reservas concurrentes de asientos o inventarios.
 
-[ Consultar Postgres Isolation ](https://www.postgresql.org/docs/current/transaction-iso.html)
+[Consultar Postgres Isolation](https://www.postgresql.org/docs/current/transaction-iso.html)
 
 Meta Llama 3.1 Function Call Paper Técnico
 
@@ -892,7 +892,7 @@ Meta Llama 3.1 Function Call Paper Técnico
 
 Evaluación del rendimiento en benchmarks de Tool Use (BFCL) alcanzando más del 85% de precisión en llamadas complejas multi-función.
 
-[ Consultar Llama 3.1 Research ](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/)
+[Consultar Llama 3.1 Research](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/)
 
 Fault Tolerance Systems Ingeniería del Caos
 
@@ -900,7 +900,7 @@ Fault Tolerance Systems Ingeniería del Caos
 
 Diseño de fallbacks inteligentes que ofrecen opciones pre-calculadas al usuario cuando el servicio externo supera el timeout límite.
 
-[ Consultar Martin Fowler Circuit Breaker ](https://martinfowler.com/bliki/CircuitBreaker.html)
+[Consultar Martin Fowler Circuit Breaker](https://martinfowler.com/bliki/CircuitBreaker.html)
 
 Latency Engineering Rendimiento
 
@@ -908,12 +908,12 @@ Latency Engineering Rendimiento
 
 Técnicas de inferencia acelerada con kernels FlashAttention-2 y cuantización AWQ para reducir el tiempo total del ciclo a menos de 2 segundos.
 
-[ Consultar vLLM Kernels ](https://github.com/vllm-project/vllm)
+[Consultar vLLM Kernels](https://github.com/vllm-project/vllm)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](02-agentes-conversacionales-memoria-redis.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [Siguiente ➡️](04-produccion-seguridad-llama-guard.md)
+[⬅️ Anterior](02-agentes-conversacionales-memoria-redis.md) • [Inicio](../../README.md) • [Módulo 2](README.md) • [Siguiente ️](04-produccion-seguridad-llama-guard.md)
 
 </div>

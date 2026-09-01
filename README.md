@@ -1,4 +1,4 @@
-# 🦙 Meta Llama 3 Engineering Labs & Applied AI Specialization
+# Meta Llama 3 Engineering Labs & Applied AI Specialization
 
 <div align="center">
 
@@ -12,37 +12,37 @@
 
 **Recurso educativo y de ingeniería completo para el desarrollo con modelos de pesos abiertos (*Open Weights*) de Meta Llama 3**
 
-[📚 Contenido](#-contenido-del-programa) • [🚀 Inicio Rápido](#-inicio-rápido-en-local-cli) • [🧪 Cuadernos Google Colab](#-cuadernos-de-google-colab-y-laboratorios-en-1-clic) • [💻 Scripts](#-scripts-de-terminal) • [📖 Documentación](#-documentación-técnica-por-módulos)
+[Contenido](#-contenido-del-programa) • [Inicio Rápido](#-inicio-rápido-en-local-cli) • [Cuadernos Google Colab](#-cuadernos-de-google-colab-y-laboratorios-en-1-clic) • [Scripts](#-scripts-de-terminal) • [Documentación](#-documentación-técnica-por-módulos)
 
 </div>
 
 ---
 
-## 📋 Descripción
+## Descripción
 
 Este repositorio contiene el material técnico, los manuales teóricos en Markdown, los cuadernos interactivos de Google Colab y los scripts de producción del programa de **Especialización en Inteligencia Artificial Aplicada con Meta Llama 3**, diseñado y construido por **Ing. Jesús Javier Hernández Olvera**. Incluye:
 
-- ✅ **8 Temas Teóricos Detallados** organizados en 2 Módulos de Especialización
-- ✅ **2 Cuadernos Jupyter (.ipynb)** listos para ejecutarse con 1 clic en Google Colab
-- ✅ **2 Scripts Python de Producción** para benchmarking y RAG desde Terminal
-- ✅ **100% Alineado con las Mejores Prácticas** de Meta AI, Hugging Face y Groq LPU
-- ✅ **Arquitectura Libre de Alucinaciones** mediante Sentence-Transformers y RAG
+-  **8 Temas Teóricos Detallados** organizados en 2 Módulos de Especialización
+-  **2 Cuadernos Jupyter (.ipynb)** listos para ejecutarse con 1 clic en Google Colab
+-  **2 Scripts Python de Producción** para benchmarking y RAG desde Terminal
+-  **100% Alineado con las Mejores Prácticas** de Meta AI, Hugging Face y Groq LPU
+-  **Arquitectura Libre de Alucinaciones** mediante Sentence-Transformers y RAG
 
 ---
 
-## 🎓 Competencias Profesionales del Programa
+## Competencias Profesionales del Programa
 
 Al completar este programa de ingeniería serás capaz de:
 
-1. ⚡ **Dominar la Microarquitectura Transformer:** Comprender el cálculo de auto-atención escalada ($Q, K, V$), Grouped-Query Attention (GQA), Rotary Position Embeddings (RoPE) y KV-Cache.
-2. 🔍 **Construir Sistemas RAG de Grado Industrial:** Generar representaciones densas con `sentence-transformers`, indexar espacios vectoriales y anclar respuestas en documentos verídicos.
-3. 🛠️ **Optimizar con Fine-Tuning LoRA / QLoRA:** Adaptar modelos masivos mediante matrices de bajo rango en 4-bits sin requerir clusters inaccesibles de GPUs.
-4. 🤖 **Desarrollar Agentes Autónomos Multi-Turno:** Gestionar estado conversacional persistente con Redis y orquestar llamadas a herramientas (*Function Calling*).
-5. 🛡️ **Blindar y Desplegar en Producción:** Conectar la API oficial de WhatsApp Cloud con FastAPI, NGINX SSL y defensas activas contra inyecciones de prompts con **Llama Guard 3** y **Prompt Guard**.
+1.  **Dominar la Microarquitectura Transformer:** Comprender el cálculo de auto-atención escalada ($Q, K, V$), Grouped-Query Attention (GQA), Rotary Position Embeddings (RoPE) y KV-Cache.
+2.  **Construir Sistemas RAG de Grado Industrial:** Generar representaciones densas con `sentence-transformers`, indexar espacios vectoriales y anclar respuestas en documentos verídicos.
+3. ️ **Optimizar con Fine-Tuning LoRA / QLoRA:** Adaptar modelos masivos mediante matrices de bajo rango en 4-bits sin requerir clusters inaccesibles de GPUs.
+4.  **Desarrollar Agentes Autónomos Multi-Turno:** Gestionar estado conversacional persistente con Redis y orquestar llamadas a herramientas (*Function Calling*).
+5. ️ **Blindar y Desplegar en Producción:** Conectar la API oficial de WhatsApp Cloud con FastAPI, NGINX SSL y defensas activas contra inyecciones de prompts con **Llama Guard 3** y **Prompt Guard**.
 
 ---
 
-## 🧪 Cuadernos de Google Colab y Laboratorios (En 1-Clic)
+## Cuadernos de Google Colab y Laboratorios (En 1-Clic)
 
 | # | Laboratorio / Challenge | Descripción de Ingeniería | Enlace Directo a Colab |
 |---|---|---|---|
@@ -52,7 +52,7 @@ Al completar este programa de ingeniería serás capaz de:
 
 ---
 
-## 📚 Contenido del Programa
+## Contenido del Programa
 
 ### [Módulo 1: Fundamentos de IA & Ecosistema de Modelos Abiertos](docs/modulo-1-fundamentos-ia/README.md)
 **4 manuales de ingeniería • 3 challenges prácticos en Colab**
@@ -81,7 +81,7 @@ Al completar este programa de ingeniería serás capaz de:
 
 ---
 
-## 🚀 Inicio Rápido en Local (CLI)
+## Inicio Rápido en Local (CLI)
 
 ### 1. Clonar el repositorio
 ```bash
@@ -134,7 +134,7 @@ Q3_REASONING    | Enterprise (120B / 70B)  | 2.890        | 245      | 84.8
 
 ---
 
-## 👨‍💻 Dirección Técnica & Autoría
+## ‍ Dirección Técnica & Autoría
 
 * **Creador & Arquitecto:** **Ing. Jesús Javier Hernández Olvera**
 * **Especialización:** Arquitectura de Inteligencia Artificial, Modelos de Pesos Abiertos y Agentes Autónomos.
@@ -145,11 +145,11 @@ Q3_REASONING    | Enterprise (120B / 70B)  | 2.890        | 245      | 84.8
 
 ---
 
-## 🏷️ Temas & Tecnologías (GitHub Topics)
+## ️ Temas & Tecnologías (GitHub Topics)
 
 `meta-llama-3` • `llama-3.1` • `rag-system` • `sentence-transformers` • `groq-lpu` • `vector-embeddings` • `fastapi` • `docker` • `redis` • `whatsapp-cloud-api` • `function-calling` • `llama-guard-3` • `prompt-engineering` • `lora` • `qlora` • `ai-engineering`
 
 
-## 📄 Licencia
+## Licencia
 
 Distribuido bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.

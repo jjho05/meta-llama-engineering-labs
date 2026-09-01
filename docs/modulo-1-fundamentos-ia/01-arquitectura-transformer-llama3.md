@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](02-prompt-engineering-avanzado-rag.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [Siguiente ️](02-prompt-engineering-avanzado-rag.md)
 
 </div>
 
@@ -1131,7 +1131,7 @@ Meta AI Research · 2024 Paper Fundacional
 
 Documento técnico exhaustivo que detalla el preentrenamiento en más de 15 billones de tokens, la arquitectura GQA, el vocabulario de 128k y los procesos de alineación mediante DPO. 
 
-[ Consultar en arXiv: 2407.21783 ](https://arxiv.org/abs/2407.21783)
+[Consultar en arXiv: 2407.21783](https://arxiv.org/abs/2407.21783)
 
 Google Brain · 2017 Arquitectura Transformer
 
@@ -1139,7 +1139,7 @@ Google Brain · 2017 Arquitectura Transformer
 
 El artículo científico que revolucionó la inteligencia artificial introduciendo la auto-atención por producto punto escalado ($Q, K, V$) y eliminando la necesidad de recurrencia secuencial. 
 
-[ Consultar en arXiv: 1706.03762 ](https://arxiv.org/abs/1706.03762)
+[Consultar en arXiv: 1706.03762](https://arxiv.org/abs/1706.03762)
 
 Google DeepMind · 2022 Leyes de Escala
 
@@ -1147,7 +1147,7 @@ Google DeepMind · 2022 Leyes de Escala
 
 Investigación que formula las proporciones matemáticas exactas entre el número de parámetros del modelo y la cantidad óptima de tokens requeridos durante el entrenamiento. 
 
-[ Consultar en arXiv: 2203.15556 ](https://arxiv.org/abs/2203.15556)
+[Consultar en arXiv: 2203.15556](https://arxiv.org/abs/2203.15556)
 
 Google Research · 2023 Optimización KV Cache
 
@@ -1155,7 +1155,7 @@ Google Research · 2023 Optimización KV Cache
 
 Propuesta técnica adoptada por Meta en Llama 3 para compartir cabezales de llaves y valores, reduciendo el consumo de memoria VRAM en un 75% durante la inferencia. 
 
-[ Consultar en arXiv: 2305.13245 ](https://arxiv.org/abs/2305.13245)
+[Consultar en arXiv: 2305.13245](https://arxiv.org/abs/2305.13245)
 
 Stanford University · 2023 Alineación de Modelos
 
@@ -1163,7 +1163,7 @@ Stanford University · 2023 Alineación de Modelos
 
 Método matemático que permite alinear modelos a partir de retroalimentación humana de forma estable y directa, sustituyendo el complejo pipeline clásico de RLHF con PPO. 
 
-[ Consultar en arXiv: 2305.18290 ](https://arxiv.org/abs/2305.18290)
+[Consultar en arXiv: 2305.18290](https://arxiv.org/abs/2305.18290)
 
 Zhuravskiy & Su et al. · 2021 Codificación Posicional
 
@@ -1171,7 +1171,7 @@ Zhuravskiy & Su et al. · 2021 Codificación Posicional
 
 Introduce Rotary Position Embeddings (RoPE), el método vectorial que permite a Llama 3 generalizar la atención a 128,000 tokens rotando tensores en el espacio euclidiano. 
 
-[ Consultar en arXiv: 2104.09864 ](https://arxiv.org/abs/2104.09864)
+[Consultar en arXiv: 2104.09864](https://arxiv.org/abs/2104.09864)
 
 Microsoft Research · 2021 Ajuste Fino Eficiente (PEFT)
 
@@ -1179,7 +1179,7 @@ Microsoft Research · 2021 Ajuste Fino Eficiente (PEFT)
 
 Demuestra cómo adaptar modelos gigantes entrenando únicamente matrices de bajo rango en las capas de atención, reduciendo los requerimientos de memoria en un 99%. 
 
-[ Consultar en arXiv: 2106.09685 ](https://arxiv.org/abs/2106.09685)
+[Consultar en arXiv: 2106.09685](https://arxiv.org/abs/2106.09685)
 
 Univ. of Washington · 2023 Cuantización NF4
 
@@ -1187,7 +1187,7 @@ Univ. of Washington · 2023 Cuantización NF4
 
 Introduce la cuantización 4-bit NormalFloat y Double Quantization para permitir el entrenamiento y ajuste fino de modelos de 70B parámetros en GPUs accesibles. 
 
-[ Consultar en arXiv: 2305.14314 ](https://arxiv.org/abs/2305.14314)
+[Consultar en arXiv: 2305.14314](https://arxiv.org/abs/2305.14314)
 
 Google Research · 2022 Inferencia Acelerada
 
@@ -1195,7 +1195,7 @@ Google Research · 2022 Inferencia Acelerada
 
 Estrategia que duplica la velocidad de emisión de tokens al generar borradores con un modelo liviano y validarlos en paralelo con el LLM principal en una sola pasada. 
 
-[ Consultar en arXiv: 2211.17192 ](https://arxiv.org/abs/2211.17192)
+[Consultar en arXiv: 2211.17192](https://arxiv.org/abs/2211.17192)
 
 Ecosistema Abierto · 2024 Herramientas & Código
 
@@ -1203,7 +1203,7 @@ Ecosistema Abierto · 2024 Herramientas & Código
 
 Herramientas indispensables para descarga de pesos, tokenización y ejecución en local: 
 
-[ GitHub Oficial de Meta Llama 3 ](https://github.com/meta-llama/llama3) [ Hugging Face Model Hub ](https://huggingface.co/meta-llama) [ Ollama Local Runtime ](https://ollama.com)
+[GitHub Oficial de Meta Llama 3](https://github.com/meta-llama/llama3) [Hugging Face Model Hub](https://huggingface.co/meta-llama) [Ollama Local Runtime](https://ollama.com)
 
 Univ. of Washington · 2023 Cuantización NF4
 
@@ -1211,7 +1211,7 @@ Univ. of Washington · 2023 Cuantización NF4
 
 Introduce la cuantización 4-bit NormalFloat y Double Quantization para permitir el entrenamiento y ajuste fino de modelos de 70B parámetros en GPUs accesibles. 
 
-[ Consultar en arXiv: 2305.14314 ](https://arxiv.org/abs/2305.14314)
+[Consultar en arXiv: 2305.14314](https://arxiv.org/abs/2305.14314)
 
 Noam Shazeer (Google) · 2020 Activaciones FFN
 
@@ -1219,7 +1219,7 @@ Noam Shazeer (Google) · 2020 Activaciones FFN
 
 Demuestra la superioridad de las compuertas lineales Swish (SwiGLU) en capas Feed-Forward sobre ReLU y GELU tradicionales, adoptadas como estándar en la familia Llama. 
 
-[ Consultar en arXiv: 2002.05202 ](https://arxiv.org/abs/2002.05202)
+[Consultar en arXiv: 2002.05202](https://arxiv.org/abs/2002.05202)
 
 Meta AI Research · 2024 Repositorio Central
 
@@ -1227,7 +1227,7 @@ Meta AI Research · 2024 Repositorio Central
 
 Evolución de los modelos fundacionales de Meta desde FairSeq y OPT hasta la arquitectura actual de Llama 3 con atención agrupada y kernels de FlashAttention. 
 
-[ Consultar FairSeq Repo ](https://github.com/facebookresearch/fairseq)
+[Consultar FairSeq Repo](https://github.com/facebookresearch/fairseq)
 
 PyTorch 2.4 Docs Aceleración GPU
 
@@ -1235,7 +1235,7 @@ PyTorch 2.4 Docs Aceleración GPU
 
 Documentación sobre la selección automática de kernels CUDA (FlashAttention, Mem-Efficient, Math) en PyTorch para optimizar la velocidad de cálculo de atención. 
 
-[ Consultar PyTorch SDPA ](https://pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html)
+[Consultar PyTorch SDPA](https://pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html)
 
 Tokenization Research Algoritmo BPE
 
@@ -1243,7 +1243,7 @@ Tokenization Research Algoritmo BPE
 
 Análisis del impacto de ampliar el vocabulario de 32k a 128k tokens en la tasa de compresión textual para idiomas latinos y código fuente. 
 
-[ Consultar Tokenizer BPE ](https://github.com/openai/tiktoken)
+[Consultar Tokenizer BPE](https://github.com/openai/tiktoken)
 
 NVIDIA AI Dev · 2024 Compilador de Inferencia
 
@@ -1251,12 +1251,12 @@ NVIDIA AI Dev · 2024 Compilador de Inferencia
 
 Optimización de grafos de cómputo y fusión de capas para ejecutar Llama 3 con máxima eficiencia de hardware y paralelismo de tensores (TP). 
 
-[ Consultar TensorRT-LLM ](https://developer.nvidia.com/tensorrt-llm)
+[Consultar TensorRT-LLM](https://developer.nvidia.com/tensorrt-llm)
 
 ---
 
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](02-prompt-engineering-avanzado-rag.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [Siguiente ️](02-prompt-engineering-avanzado-rag.md)
 
 </div>

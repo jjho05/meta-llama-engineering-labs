@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](03-fine-tuning-lora-qlora-evaluacion.md) • [Siguiente ➡️](challenge-1-benchmark-multi-modelo.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [⬅️ Anterior](03-fine-tuning-lora-qlora-evaluacion.md) • [Siguiente ️](challenge-1-benchmark-multi-modelo.md)
 
 </div>
 
@@ -162,7 +162,7 @@ Arquitectura MLOps End-to-End
 
 Haz clic en cada una de las 4 etapas para inspeccionar la herramienta de ingeniería utilizada, el artefacto producido, su métrica de control de calidad y el código de implementación correspondiente.
 
-####  Etapa 1: Ingesta, Limpieza y Formateo de Datos SFT 
+#### Etapa 1: Ingesta, Limpieza y Formateo de Datos SFT 
 
 Pandas / HuggingFace Datasets
 
@@ -801,7 +801,7 @@ Ver Solución de Ingeniería Paso a Paso & Análisis MLOps
 
 1
 
-#####  Etapa 1: Ingesta, Limpieza y Formateo de Datos SFT 
+##### Etapa 1: Ingesta, Limpieza y Formateo de Datos SFT 
 
 **Herramientas:** `Pandas`, `HuggingFace Datasets`, `Pydantic v2`.  
 **Técnica:** Se filtran caracteres de control corruptos, se anonimizan datos personales (PII) y se construye el esquema JSONL con los delimitadores oficiales de Meta Llama 3 (`<|start_header_id|>system<|end_header_id|>`, `<|start_header_id|>user...`).  
@@ -810,7 +810,7 @@ Ver Solución de Ingeniería Paso a Paso & Análisis MLOps
 
 2
 
-#####  Etapa 2: Ajuste Eficiente (Fine-Tuning LoRA / QLoRA) 
+##### Etapa 2: Ajuste Eficiente (Fine-Tuning LoRA / QLoRA) 
 
 **Herramientas:** `TRL (SFTTrainer)`, `PEFT`, `bitsandbytes`, `Unsloth`.  
 **Técnica:** Cuantización NF4 en 4 bits de los pesos base $W_0$ combinada con adaptadores de bajo rango ($r=16, \alpha=32$) y _Loss Masking_ (etiqueta `label = -100` en tokens de usuario) para que el optimizador solo calcule gradientes sobre las respuestas del asistente.  
@@ -819,7 +819,7 @@ Ver Solución de Ingeniería Paso a Paso & Análisis MLOps
 
 3
 
-#####  Etapa 3: Evaluación Sistemática & Blindaje de Seguridad 
+##### Etapa 3: Evaluación Sistemática & Blindaje de Seguridad 
 
 **Herramientas:** `Evaluate`, `Llama Guard 3`, `PyTest`.  
 **Técnica:** Evaluación en conjunto ciego de prueba calculando Perplejidad ($PPL$), $BLEU\text{-}4$, $ROUGE\text{-}L$ y auditoría de alineación ética contra 14 categorías de riesgo con Llama Guard 3.  
@@ -828,7 +828,7 @@ Ver Solución de Ingeniería Paso a Paso & Análisis MLOps
 
 4
 
-#####  Etapa 4: Despliegue en Microservicios con FastAPI 
+##### Etapa 4: Despliegue en Microservicios con FastAPI 
 
 **Herramientas:** `FastAPI`, `Uvicorn`, `Docker`, `vLLM / Ollama`.  
 **Técnica:** Fusión de pesos con `merge_and_unload()`, empaquetado en contenedor Docker multi-stage, exposición de endpoint REST `POST /v1/chat/completions` con streaming Server-Sent Events (SSE) y contrato OpenAPI.  
@@ -847,25 +847,25 @@ Ver Solución de Ingeniería Paso a Paso & Mapeo Arquitectónico
 
 A
 
-#####  El Mostrador de Pedidos (El Endpoint FastAPI) 
+##### El Mostrador de Pedidos (El Endpoint FastAPI) 
 
 Representa la **interfaz pública estandarizada** del servicio. Así como un comensal no entra a la cocina a manipular las ollas ni necesita saber a qué temperatura exacta está el horno, el cliente de software (como WhatsApp o un frontend web) no interactúa directamente con los tensores ni con la memoria VRAM de la GPU: solo se comunica con la URL del endpoint (`POST /v1/chat/completions`). 
 
 B
 
-#####  La Request (La Orden del Cliente con Menú Validado) 
+##### La Request (La Orden del Cliente con Menú Validado) 
 
 Es el **payload JSON** que envía el cliente con los parámetros de su consulta (lista de mensajes, temperatura, tokens máximos). Pydantic v2 actúa como el cajero del mostrador: si pides un platillo que no existe o especificas una temperatura negativa, el cajero rechaza la orden de inmediato con código `422 Unprocessable Entity` antes de enviar la comanda a la cocina, protegiendo los recursos. 
 
 C
 
-#####  La Cocina Interna (Inferencia en GPU con Llama 3) 
+##### La Cocina Interna (Inferencia en GPU con Llama 3) 
 
 Es la maquinaria pesada de ejecución: los kernels CUDA, la memoria KV-Cache, las matrices de auto-atención QKV y la base vectorial RAG. La cocina recibe la comanda validada, procesa los tensores y prepara el resultado sin que el cliente conozca la complejidad interna. 
 
 D
 
-#####  La Response (El Platillo Empaquetado o la Entrega en Streaming) 
+##### La Response (El Platillo Empaquetado o la Entrega en Streaming) 
 
 Es la **respuesta HTTP final** entregada al cliente con código `200 OK`, el texto generado por Llama 3 y el conteo de tokens consumidos. En modo *Streaming (SSE)*, equivale a servir los platillos uno a uno a la mesa a medida que van saliendo del fuego, reduciendo la espera percibida por el comensal. 
 
@@ -881,7 +881,7 @@ Ver Solución de Ingeniería Paso a Paso & Script PyTest
 
 1
 
-#####  Caso 1: Escenario Feliz (Happy Path con Recuperación RAG) 
+##### Caso 1: Escenario Feliz (Happy Path con Recuperación RAG) 
 
 **Pregunta del Usuario:** "¿Cuál es la política oficial de viáticos para viajes internacionales de soporte técnico?"  
 **Flujo Técnico:** La consulta se vectoriza → ChromaDB encuentra 3 chunks con similitud coseno $> 0.82$ → Llama 3 sintetiza la respuesta citando la Sección 5.1 del Manual de Políticas Corporativas.  
@@ -889,7 +889,7 @@ Ver Solución de Ingeniería Paso a Paso & Script PyTest
 
 2
 
-#####  Caso 2: Escenario de Fallo Controlado (Documento Inexistente) 
+##### Caso 2: Escenario de Fallo Controlado (Documento Inexistente) 
 
 **Pregunta del Usuario:** "¿Cuál es el procedimiento para solicitar reembolso de boletos para el viaje a Marte 2029?"  
 **Comportamiento del Pipeline:** La búsqueda vectorial en ChromaDB arroja un score de similitud máximo de $0.14$ (por debajo del umbral de corte de $0.35$).  
@@ -898,7 +898,7 @@ Ver Solución de Ingeniería Paso a Paso & Script PyTest
 
 3
 
-#####  Implementación de la Prueba con PyTest 
+##### Implementación de la Prueba con PyTest 
 
 test_rag_pipeline_fallbacks.py
     
@@ -924,23 +924,23 @@ Ver Solución de Ingeniería Paso a Paso & Análisis Comparativo
 
 1
 
-#####  Diferencia 1: Dependencias Ocultas y Estado Global de Memoria 
+##### Diferencia 1: Dependencias Ocultas y Estado Global de Memoria 
 
 En un notebook, una celda puede funcionar porque depende de una variable o función auxiliar ejecutada en una celda previa hace 3 horas. En una prueba End-to-End, el entorno arranca desde cero en un proceso aislado, garantizando que el microservicio sea 100% autónomo y reproducible sin variables fantasmas. 
 
 2
 
-#####  Diferencia 2: Serialización, Validación de Tipos y Protocolo de Red 
+##### Diferencia 2: Serialización, Validación de Tipos y Protocolo de Red 
 
 El notebook ejecuta objetos nativos de Python directamente en memoria (`dict`, tensores PyTorch). La prueba E2E somete la petición a la serialización JSON real, cabeceras HTTP, validación estricta de esquemas Pydantic v2 y des-serialización de respuesta, detectando incompatibilidades de tipos que en el notebook pasan desapercibidas. 
 
 3
 
-#####  Diferencia 3: Manejo de Concurrencia, Timeouts y Resiliencia 
+##### Diferencia 3: Manejo de Concurrencia, Timeouts y Resiliencia 
 
 Si la base vectorial tarda 8 segundos o la GPU se satura, el notebook simplemente se congela de manera indefinida. La prueba E2E valida que los middlewares de FastAPI apliquen timeouts (`asyncio.timeout`), rate limiting y circuit breakers para liberar los workers ASGI y mantener el SLA sin colapsar. 
 
-#####  ¿Por qué la prueba End-to-End otorga máxima confianza profesional? 
+##### ¿Por qué la prueba End-to-End otorga máxima confianza profesional? 
 
 Porque **emula exactamente la experiencia del usuario final y el comportamiento del sistema bajo condiciones reales de producción**. Demuestra que todos los subsistemas (validación, embeddings, búsqueda vectorial, inferencia autoregresiva y red) colaboran armónicamente como un servicio industrial robusto. 
 
@@ -956,7 +956,7 @@ FastAPI · 2024 Framework ASGI
 
 Guía oficial de diseño de APIs asíncronas con Starlette, inyección de dependencias, middlewares de métricas y validación con Pydantic v2. 
 
-[ Consultar en FastAPI Docs ](https://fastapi.tiangolo.com/)
+[Consultar en FastAPI Docs](https://fastapi.tiangolo.com/)
 
 Meta AI · 2024 Guía de Inferencia
 
@@ -964,7 +964,7 @@ Meta AI · 2024 Guía de Inferencia
 
 Especificación de Meta sobre hardware recomendado, optimización de KV-Cache, Grouped-Query Attention y serving distribuido. 
 
-[ Consultar en Meta Llama Docs ](https://llama.meta.com/docs/)
+[Consultar en Meta Llama Docs](https://llama.meta.com/docs/)
 
 Encode / Uvicorn · 2024 Servidor ASGI
 
@@ -972,7 +972,7 @@ Encode / Uvicorn · 2024 Servidor ASGI
 
 Arquitectura de servidor web asíncrono basada en uvloop (bindings C de libuv) y httptools para concurrencia masiva en microservicios Python. 
 
-[ Consultar en Uvicorn.org ](https://www.uvicorn.org/)
+[Consultar en Uvicorn.org](https://www.uvicorn.org/)
 
 Pydantic · 2023 Validación en Rust
 
@@ -980,7 +980,7 @@ Pydantic · 2023 Validación en Rust
 
 Samuel Colvin et al. presentan el motor de validación reescrito en Rust (`pydantic-core`) que acelera la serialización JSON hasta 20x. 
 
-[ Consultar en Pydantic Docs ](https://docs.pydantic.dev/latest/)
+[Consultar en Pydantic Docs](https://docs.pydantic.dev/latest/)
 
 PyTest · 2024 Testing Automatizado
 
@@ -988,7 +988,7 @@ PyTest · 2024 Testing Automatizado
 
 Metodología de testing para microservicios asíncronos con fixtures, parametrización de casos límite y validación de endpoints HTTP con TestClient. 
 
-[ Consultar en PyTest.org ](https://docs.pytest.org/)
+[Consultar en PyTest.org](https://docs.pytest.org/)
 
 W3C · 2015 Estándar Web
 
@@ -996,7 +996,7 @@ W3C · 2015 Estándar Web
 
 Estándar de la W3C para transporte unidireccional de flujos de eventos sobre HTTP (`text/event-stream`), núcleo de la inferencia en streaming. 
 
-[ Consultar en W3C / WHATWG ](https://html.spec.whatwg.org/multipage/server-sent-events.html)
+[Consultar en W3C / WHATWG](https://html.spec.whatwg.org/multipage/server-sent-events.html)
 
 UC Berkeley · SOSP 2023 Paper SOTA
 
@@ -1004,7 +1004,7 @@ UC Berkeley · SOSP 2023 Paper SOTA
 
 Kwon et al. introducen PagedAttention para eliminar la fragmentación del KV-Cache en memoria GPU, multiplicando el throughput de inferencia por 2–4x. 
 
-[ Consultar en arXiv: 2309.06180 ](https://arxiv.org/abs/2309.06180)
+[Consultar en arXiv: 2309.06180](https://arxiv.org/abs/2309.06180)
 
 Docker · 2024 Contenerización
 
@@ -1012,7 +1012,7 @@ Docker · 2024 Contenerización
 
 Guía de ingeniería para compilar imágenes ligeras con NVIDIA Container Toolkit, aislando dependencias y minimizando la superficie de ataque. 
 
-[ Consultar en Docker Docs ](https://docs.docker.com/build/building/multi-stage/)
+[Consultar en Docker Docs](https://docs.docker.com/build/building/multi-stage/)
 
 Heroku / Open Source Metodología
 
@@ -1020,7 +1020,7 @@ Heroku / Open Source Metodología
 
 Principios arquitectónicos para construir microservicios nativos en la nube: configuración en entorno, procesos sin estado y desacoplamiento de logs. 
 
-[ Consultar en 12factor.net ](https://12factor.net/)
+[Consultar en 12factor.net](https://12factor.net/)
 
 MIT Press · 1961 Teoría de Colas
 
@@ -1028,7 +1028,7 @@ MIT Press · 1961 Teoría de Colas
 
 John Little formula $L = \lambda W$, ecuación fundamental de sistemas computacionales que vincula concurrencia de requests, tasa de llegada y latencia. 
 
-[ Consultar en INFORMS ](https://www.informs.org/)
+[Consultar en INFORMS](https://www.informs.org/)
 
 Meta AI · 2024 Seguridad en Producción
 
@@ -1036,7 +1036,7 @@ Meta AI · 2024 Seguridad en Producción
 
 Modelo especializado de clasificación de seguridad para interceptar prompts y salidas no seguras en microservicios antes de llegar al usuario. 
 
-[ Consultar en Meta AI Docs ](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama-guard-3/)
+[Consultar en Meta AI Docs](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama-guard-3/)
 
 Linux Foundation · 2024 Estándar OpenAPI
 
@@ -1044,7 +1044,7 @@ Linux Foundation · 2024 Estándar OpenAPI
 
 Especificación oficial para contratos de API RESTful con JSON Schema 2020-12, base de la documentación viva generada automáticamente por FastAPI. 
 
-[ Consultar en OpenAPI Initiative ](https://spec.openapis.org/oas/latest.html)
+[Consultar en OpenAPI Initiative](https://spec.openapis.org/oas/latest.html)
 
 OpenAccess AI Collective Framework de Entrenamiento
 
@@ -1052,7 +1052,7 @@ OpenAccess AI Collective Framework de Entrenamiento
 
 Herramienta de configuración YAML para entrenar adaptadores LoRA con empaquetado de secuencias FlashAttention y optimizadores 8-bit. 
 
-[ Consultar Axolotl GitHub ](https://github.com/axolotl-ai-cloud/axolotl)
+[Consultar Axolotl GitHub](https://github.com/axolotl-ai-cloud/axolotl)
 
 Lin et al. · MLSys Paper Científico
 
@@ -1060,7 +1060,7 @@ Lin et al. · MLSys Paper Científico
 
 Técnica de cuantización en 4 bits que protege el 1% de los pesos más importantes reduciendo el uso de VRAM a la mitad sin pérdida de calidad. 
 
-[ Consultar Paper AWQ ](https://arxiv.org/abs/2306.00978)
+[Consultar Paper AWQ](https://arxiv.org/abs/2306.00978)
 
 Hugging Face Core Librería de Alineación
 
@@ -1068,7 +1068,7 @@ Hugging Face Core Librería de Alineación
 
 Librería estándar para Direct Preference Optimization (DPO) y Supervised Fine-Tuning (SFT) sobre modelos de lenguaje abiertos. 
 
-[ Consultar HF TRL Docs ](https://huggingface.co/docs/trl/)
+[Consultar HF TRL Docs](https://huggingface.co/docs/trl/)
 
 Dao et al. · ICLR Aceleración de Memoria
 
@@ -1076,12 +1076,12 @@ Dao et al. · ICLR Aceleración de Memoria
 
 Algoritmo de paralelización por bloques de SRAM que acelera el cálculo de atención hasta 2.5x respecto a implementaciones estándar. 
 
-[ Consultar FlashAttention-2 ](https://github.com/Dao-AILab/flash-attention)
+[Consultar FlashAttention-2](https://github.com/Dao-AILab/flash-attention)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](03-fine-tuning-lora-qlora-evaluacion.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](challenge-1-benchmark-multi-modelo.md)
+[⬅️ Anterior](03-fine-tuning-lora-qlora-evaluacion.md) • [Inicio](../../README.md) • [Módulo 1](README.md) • [Siguiente ️](challenge-1-benchmark-multi-modelo.md)
 
 </div>

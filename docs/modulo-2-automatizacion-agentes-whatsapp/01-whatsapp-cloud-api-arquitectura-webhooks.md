@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](../modulo-1-fundamentos-ia/challenge-2-asistente-politicas-rag.md) • [Siguiente ➡️](02-agentes-conversacionales-memoria-redis.md)
+[Inicio](../../README.md) • [Módulo 2](README.md) • [⬅️ Anterior](../modulo-1-fundamentos-ia/challenge-2-asistente-politicas-rag.md) • [Siguiente ️](02-agentes-conversacionales-memoria-redis.md)
 
 </div>
 
@@ -963,7 +963,7 @@ Meta for Developers · 2024 Documentación Oficial
 
 Guía integral de endpoints Graph API v20.0, contratos de datos para mensajes de texto, respuestas interactivas con botones (Interactive Messages), plantillas HSM y políticas de límites de tasa (Rate Limiting). 
 
-[ Consultar en Meta for Developers ](https://developers.facebook.com/docs/whatsapp/cloud-api)
+[Consultar en Meta for Developers](https://developers.facebook.com/docs/whatsapp/cloud-api)
 
 Meta Security Standards · 2024 Criptografía & Seguridad
 
@@ -971,7 +971,7 @@ Meta Security Standards · 2024 Criptografía & Seguridad
 
 Especificación oficial del protocolo de handshake GET con `hub.challenge` y validación de autenticidad criptográfica mediante la cabecera `X-Hub-Signature-256` con secretos de aplicación (App Secret). 
 
-[ Consultar Guía de Webhooks ](https://developers.facebook.com/docs/graph-api/webhooks/getting-started)
+[Consultar Guía de Webhooks](https://developers.facebook.com/docs/graph-api/webhooks/getting-started)
 
 Tiangolo / FastAPI · 2024 Framework de Microservicios
 
@@ -979,7 +979,7 @@ Tiangolo / FastAPI · 2024 Framework de Microservicios
 
 Documentación técnica sobre endpoints concurrentes con `async / await`, manejo de tareas en segundo plano con `BackgroundTasks` y extracción estricta de Query Parameters con alias. 
 
-[ Consultar Documentación de FastAPI ](https://fastapi.tiangolo.com/)
+[Consultar Documentación de FastAPI](https://fastapi.tiangolo.com/)
 
 IETF RFC 2104 · 1997 Estándar Criptográfico
 
@@ -987,7 +987,7 @@ IETF RFC 2104 · 1997 Estándar Criptográfico
 
 Krawczyk, Bellare y Canetti definen la construcción matemática HMAC para verificación de integridad de datos y autenticidad de origen, base del blindaje de webhooks en Meta y GitHub. 
 
-[ Consultar Paper RFC 2104 ](https://datatracker.ietf.org/doc/html/rfc2104)
+[Consultar Paper RFC 2104](https://datatracker.ietf.org/doc/html/rfc2104)
 
 ngrok Inc. · 2024 Túneles de Red & TLS
 
@@ -995,7 +995,7 @@ ngrok Inc. · 2024 Túneles de Red & TLS
 
 Manual de configuración de túneles inversos TLS seguros para exponer servidores locales en puertos como `:8000` hacia internet, permitiendo la depuración e inspección de peticiones webhook entrantes. 
 
-[ Consultar Documentación de ngrok ](https://ngrok.com/docs)
+[Consultar Documentación de ngrok](https://ngrok.com/docs)
 
 Encode OSS · 2024 Servidor ASGI
 
@@ -1003,7 +1003,7 @@ Encode OSS · 2024 Servidor ASGI
 
 Servidor ASGI basado en uvloop y httptools diseñado para gestionar miles de conexiones HTTP concurrentes con baja latencia para servicios de mensajería conversacional en tiempo real. 
 
-[ Consultar en Uvicorn.org ](https://www.uvicorn.org/)
+[Consultar en Uvicorn.org](https://www.uvicorn.org/)
 
 Pydantic Community · 2024 Validación de Esquemas
 
@@ -1011,7 +1011,7 @@ Pydantic Community · 2024 Validación de Esquemas
 
 Librería de tipado y validación de estructuras JSON complejas para mapear con seguridad defensiva los modelos de eventos de WhatsApp evitando excepciones en tiempo de ejecución. 
 
-[ Consultar Documentación Pydantic ](https://docs.pydantic.dev/latest/)
+[Consultar Documentación Pydantic](https://docs.pydantic.dev/latest/)
 
 Meta Business Engineering · 2024 Guía de Migración
 
@@ -1019,7 +1019,7 @@ Meta Business Engineering · 2024 Guía de Migración
 
 Directrices y mejores prácticas para la transición de arquitecturas auto-hospedadas con Docker hacia la Cloud API oficial de Meta, reduciendo costos de mantenimiento y optimizando la latencia de entrega. 
 
-[ Consultar Resumen de Migración ](https://developers.facebook.com/docs/whatsapp/cloud-api/overview)
+[Consultar Resumen de Migración](https://developers.facebook.com/docs/whatsapp/cloud-api/overview)
 
 IETF RFC 2104 Estándar Criptográfico
 
@@ -1027,7 +1027,7 @@ IETF RFC 2104 Estándar Criptográfico
 
 Especificación formal del algoritmo HMAC-SHA256 utilizado por Meta para firmar digitalmente cada payload entrante y prevenir ataques de intermediario. 
 
-[ Consultar RFC 2104 ](https://datatracker.ietf.org/doc/html/rfc2104)
+[Consultar RFC 2104](https://datatracker.ietf.org/doc/html/rfc2104)
 
 Encode OSS · 2024 Servidor Web ASGI
 
@@ -1035,7 +1035,7 @@ Encode OSS · 2024 Servidor Web ASGI
 
 Servidor de ejecución concurrente basado en uvloop y httptools que maneja miles de conexiones simultáneas por segundo en el endpoint de webhooks. 
 
-[ Consultar Uvicorn Docs ](https://www.uvicorn.org/)
+[Consultar Uvicorn Docs](https://www.uvicorn.org/)
 
 IETF RFC 9110 Estándar HTTP
 
@@ -1043,7 +1043,7 @@ IETF RFC 9110 Estándar HTTP
 
 Normativa técnica sobre la obligación de responder HTTP 200 en menos de 20 segundos a los servidores de Meta para evitar la deshabilitación del webhook. 
 
-[ Consultar RFC 9110 ](https://datatracker.ietf.org/doc/html/rfc9110)
+[Consultar RFC 9110](https://datatracker.ietf.org/doc/html/rfc9110)
 
 ngrok Inc. · 2024 Túnel Seguro de Red
 
@@ -1051,7 +1051,7 @@ ngrok Inc. · 2024 Túnel Seguro de Red
 
 Plataforma de túneles TLS reversos para exponer servidores locales de desarrollo al router de Meta Cloud API con inspección de tráfico en tiempo real. 
 
-[ Consultar ngrok Docs ](https://ngrok.com/docs)
+[Consultar ngrok Docs](https://ngrok.com/docs)
 
 Meta Business Center Verificación Empresarial
 
@@ -1059,7 +1059,7 @@ Meta Business Center Verificación Empresarial
 
 Proceso oficial para elevar los límites de mensajería (Messaging Limits) desde Tier 1 (1k conversaciones/día) hasta Tier Unlimited en producción. 
 
-[ Consultar Niveles de Mensajería ](https://www.facebook.com/business/help/2058515294227817)
+[Consultar Niveles de Mensajería](https://www.facebook.com/business/help/2058515294227817)
 
 Python Logging Guide Trazabilidad SRE
 
@@ -1067,7 +1067,7 @@ Python Logging Guide Trazabilidad SRE
 
 Estrategias de auditoría forense y registro estructurado de eventos de mensajería vinculando el wa_id y message_id para resolución de incidencias. 
 
-[ Consultar structlog Docs ](https://www.structlog.org/)
+[Consultar structlog Docs](https://www.structlog.org/)
 
 FastAPI Framework Concurrencia Asíncrona
 
@@ -1075,7 +1075,7 @@ FastAPI Framework Concurrencia Asíncrona
 
 Desacoplamiento del procesamiento pesado de inferencia LLM mediante BackgroundTasks para retornar inmediatamente HTTP 200 a Meta. 
 
-[ Consultar Background Tasks ](https://fastapi.tiangolo.com/tutorial/background-tasks/)
+[Consultar Background Tasks](https://fastapi.tiangolo.com/tutorial/background-tasks/)
 
 Meta Policy Standards Calidad de Servicio
 
@@ -1083,12 +1083,12 @@ Meta Policy Standards Calidad de Servicio
 
 Políticas de cumplimiento para mantener una calificación de calidad verde (High Quality) y evitar bloqueos automáticos por quejas de spam. 
 
-[ Consultar Políticas de Calidad ](https://developers.facebook.com/docs/whatsapp/messaging-limits)
+[Consultar Políticas de Calidad](https://developers.facebook.com/docs/whatsapp/messaging-limits)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](../modulo-1-fundamentos-ia/challenge-2-asistente-politicas-rag.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [Siguiente ➡️](02-agentes-conversacionales-memoria-redis.md)
+[⬅️ Anterior](../modulo-1-fundamentos-ia/challenge-2-asistente-politicas-rag.md) • [Inicio](../../README.md) • [Módulo 2](README.md) • [Siguiente ️](02-agentes-conversacionales-memoria-redis.md)
 
 </div>

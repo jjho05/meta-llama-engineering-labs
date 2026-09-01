@@ -114,7 +114,7 @@ def sanitizar_texto(texto_crudo: str) -> str:
     """Elimina cabeceras repetitivas, saltos huérfanos y caracteres no válidos."""
     t = texto_crudo.replace("\r\n", "\n").replace("\t", " ")
     t = re.sub(r"P[aá]gina\s+\d+\s+de\s+\d+", "", t, flags=re.IGNORECASE)
-    t = re.sub(r"[ ]{2,}", " ", t)
+    t = re.sub(r"[]{2,}", " ", t)
     t = re.sub(r"\n{3,}", "\n\n", t)
     return t.strip()
 ```
@@ -426,12 +426,12 @@ CMD ["uvicorn", "api_server:app", "--host", "0.0.0.0", "--port", "8000", "--work
 
 ## 19. Rúbrica Oficial de Evaluación y Checklist de Calidad
 
-- [ ] **Desacoplamiento:** El conocimiento proviene de una base documental externa y no del prompt.
-- [ ] **RAG Operativo:** Los textos están indexados en `rag_engine.py` y la búsqueda responde con confianza cosenoidal.
-- [ ] **Control Fáctico:** El modelo no alucina ante preguntas fuera de dominio.
-- [ ] **Validación VRAM:** Ejecuta sin desbordamientos de memoria en Google Colab.
-- [ ] **API Tipada:** `api_server.py` responde validando esquemas Pydantic.
-- [ ] **Seguridad:** Las credenciales y claves se gestionan mediante variables de entorno.
+- [] **Desacoplamiento:** El conocimiento proviene de una base documental externa y no del prompt.
+- [] **RAG Operativo:** Los textos están indexados en `rag_engine.py` y la búsqueda responde con confianza cosenoidal.
+- [] **Control Fáctico:** El modelo no alucina ante preguntas fuera de dominio.
+- [] **Validación VRAM:** Ejecuta sin desbordamientos de memoria en Google Colab.
+- [] **API Tipada:** `api_server.py` responde validando esquemas Pydantic.
+- [] **Seguridad:** Las credenciales y claves se gestionan mediante variables de entorno.
 
 ---
 

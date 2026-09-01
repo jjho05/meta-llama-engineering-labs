@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](04-del-prototipo-al-pipeline-productivo.md) • [Siguiente ➡️](challenge-2-asistente-politicas-rag.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [⬅️ Anterior](04-del-prototipo-al-pipeline-productivo.md) • [Siguiente ️](challenge-2-asistente-politicas-rag.md)
 
 </div>
 
@@ -1135,11 +1135,9 @@ ejecutar_challenge.py (Código Completo y Verificado)
         return re.sub(r"<think>.*?</think>", "", texto, flags=re.DOTALL).strip()
     
     # 2. Definición del banco de 3 preguntas
-    preguntas = [
-        "¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?",
+    preguntas = ["¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?",
         "¿Cuál es el horario de atención y los canales oficiales para soporte técnico?",
-        "¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"
-    ]
+        "¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"]
     
     # 3. Función de inferencia comparativa
     def consultar_pregunta(pregunta: str, num: int):
@@ -1280,7 +1278,7 @@ Meta AI Research · 2024 Paper Fundacional
 
 Documento técnico exhaustivo que detalla el preentrenamiento en 15T tokens, la arquitectura GQA, el vocabulario de 128k y los procesos de alineación mediante DPO y PPO. 
 
-[ Consultar en arXiv: 2407.21783 ](https://arxiv.org/abs/2407.21783)
+[Consultar en arXiv: 2407.21783](https://arxiv.org/abs/2407.21783)
 
 Google Brain · 2017 Arquitectura Base
 
@@ -1288,7 +1286,7 @@ Google Brain · 2017 Arquitectura Base
 
 El artículo científico que introdujo la auto-atención por producto punto escalado ($Q, K, V$) y eliminó la necesidad de capas recurrentes en el procesamiento del lenguaje. 
 
-[ Consultar en arXiv: 1706.03762 ](https://arxiv.org/abs/1706.03762)
+[Consultar en arXiv: 1706.03762](https://arxiv.org/abs/1706.03762)
 
 Abts et al. / Groq Inc. · 2022 Hardware LPU
 
@@ -1296,7 +1294,7 @@ Abts et al. / Groq Inc. · 2022 Hardware LPU
 
 Publicación en IEEE Micro sobre la arquitectura de silicio de la LPU de Groq y la eliminación de latencias de memoria DRAM para inferencia ultra-rápida. 
 
-[ Consultar en IEEE Micro: 9772967 ](https://ieeexplore.ieee.org/document/9772967)
+[Consultar en IEEE Micro: 9772967](https://ieeexplore.ieee.org/document/9772967)
 
 Ainslie et al. · 2023 Atención GQA
 
@@ -1304,7 +1302,7 @@ Ainslie et al. · 2023 Atención GQA
 
 Metodología que agrupa cabezales de consulta para compartir llaves y valores, reduciendo drásticamente el KV-Cache en memoria durante inferencia autoregresiva. 
 
-[ Consultar en arXiv: 2305.13245 ](https://arxiv.org/abs/2305.13245)
+[Consultar en arXiv: 2305.13245](https://arxiv.org/abs/2305.13245)
 
 Su et al. · 2024 Posicionamiento RoPE
 
@@ -1312,7 +1310,7 @@ Su et al. · 2024 Posicionamiento RoPE
 
 Formulación de matrices de rotación ortogonales para incrustar posiciones relativas de tokens, estándar actual en Llama 3, Mistral y Qwen. 
 
-[ Consultar en arXiv: 2104.09864 ](https://arxiv.org/abs/2104.09864)
+[Consultar en arXiv: 2104.09864](https://arxiv.org/abs/2104.09864)
 
 Dao et al. · 2022 Aceleración IO
 
@@ -1320,7 +1318,7 @@ Dao et al. · 2022 Aceleración IO
 
 Algoritmo de atención consciente de la jerarquía de memoria GPU (SRAM vs HBM), reduciendo accesos a memoria en un factor de 3x a 5x. 
 
-[ Consultar en arXiv: 2205.14135 ](https://arxiv.org/abs/2205.14135)
+[Consultar en arXiv: 2205.14135](https://arxiv.org/abs/2205.14135)
 
 Dettmers et al. · 2023 Cuantización 4-Bit
 
@@ -1328,7 +1326,7 @@ Dettmers et al. · 2023 Cuantización 4-Bit
 
 Demostración empírica de cuantización en formato NormalFloat4 (NF4) con doble cuantización para ejecutar y adaptar modelos de 70B en GPUs de 48 GB. 
 
-[ Consultar en arXiv: 2305.14314 ](https://arxiv.org/abs/2305.14314)
+[Consultar en arXiv: 2305.14314](https://arxiv.org/abs/2305.14314)
 
 Brown et al. / OpenAI · 2020 In-Context Learning
 
@@ -1336,7 +1334,7 @@ Brown et al. / OpenAI · 2020 In-Context Learning
 
 Descubrimiento fundamental de cómo las demostraciones en contexto (Few-Shot) permiten condicionar el comportamiento y taxonomía del modelo sin modificar parámetros. 
 
-[ Consultar en arXiv: 2005.14165 ](https://arxiv.org/abs/2005.14165)
+[Consultar en arXiv: 2005.14165](https://arxiv.org/abs/2005.14165)
 
 Wei et al. / Google · 2022 Razonamiento CoT
 
@@ -1344,7 +1342,7 @@ Wei et al. / Google · 2022 Razonamiento CoT
 
 Investigación que demuestra cómo solicitar razonamiento paso a paso desbloquea capacidades analíticas complejas en matemáticas y lógica simbólica. 
 
-[ Consultar en arXiv: 2201.11903 ](https://arxiv.org/abs/2201.11903)
+[Consultar en arXiv: 2201.11903](https://arxiv.org/abs/2201.11903)
 
 Shazeer / Google · 2020 Activación SwiGLU
 
@@ -1352,7 +1350,7 @@ Shazeer / Google · 2020 Activación SwiGLU
 
 Propuesta de la función de activación Swish-Gated Linear Unit (SwiGLU) adoptada en Llama 3 para mejorar la capacidad de convergencia frente a ReLU y GELU. 
 
-[ Consultar en arXiv: 2002.05202 ](https://arxiv.org/abs/2002.05202)
+[Consultar en arXiv: 2002.05202](https://arxiv.org/abs/2002.05202)
 
 Groq Cloud Official · 2025 Documentación API
 
@@ -1360,7 +1358,7 @@ Groq Cloud Official · 2025 Documentación API
 
 Especificación oficial de endpoints compatibles con OpenAI, protocolos de streaming HTTP/2, gestión de cuotas y catálogo dinámico de modelos. 
 
-[ Consultar en console.groq.com/docs ](https://console.groq.com/docs)
+[Consultar en console.groq.com/docs](https://console.groq.com/docs)
 
 OWASP & NIST · 2025 Seguridad & Privacidad
 
@@ -1368,12 +1366,12 @@ OWASP & NIST · 2025 Seguridad & Privacidad
 
 Directivas de mitigación contra inyecciones de prompts, exposición de credenciales en código y estándares de gobernanza para agentes en producción. 
 
-[ Consultar en owasp.org ](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+[Consultar en owasp.org](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](04-del-prototipo-al-pipeline-productivo.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](challenge-2-asistente-politicas-rag.md)
+[⬅️ Anterior](04-del-prototipo-al-pipeline-productivo.md) • [Inicio](../../README.md) • [Módulo 1](README.md) • [Siguiente ️](challenge-2-asistente-politicas-rag.md)
 
 </div>

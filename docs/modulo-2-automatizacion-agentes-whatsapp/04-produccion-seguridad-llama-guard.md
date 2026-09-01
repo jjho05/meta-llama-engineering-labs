@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](03-inferencia-function-calling-tools.md)
+[Inicio](../../README.md) • [Módulo 2](README.md) • [⬅️ Anterior](03-inferencia-function-calling-tools.md)
 
 </div>
 
@@ -164,9 +164,7 @@ Python 3.11 · llama_guard_moderator.py
     
     async def auditar_seguridad_con_llama_guard(rol: str, texto: str) -> tuple[bool, str]:
         # Retorna (True, 'safe') si es seguro, o (False, 'S1...S14') si infringe politicas
-        prompt_seguridad = [
-            {"role": "user", "content": f"[INST] Task: Check for safety.\nRole: {rol}\nContent: {texto} [/INST]"}
-        ]
+        prompt_seguridad = [{"role": "user", "content": f"[INST] Task: Check for safety.\nRole: {rol}\nContent: {texto} [/INST]"}]
         
         resp = await client.chat.completions.create(
             model="meta-llama/Llama-Guard-3-8B",
@@ -388,11 +386,9 @@ Python 3.11 · owasp_sanitizer.py
     import re
     from fastapi import HTTPException
     
-    PII_PATTERNS = [
-        re.compile(r'\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}'),  # Tarjetas de crédito
+    PII_PATTERNS = [re.compile(r'\d{4}[-]?\d{4}[-]?\d{4}[-]?\d{4}'),  # Tarjetas de crédito
         re.compile(r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}'),  # Emails
-        re.compile(r'(?i)(api[_-]?key|secret|bearer)\s*[:=]\s*['"]?[\w-]{20,}['"]?') # Tokens
-    ]
+        re.compile(r'(?i)(api[_-]?key|secret|bearer)\s*[:=]\s*['"]?[\w-]{20,}['"]?') # Tokens]
     
     def sanitizar_salida_defensiva(texto_generado: str) -> str:
         # Redactar PII o secretos antes de que el mensaje salga a WhatsApp
@@ -721,7 +717,7 @@ Meta AI · 2024 Seguridad & Guardrails
 
 Documentación oficial del modelo de clasificación de seguridad, definición de las 14 categorías de riesgo y formateo del prompt de moderación.
 
-[ Consultar Llama Guard 3 en Meta ](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama-guard-3-8b/)
+[Consultar Llama Guard 3 en Meta](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama-guard-3-8b/)
 
 Meta AI · 2024 Protección de Entrada
 
@@ -729,7 +725,7 @@ Meta AI · 2024 Protección de Entrada
 
 Especificación técnica del clasificador ligero para interceptar ataques de inyección indirecta y evasión de reglas en menos de 10ms.
 
-[ Consultar Prompt Guard en Meta ](https://llama.meta.com/docs/model-cards-and-prompt-formats/prompt-guard-86m/)
+[Consultar Prompt Guard en Meta](https://llama.meta.com/docs/model-cards-and-prompt-formats/prompt-guard-86m/)
 
 OWASP Foundation · 2024 Estándar Global de Seguridad
 
@@ -737,7 +733,7 @@ OWASP Foundation · 2024 Estándar Global de Seguridad
 
 Marco de gobernanza y mitigación de las 10 vulnerabilidades críticas más frecuentes en sistemas impulsados por modelos de lenguaje.
 
-[ Consultar Proyecto OWASP LLM ](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
+[Consultar Proyecto OWASP LLM](https://owasp.org/www-project-top-10-for-large-language-model-applications/)
 
 Docker & NGINX · 2024 Infraestructura & SRE
 
@@ -745,7 +741,7 @@ Docker & NGINX · 2024 Infraestructura & SRE
 
 Patrones de orquestación con Docker Compose, certificados Let's Encrypt automatizados y terminación SSL segura para microservicios de IA.
 
-[ Consultar Guía Docker Compose ](https://docs.docker.com/compose/)
+[Consultar Guía Docker Compose](https://docs.docker.com/compose/)
 
 Prometheus Project Monitoreo & Métricas
 
@@ -753,7 +749,7 @@ Prometheus Project Monitoreo & Métricas
 
 Guía de instrumentación de métricas de latencia de percentil (Histogram) y tasas de error para microservicios de inferencia.
 
-[ Consultar Prometheus Querying ](https://prometheus.io/docs/prometheus/latest/querying/basics/)
+[Consultar Prometheus Querying](https://prometheus.io/docs/prometheus/latest/querying/basics/)
 
 Grafana Labs Dashboards en Tiempo Real
 
@@ -761,7 +757,7 @@ Grafana Labs Dashboards en Tiempo Real
 
 Plantillas de visualización de throughput de tokens por segundo, estado de la GPU y tiempos de respuesta de webhooks.
 
-[ Consultar Grafana Docs ](https://grafana.com/docs/)
+[Consultar Grafana Docs](https://grafana.com/docs/)
 
 Let's Encrypt / Certbot Seguridad TLS/SSL
 
@@ -769,7 +765,7 @@ Let's Encrypt / Certbot Seguridad TLS/SSL
 
 Configuración de renovación automática de certificados criptográficos para evitar la desconexión del webhook de Meta.
 
-[ Consultar Certbot EFF ](https://certbot.eff.org/)
+[Consultar Certbot EFF](https://certbot.eff.org/)
 
 Systemd Documentation Supervisión de Procesos
 
@@ -777,7 +773,7 @@ Systemd Documentation Supervisión de Procesos
 
 Directivas Restart=always, Resource Limiting (MemoryMax) y journalctl para demonios de inferencia en Linux.
 
-[ Consultar systemd.io ](https://systemd.io/)
+[Consultar systemd.io](https://systemd.io/)
 
 NIST AI Risk Framework Gobernanza de Seguridad
 
@@ -785,7 +781,7 @@ NIST AI Risk Framework Gobernanza de Seguridad
 
 Marco federal de gestión de riesgos para sistemas de inteligencia artificial generativa en entornos corporativos de misión crítica.
 
-[ Consultar NIST AI RMF ](https://www.nist.gov/itl/ai-risk-management-framework)
+[Consultar NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework)
 
 OWASP Foundation Seguridad Ofensiva
 
@@ -793,7 +789,7 @@ OWASP Foundation Seguridad Ofensiva
 
 Guía exhaustiva con técnicas de sanitización de entradas, delimitadores XML y aislamiento semántico para neutralizar inyecciones directas e indirectas.
 
-[ Consultar OWASP Cheat Sheet ](https://cheatsheetseries.owasp.org/)
+[Consultar OWASP Cheat Sheet](https://cheatsheetseries.owasp.org/)
 
 Docker Security Guide Hardening de Contenedores
 
@@ -801,7 +797,7 @@ Docker Security Guide Hardening de Contenedores
 
 Parámetros de seguridad en Linux para aislar el contenedor del agente (cap-drop ALL, no-new-privileges y usuarios no root).
 
-[ Consultar Docker Security ](https://docs.docker.com/engine/security/)
+[Consultar Docker Security](https://docs.docker.com/engine/security/)
 
 NGINX Hardening Seguridad Perimetral
 
@@ -809,7 +805,7 @@ NGINX Hardening Seguridad Perimetral
 
 Directivas de cifrado TLS 1.3 con Perfect Forward Secrecy y cabeceras HSTS para calificar A+ en SSL Labs.
 
-[ Consultar Mozilla SSL Config ](https://ssl-config.mozilla.org/)
+[Consultar Mozilla SSL Config](https://ssl-config.mozilla.org/)
 
 Google SRE Book Ingeniería de Fiabilidad
 
@@ -817,7 +813,7 @@ Google SRE Book Ingeniería de Fiabilidad
 
 Metodología para fijar presupuestos de error (Error Budgets) y definir alertas procesables basadas en impacto al usuario final.
 
-[ Leer Google SRE Book ](https://sre.google/sre-book/table-of-contents/)
+[Leer Google SRE Book](https://sre.google/sre-book/table-of-contents/)
 
 Linux Systemd SRE Supervisión
 
@@ -825,7 +821,7 @@ Linux Systemd SRE Supervisión
 
 Integración de latidos periódicos (Watchdog) en FastAPI para reiniciar automáticamente procesos colapsados por Out-Of-Memory (OOM).
 
-[ Consultar sd_notify Docs ](https://www.freedesktop.org/software/systemd/man/latest/sd_notify.html)
+[Consultar sd_notify Docs](https://www.freedesktop.org/software/systemd/man/latest/sd_notify.html)
 
 Prometheus Alertmanager Respuesta a Incidentes
 
@@ -833,7 +829,7 @@ Prometheus Alertmanager Respuesta a Incidentes
 
 Enrutamiento inteligente de alertas críticas para evitar fatiga de notificaciones en el equipo de guardia 24/7.
 
-[ Consultar Alertmanager Docs ](https://prometheus.io/docs/alerting/latest/alertmanager/)
+[Consultar Alertmanager Docs](https://prometheus.io/docs/alerting/latest/alertmanager/)
 
 Meta Llama Guard Paper Paper Científico
 
@@ -841,12 +837,12 @@ Meta Llama Guard Paper Paper Científico
 
 Metodología de entrenamiento y calibración de probabilidades para minimizar falsos positivos en moderación conversacional de negocios.
 
-[ Leer Paper Llama Guard ](https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/)
+[Leer Paper Llama Guard](https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](03-inferencia-function-calling-tools.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md)
+[⬅️ Anterior](03-inferencia-function-calling-tools.md) • [Inicio](../../README.md) • [Módulo 2](README.md)
 
 </div>

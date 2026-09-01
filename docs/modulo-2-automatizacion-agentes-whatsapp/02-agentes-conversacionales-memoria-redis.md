@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [⬅️ Anterior](01-whatsapp-cloud-api-arquitectura-webhooks.md) • [Siguiente ➡️](03-inferencia-function-calling-tools.md)
+[Inicio](../../README.md) • [Módulo 2](README.md) • [⬅️ Anterior](01-whatsapp-cloud-api-arquitectura-webhooks.md) • [Siguiente ️](03-inferencia-function-calling-tools.md)
 
 </div>
 
@@ -207,16 +207,14 @@ Python 3.11 · llama_stack_agent_setup.py
     )
     
     # 4. Declaramos herramientas operativas
-    tools = [
-        ToolDefinition(
+    tools = [ToolDefinition(
             name="consultar_disponibilidad_citas",
             description="Consulta horarios libres en la agenda dental para una fecha dada."
         ),
         ToolDefinition(
             name="confirmar_cita_en_calendario",
             description="Bloquea y confirma una cita médica para el paciente."
-        )
-    ]
+        )]
     
     # 5. Capa de blindaje de contenido y anti-jailbreak
     safety_config = SafetyConfig(
@@ -433,9 +431,7 @@ Python 3.11 · context_compactor.py
         # 2. Recuperar únicamente los últimos 4 turnos (sliding window)
         ultimos_turnos = await redis_conn.lrange(f"session:{wa_id}:messages", -4, -1)
         
-        prompt_contexto = [
-            {"role": "system", "content": f"Eres el asistente de Meta. Datos del cliente: {resumen}"}
-        ]
+        prompt_contexto = [{"role": "system", "content": f"Eres el asistente de Meta. Datos del cliente: {resumen}"}]
         for msg_json in ultimos_turnos:
             prompt_contexto.append(json.loads(msg_json))
             
@@ -773,7 +769,7 @@ Meta AI · 2024 Especificación Abierta
 
 Arquitectura unificada de APIs para memoria, herramientas, evaluación y orquestación de agentes con modelos Meta Llama 3.
 
-[ Consultar Llama Stack en GitHub ](https://github.com/meta-llama/llama-stack)
+[Consultar Llama Stack en GitHub](https://github.com/meta-llama/llama-stack)
 
 Meta AI Research · 2024 Paper Científico
 
@@ -781,7 +777,7 @@ Meta AI Research · 2024 Paper Científico
 
 Paper técnico oficial con el análisis de atención agrupada (GQA), ventana nativa de 128k tokens y formateo con delimitadores de turnos especiales.
 
-[ Leer Paper en Meta AI Research ](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/)
+[Leer Paper en Meta AI Research](https://ai.meta.com/research/publications/the-llama-3-herd-of-models/)
 
 Redis Ltd. · 2024 Guía de Arquitectura
 
@@ -789,7 +785,7 @@ Redis Ltd. · 2024 Guía de Arquitectura
 
 Patrones de persistencia en memoria, expiración de claves TTL para sesiones de mensajería y concurrencia asíncrona con redis-py.
 
-[ Consultar Documentación de Redis ](https://redis.io/docs/latest/develop/use/session-management/)
+[Consultar Documentación de Redis](https://redis.io/docs/latest/develop/use/session-management/)
 
 Python Software Foundation Estándar Asíncrono
 
@@ -797,7 +793,7 @@ Python Software Foundation Estándar Asíncrono
 
 Documentación del motor de corrutinas en Python para coordinar peticiones concurrentes de WhatsApp sin bloquear el hilo del servidor.
 
-[ Consultar Python Docs asyncio ](https://docs.python.org/3/library/asyncio.html)
+[Consultar Python Docs asyncio](https://docs.python.org/3/library/asyncio.html)
 
 SQLite Development Team Motor Embebido
 
@@ -805,7 +801,7 @@ SQLite Development Team Motor Embebido
 
 Técnicas de concurrencia y persistencia atómica con SQLite para almacenamiento local de conversaciones con bajo consumo de memoria.
 
-[ Consultar Documentación SQLite WAL ](https://www.sqlite.org/wal.html)
+[Consultar Documentación SQLite WAL](https://www.sqlite.org/wal.html)
 
 Meta Open Source Herramientas de Agente
 
@@ -813,7 +809,7 @@ Meta Open Source Herramientas de Agente
 
 Directrices de seguridad y aislamiento de memoria para agentes que interactúan con múltiples usuarios en plataformas de mensajería.
 
-[ Consultar Llama Agent Docs ](https://llama.meta.com/docs/llama-stack/)
+[Consultar Llama Agent Docs](https://llama.meta.com/docs/llama-stack/)
 
 Hugging Face & vLLM Optimización de KV Cache
 
@@ -821,7 +817,7 @@ Hugging Face & vLLM Optimización de KV Cache
 
 Arquitectura de memoria paginada para reducir la fragmentación de la memoria VRAM durante la gestión de múltiples sesiones simultáneas.
 
-[ Consultar vLLM Architecture ](https://vllm.ai/)
+[Consultar vLLM Architecture](https://vllm.ai/)
 
 IETF RFC 7519 Estándar de Token
 
@@ -829,7 +825,7 @@ IETF RFC 7519 Estándar de Token
 
 Estándar para validación de identidad y claims de sesión en arquitecturas conversacionales distribuidas de microservicios.
 
-[ Consultar RFC 7519 ](https://datatracker.ietf.org/doc/html/rfc7519)
+[Consultar RFC 7519](https://datatracker.ietf.org/doc/html/rfc7519)
 
 Redis Cluster Docs Alta Disponibilidad
 
@@ -837,7 +833,7 @@ Redis Cluster Docs Alta Disponibilidad
 
 Estrategias de particionamiento de hash slots para escalar horizontalmente la memoria de más de 500,000 usuarios concurrentes en WhatsApp.
 
-[ Consultar Redis Cluster Scaling ](https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/)
+[Consultar Redis Cluster Scaling](https://redis.io/docs/latest/operate/oss_and_stack/management/scaling/)
 
 PostgreSQL 16 Docs JSONB Indexing
 
@@ -845,7 +841,7 @@ PostgreSQL 16 Docs JSONB Indexing
 
 Indexación de árboles de conversación complejos mediante índices GIN sobre campos JSONB para consultas analíticas instantáneas.
 
-[ Consultar Postgres JSONB Docs ](https://www.postgresql.org/docs/current/datatype-json.html)
+[Consultar Postgres JSONB Docs](https://www.postgresql.org/docs/current/datatype-json.html)
 
 Pydantic Library Esquemas de Estado
 
@@ -853,7 +849,7 @@ Pydantic Library Esquemas de Estado
 
 Patrones de diseño para serialización y deserialización atómica del estado conversacional evitando corrupción de memoria.
 
-[ Consultar Pydantic Models ](https://docs.pydantic.dev/latest/concepts/models/)
+[Consultar Pydantic Models](https://docs.pydantic.dev/latest/concepts/models/)
 
 Finite State Machine Diseño de Software
 
@@ -861,7 +857,7 @@ Finite State Machine Diseño de Software
 
 Modelado de flujos conversacionales como autómatas finitos deterministas para asegurar el cumplimiento estricto de reglas de negocio.
 
-[ Consultar FSM Transitions ](https://github.com/pytransitions/transitions)
+[Consultar FSM Transitions](https://github.com/pytransitions/transitions)
 
 Meta Llama 3 Prompting Formateo de Turnos
 
@@ -869,7 +865,7 @@ Meta Llama 3 Prompting Formateo de Turnos
 
 Especificación de los delimitadores oficiales <|start_header_id|> y <|eot_id|> para preservar la pureza del contexto conversacional.
 
-[ Consultar Delimitadores de Turno ](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/)
+[Consultar Delimitadores de Turno](https://llama.meta.com/docs/model-cards-and-prompt-formats/llama3_1/)
 
 Memory Eviction Policies Gestión de RAM
 
@@ -877,7 +873,7 @@ Memory Eviction Policies Gestión de RAM
 
 Configuración de políticas volatile-lru y maxmemory en Redis para descartar automáticamente sesiones antiguas sin interrumpir chats activos.
 
-[ Consultar Memoria y Evicción ](https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/memory-optimization/)
+[Consultar Memoria y Evicción](https://redis.io/docs/latest/operate/oss_and_stack/management/optimization/memory-optimization/)
 
 LangChain Core Patrones de Memoria
 
@@ -885,7 +881,7 @@ LangChain Core Patrones de Memoria
 
 Análisis comparativo de algoritmos de compresión de contexto que combinan ventanas deslizantes con resúmenes incrementales generados por LLMs.
 
-[ Consultar Memory Patterns ](https://python.langchain.com/docs/modules/memory/)
+[Consultar Memory Patterns](https://python.langchain.com/docs/modules/memory/)
 
 Meta AI Ethics Gobernanza de Datos
 
@@ -893,12 +889,12 @@ Meta AI Ethics Gobernanza de Datos
 
 Directrices de cumplimiento legal y derecho al olvido (data deletion request) en agentes de WhatsApp con almacenamiento persistente.
 
-[ Consultar Responsible AI ](https://ai.meta.com/responsible-ai/)
+[Consultar Responsible AI](https://ai.meta.com/responsible-ai/)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](01-whatsapp-cloud-api-arquitectura-webhooks.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 2](README.md) • [Siguiente ➡️](03-inferencia-function-calling-tools.md)
+[⬅️ Anterior](01-whatsapp-cloud-api-arquitectura-webhooks.md) • [Inicio](../../README.md) • [Módulo 2](README.md) • [Siguiente ️](03-inferencia-function-calling-tools.md)
 
 </div>

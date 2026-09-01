@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior](01-arquitectura-transformer-llama3.md) • [Siguiente ➡️](03-fine-tuning-lora-qlora-evaluacion.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [⬅️ Anterior](01-arquitectura-transformer-llama3.md) • [Siguiente ️](03-fine-tuning-lora-qlora-evaluacion.md)
 
 </div>
 
@@ -387,11 +387,9 @@ rag_pipeline_llama3.py (FastAPI + ChromaDB)
     embed_model = SentenceTransformer("BAAI/bge-large-en-v1.5")
     
     # 2. Indexar documento de políticas actualizado
-    politicas_texto = [
-     "Las devoluciones en 2024 deben tramitarse dentro de 15 días naturales desde la entrega.",
+    politicas_texto = ["Las devoluciones en 2024 deben tramitarse dentro de 15 días naturales desde la entrega.",
      "El reembolso se emite al método de pago original en un plazo de 3 a 5 días hábiles.",
-     "Artículos en liquidación final no son elegibles para cambio ni devolución."
-    ]
+     "Artículos en liquidación final no son elegibles para cambio ni devolución."]
     collection.add(
      documents=politicas_texto,
      ids=["p1", "p2", "p3"]
@@ -791,7 +789,7 @@ Meta AI (FAIR) · 2020 Paper Fundacional RAG
 
 El artículo pionero que propuso la formulación matemática bimodal de RAG, combinando modelos generativos autorregresivos con un índice no paramétrico para responder con cero alucinaciones. 
 
-[ Consultar en arXiv: 2005.11401 ](https://arxiv.org/abs/2005.11401)
+[Consultar en arXiv: 2005.11401](https://arxiv.org/abs/2005.11401)
 
 Google Brain · 2022 Chain-of-Thought (CoT)
 
@@ -799,7 +797,7 @@ Google Brain · 2022 Chain-of-Thought (CoT)
 
 Investigación seminal de Jason Wei et al. que demostró que instruir al modelo a generar deducciones paso a paso desencadena razonamiento aritmético y simbólico emergente. 
 
-[ Consultar en arXiv: 2201.11903 ](https://arxiv.org/abs/2201.11903)
+[Consultar en arXiv: 2201.11903](https://arxiv.org/abs/2201.11903)
 
 OpenAI · 2020 In-Context Learning
 
@@ -807,7 +805,7 @@ OpenAI · 2020 In-Context Learning
 
 Estudio formal que fundamentó el aprendizaje en contexto (Few-Shot), probando cómo $K$ ejemplos demostrativos calibran el formato y las etiquetas sin alterar gradientes ni parámetros. 
 
-[ Consultar en arXiv: 2005.14165 ](https://arxiv.org/abs/2005.14165)
+[Consultar en arXiv: 2005.14165](https://arxiv.org/abs/2005.14165)
 
 Princeton & Google · 2022 Patrón ReAct
 
@@ -815,7 +813,7 @@ Princeton & Google · 2022 Patrón ReAct
 
 Introduce el bucle interactivo de razonamiento y acción (Thought → Action → Observation), permitiendo a los LLMs invocar APIs, herramientas y bases de datos vectoriales en tiempo real. 
 
-[ Consultar en arXiv: 2210.03629 ](https://arxiv.org/abs/2210.03629)
+[Consultar en arXiv: 2210.03629](https://arxiv.org/abs/2210.03629)
 
 Google Research · 2022 Auto-Consistencia
 
@@ -823,7 +821,7 @@ Google Research · 2022 Auto-Consistencia
 
 Propone muestrear $N$ rutas estocásticas de razonamiento CoT y seleccionar la conclusión final por votación mayoritaria ($\arg\max$), incrementando notablemente la precisión matemática. 
 
-[ Consultar en arXiv: 2203.11171 ](https://arxiv.org/abs/2203.11171)
+[Consultar en arXiv: 2203.11171](https://arxiv.org/abs/2203.11171)
 
 Malkov & Yashunin · 2018 Algoritmo HNSW
 
@@ -831,7 +829,7 @@ Malkov & Yashunin · 2018 Algoritmo HNSW
 
 El algoritmo matemático detrás de ChromaDB, FAISS y Pinecone para buscar vecinos más cercanos en grafos navegables jerárquicos con complejidad logarítmica $\mathcal{O}(\log N)$. 
 
-[ Consultar en arXiv: 1603.09320 ](https://arxiv.org/abs/1603.09320)
+[Consultar en arXiv: 1603.09320](https://arxiv.org/abs/1603.09320)
 
 Meta AI (FAIR) · 2020 Dense Passage Retrieval
 
@@ -839,7 +837,7 @@ Meta AI (FAIR) · 2020 Dense Passage Retrieval
 
 Demuestra cómo los bi-encoders siameses entrenados con pérdida contrastiva superan a los métodos léxicos BM25 comparando vectores de embeddings continuos en espacio latente. 
 
-[ Consultar en arXiv: 2004.04906 ](https://arxiv.org/abs/2004.04906)
+[Consultar en arXiv: 2004.04906](https://arxiv.org/abs/2004.04906)
 
 Univ. of Waterloo · 2009 Fusión Híbrida RRF
 
@@ -847,7 +845,7 @@ Univ. of Waterloo · 2009 Fusión Híbrida RRF
 
 Formulación matemática estándar de la industria (Cormack et al.) que fusiona listas de ranking de búsqueda léxica (BM25) y búsqueda vectorial mediante la suma de inversos de rangos normalizados. 
 
-[ Consultar en ACM SIGIR: 1572114 ](https://dl.acm.org/doi/10.1145/1571941.1572114)
+[Consultar en ACM SIGIR: 1572114](https://dl.acm.org/doi/10.1145/1571941.1572114)
 
 Stanford & Berkeley · 2023 Atención en Contexto
 
@@ -855,7 +853,7 @@ Stanford & Berkeley · 2023 Atención en Contexto
 
 Evidencia empírica fundamental que demuestra cómo la posición de los pasajes dentro del prompt influye en la capacidad de recuperación, motivando el ordenamiento en extremos y el reranking. 
 
-[ Consultar en arXiv: 2307.03172 ](https://arxiv.org/abs/2307.03172)
+[Consultar en arXiv: 2307.03172](https://arxiv.org/abs/2307.03172)
 
 BAAI · 2023 Embeddings & Reranker
 
@@ -863,7 +861,7 @@ BAAI · 2023 Embeddings & Reranker
 
 Arquitectura de modelos de embeddings y cross-encoder rerankers de alta precisión multilingüe (inglés/español), evaluados en el benchmark estandarizado MTEB. 
 
-[ Consultar en arXiv: 2309.07597 ](https://arxiv.org/abs/2309.07597)
+[Consultar en arXiv: 2309.07597](https://arxiv.org/abs/2309.07597)
 
 Carnegie Mellon (CMU) · 2022 Búsqueda HyDE
 
@@ -871,7 +869,7 @@ Carnegie Mellon (CMU) · 2022 Búsqueda HyDE
 
 Propone Hypothetical Document Embeddings (HyDE), técnica donde el LLM genera una respuesta preliminar hipotética para consultar el espacio vectorial con mayor alineación semántica. 
 
-[ Consultar en arXiv: 2212.10496 ](https://arxiv.org/abs/2212.10496)
+[Consultar en arXiv: 2212.10496](https://arxiv.org/abs/2212.10496)
 
 Univ. of Washington & Allen AI · 2023 RAG con Auto-Reflexión
 
@@ -879,7 +877,7 @@ Univ. of Washington & Allen AI · 2023 RAG con Auto-Reflexión
 
 Framework avanzado que entrena tokens especiales de autorreflexión para que el LLM decida autónomamente cuándo recuperar documentos y verifique la veracidad de sus citas. 
 
-[ Consultar en arXiv: 2310.11511 ](https://arxiv.org/abs/2310.11511)
+[Consultar en arXiv: 2310.11511](https://arxiv.org/abs/2310.11511)
 
 Wang et al. · ICLR Paper Científico
 
@@ -887,7 +885,7 @@ Wang et al. · ICLR Paper Científico
 
 Técnica de muestreo con votación mayoritaria para elevar la precisión en tareas matemáticas y lógicas complejas con Llama 3. 
 
-[ Consultar Paper Self-Consistency ](https://arxiv.org/abs/2203.11171)
+[Consultar Paper Self-Consistency](https://arxiv.org/abs/2203.11171)
 
 DAIR.AI · 2024 Guía de Referencia
 
@@ -895,7 +893,7 @@ DAIR.AI · 2024 Guía de Referencia
 
 Compendio exhaustivo de patrones de diseño de prompts, metaprompting y evaluación de solidez contra inyecciones de contexto. 
 
-[ Consultar DAIR.AI Guide ](https://www.promptingguide.ai/)
+[Consultar DAIR.AI Guide](https://www.promptingguide.ai/)
 
 Anthropic Research Mejores Prácticas
 
@@ -903,7 +901,7 @@ Anthropic Research Mejores Prácticas
 
 Guía metodológica sobre el uso de etiquetas delimitadoras XML para prevenir la confusión de instrucciones y estructurar entradas complejas. 
 
-[ Consultar Guía XML Tags ](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags)
+[Consultar Guía XML Tags](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags)
 
 Stanford NLP · 2024 Framework de Optimización
 
@@ -911,12 +909,12 @@ Stanford NLP · 2024 Framework de Optimización
 
 Compilador de prompts declarativo que optimiza automáticamente las instrucciones y los ejemplos Few-Shot mediante algoritmos de teleprompter. 
 
-[ Consultar DSPy Stanford ](https://github.com/stanfordnlp/dspy)
+[Consultar DSPy Stanford](https://github.com/stanfordnlp/dspy)
 
 ---
 
 <div align="center">
 
-[⬅️ Anterior](01-arquitectura-transformer-llama3.md) • [🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [Siguiente ➡️](03-fine-tuning-lora-qlora-evaluacion.md)
+[⬅️ Anterior](01-arquitectura-transformer-llama3.md) • [Inicio](../../README.md) • [Módulo 1](README.md) • [Siguiente ️](03-fine-tuning-lora-qlora-evaluacion.md)
 
 </div>
