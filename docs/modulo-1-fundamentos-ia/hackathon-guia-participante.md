@@ -29,6 +29,11 @@ El error más costoso en ingeniería de Inteligencia Artificial es seleccionar u
 * **Almacenamiento Transaccional (CRUD):** Un LLM no reemplaza una base de datos relacional con propiedades ACID. Use PostgreSQL / SQLite.
 * **Predicciones Numéricas de Series de Tiempo:** Para pronósticos cuantitativos utilice modelos dedicados como XGBoost o ARIMA.
 
+> **Analogía Didáctica para Entender RAG + LLM:**
+> * **El Escritor Inteligente (El LLM / Llama):** Redacta con elocuencia en lenguaje natural, pero no conoce las políticas internas de tu empresa. Si no le das el documento, intentará adivinar para complacerte (**Alucinación**).
+> * **El Bibliotecario Veloz (El Motor RAG):** Busca en 10 milisegundos entre miles de textos y le entrega al Escritor exactamente el párrafo que responde la duda.
+> * **El Resultado:** El Escritor redacta una respuesta perfecta, empática y 100% verídica citando la fuente oficial.
+
 ---
 
 ## 2. Taxonomía de Técnicas: ¿Cuándo Usar Prompting, RAG o Fine-Tuning?
@@ -98,6 +103,12 @@ def sanitizar_texto(texto_crudo: str) -> str:
 $$\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}}{\|\mathbf{q}\|_2 \|\mathbf{d}\|_2} = \frac{\sum_{i=1}^{d} q_i d_i}{\sqrt{\sum_{i=1}^{d} q_i^2} \sqrt{\sum_{i=1}^{d} d_i^2}}$$
 
 Al usar vectores unitarios normalizados con $L_2$, $\cos(\theta) = \mathbf{q} \cdot \mathbf{d}$.
+
+> **¿Cómo entender un Embedding sin saber matemáticas? (Analogía del Mapa):**
+> * A cada idea o palabra se le asigna una coordenada geográfica en un mapa de 384 dimensiones.
+> * Las palabras *"coche"* y *"automóvil"* no comparten letras, pero en el mapa semántico **viven en la misma calle**; su distancia es casi cero.
+> * La palabra *"lechuga"* vive en el otro extremo de la ciudad.
+> * La **Similitud Coseno** simplemente mide qué tan cerca viven dos ideas en ese mapa conceptual.
 
 ---
 
