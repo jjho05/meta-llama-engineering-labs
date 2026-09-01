@@ -14,6 +14,37 @@ MÓDULO 1 · PROYECTO INTEGRADOR & HACKATHON DE INGENIERÍA IA
 
 ---
 
+## 0. Mapa de Integración: Cómo Confluyen los 4 Temas y 3 Challenges en tu Proyecto
+
+El Hackathon Integrador es la **síntesis arquitectónica de todo el Módulo 1**. Cada lección previa aporta una pieza crítica:
+
+```mermaid
+graph TD
+    T1["Tema 1 & Challenge 1<br><b>Modelo Base Llama 3</b><br>Benchmark, VRAM y Latencia"] --> Router["Capa 1: Enrutador Inteligente<br><code>router.py</code>"]
+    T2["Tema 2: Prompt Engineering<br><b>System Prompt Maestro</b><br>Delimitadores y Control Fáctico"] --> LLM["Capa 3: Inferencia Controlada<br><code>Llama-3.2-1B / 3B</code>"]
+    T3["Tema 3 & Challenge 2<br><b>Motor RAG Vectorial</b><br>Embeddings 384D y Similitud Coseno"] --> RAG["Capa 2: Base de Conocimiento<br><code>rag_engine.py</code>"]
+    T4["Tema 4 & Challenge 3<br><b>Adaptador LoRA (PEFT)</b><br>Matrices r=8 y Salida JSON"] --> LoRA["Capa 3: Extractor Estructurado<br><code>lora_adapter.py</code>"]
+    
+    Router -->|Consulta General| LLM
+    Router -->|Consulta Documental| RAG
+    Router -->|Requerimiento JSON| LoRA
+    
+    RAG --> LLM
+    LoRA --> LLM
+    LLM --> API["Capa 4: Microservicio REST FastAPI<br><code>api_server.py</code> (/v1/chat)"]
+    API --> M2["Módulo 2: Meta Cloud Webhook & WhatsApp"]
+```
+
+| Módulo 1: Tema / Challenge | Habilidad Adquirida | Aporte al Proyecto Integrador |
+| :--- | :--- | :--- |
+| **Tema 1 & Challenge 1** (Ecosistema Llama & Benchmark) | Cuantización FP16/NF4, latencia ($t_{\text{ms}}$) y tokens/segundo. | **Selección de Motor Base:** Dimensionamiento de VRAM (Tesla T4 15 GB). |
+| **Tema 2** (Prompt Engineering Avanzado) | Delimitadores especiales, roles y temperatura ($0.1$). | **System Prompt Maestro:** Control de veracidad y admisión de ignorancia. |
+| **Tema 3 & Challenge 2** (RAG & Embeddings) | Vectores en $\mathbb{R}^{384}$, similitud coseno y umbral ($\ge 0.40$). | **Capa 2 (`rag_engine.py`):** Base de conocimiento factual sin alucinaciones. |
+| **Tema 4 & Challenge 3** (LoRA PEFT) | Matrices $r=8$ y salidas estructuradas JSON. | **Capa 3 (`lora_adapter.py`):** Extracción tipada para interoperabilidad. |
+| **Proyecto Integrador** (Hackathon) | Microservicios REST, Pydantic y Red Teaming. | **Backend FastAPI Completo:** Listo para conectar con WhatsApp en Módulo 2. |
+
+---
+
 ## 1. ¿Cómo Concebir tu Proyecto? Qué SÍ Resuelve un LLM y Qué NO
 
 El error más costoso en ingeniería de Inteligencia Artificial es seleccionar un problema que no se adapta a la naturaleza probabilística de los modelos de lenguaje:
