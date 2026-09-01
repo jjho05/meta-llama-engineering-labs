@@ -75,7 +75,35 @@ graph TD
 
 ---
 
-## 5. Catálogo de Cuatro Plantillas de Proyectos
+## 5. Arquitectura Modular de Cuatro Capas
+
+| Criterio de Evaluación | Enfoque Monolítico (Prompt Relleno) | Arquitectura Modular (Router + RAG + LoRA + FastAPI) |
+| :--- | :--- | :--- |
+| **Control de Alucinaciones** | Bajo: El modelo inventa respuestas cuando la información no está explícita. | Máximo: Filtro de similitud coseno $\ge 0.40$ con admisión estricta de ignorancia. |
+| **Latencia por Consulta** | Alta ($3.0 - 8.0\text{ s}$ por procesar miles de tokens en cada turno). | Optimizada ($< 0.8\text{ s}$ en consultas directas mediante Router). |
+| **Actualización de Datos** | Manual y costosa (Reescribir prompts en cada modificación). | Instantánea (Actualizar archivos de texto en el índice vectorial). |
+| **Estructura de Salida** | Inconsistente (Agrega texto conversacional antes de JSON). | Garantizada mediante adaptadores LoRA y validación con Pydantic. |
+
+### Componentes del Sistema:
+1. **Capa 1 (`router.py`):** Enrutador heurístico de complejidad. Clasifica saludos para responder de inmediato ($< 0.5\text{ s}$) y deriva consultas documentales al pipeline RAG.
+2. **Capa 2 (`rag_engine.py`):** Motor vectorial. Segmenta documentos, calcula embeddings en $\mathbb{R}^{384}$ y recupera fragmentos mediante similitud coseno.
+3. **Capa 3 (`lora_adapter.py`):** Adaptador LoRA / Formateador JSON. Aplica pesos adaptativos PEFT o directivas estructuradas Few-Shot para generar JSON tipado.
+4. **Capa 4 (`api_server.py`):** Microservicio REST asíncrono con FastAPI y esquemas Pydantic.
+
+---
+
+## 6. Glosario Técnico de Ingeniería
+
+1. **Prompt & System Directives:** Instrucciones estructuradas que definen el rol institucional, tono, restricciones operativas y contexto documental.
+2. **Tokens & Tokenización BPE:** Unidades de procesamiento textual generadas mediante Byte-Pair Encoding ($\sim 4$ caracteres por token en español).
+3. **Incrustaciones Densas (Embeddings):** Vectores numéricos en $\mathbb{R}^{384}$ que capturan la semántica profunda de un texto.
+4. **RAG & Similitud Coseno:** Técnica de recuperación fáctica basada en el producto punto de vectores normalizados ($L_2$).
+5. **LoRA (Low-Rank Adaptation):** Técnica PEFT que congela el modelo base e inyecta matrices de bajo rango $r \ll d$ en capas de atención.
+6. **Memoria VRAM:** Memoria de la GPU (15 GB en Tesla T4) que aloja pesos, optimizador AdamW, KV-Cache y activaciones.
+
+---
+
+## 7. Catálogo de Cuatro Plantillas de Proyectos
 
 ### Plantilla 1: Asistente de Operaciones Comerciales, Envíos y Políticas de Devolución (E-Commerce)
 * **Objetivo:** Resolver dudas sobre garantías, tiempos de entrega y procedimientos de cambio de productos sin incurrir en alucinaciones.
@@ -103,7 +131,9 @@ graph TD
 
 ---
 
-## 6. Presupuesto de Memoria VRAM y Google Colab
+## 8. Presupuesto de Memoria VRAM y Google Colab
+
+$$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
 
 | Modelo Fundacional | Consumo VRAM Estimado | Viabilidad en GPU Tesla T4 (15 GB) | Recomendación Técnica |
 | :--- | :--- | :--- | :--- |
@@ -114,7 +144,7 @@ graph TD
 
 ---
 
-## 7. Código Modular del Starter Kit
+## 9. Código Modular del Starter Kit
 
 ### 1. Motor Vectorial RAG (`rag_engine.py`)
 ```python
@@ -192,7 +222,7 @@ async def chatear(entrada: MensajeEntrada):
 
 ---
 
-## 8. Diagnóstico de Incidencias Técnicas
+## 10. Diagnóstico de Incidencias Técnicas
 
 1. **Erradicación de Alucinaciones:**
    * Incorporar directiva estricta: *"Responda únicamente usando la evidencia del Contexto. Si no está en el Contexto, admita que no cuenta con la información."*
@@ -206,7 +236,7 @@ async def chatear(entrada: MensajeEntrada):
 
 ---
 
-## 9. Rúbrica Oficial de Evaluación y Checklist de Calidad
+## 11. Rúbrica Oficial de Evaluación y Checklist de Calidad
 
 - [ ] **Desacoplamiento:** El conocimiento proviene de una base documental externa y no del prompt.
 - [ ] **RAG Operativo:** Los textos están indexados en `rag_engine.py` y la búsqueda responde con confianza cosenoidal.
