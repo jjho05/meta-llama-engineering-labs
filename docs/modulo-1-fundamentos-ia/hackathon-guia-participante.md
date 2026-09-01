@@ -8,9 +8,9 @@
 
 MÓDULO 1 · PROYECTO INTEGRADOR & HACKATHON DE INGENIERÍA IA
 
-# Guía Maestra de Construcción y Mentoría: Diseña y Despliega tu Sistema de IA con Meta Llama
+# Guía Maestra de Construcción: Diseña y Despliega tu Sistema de IA con Meta Llama
 
-**Centro de Acompañamiento, Plantillas y Mentoría Enciclopédica para Participantes**. Esta guía técnica orienta a los desarrolladores y participantes en la concepción del problema, la taxonomía de técnicas de IA, la ingeniería y sanitización de datos, las estrategias avanzadas de segmentación (chunking recursivo), las matemáticas de la búsqueda vectorial, la arquitectura de dos etapas con Reranking Cross-Encoder, la ingeniería de prompts industrial, el dimensionamiento de hardware (VRAM), la integración de código modular, el empaquetado en contenedores Docker, la ejecución de pruebas de Red Teaming y la resolución de bloqueos para construir su propio sistema de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
+Esta guía técnica orienta a los desarrolladores y participantes en la concepción del problema, la taxonomía de técnicas de IA, la ingeniería y sanitización de datos, las estrategias avanzadas de segmentación (chunking recursivo), las matemáticas de la búsqueda vectorial, la arquitectura de dos etapas con Reranking Cross-Encoder, la ingeniería de prompts industrial, el dimensionamiento de hardware (VRAM), la integración de código modular, el empaquetado en contenedores Docker, la ejecución de pruebas de Red Teaming y la resolución de bloqueos para construir su propio sistema de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
 
 ---
 
