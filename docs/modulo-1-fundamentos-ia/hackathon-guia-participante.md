@@ -8,81 +8,90 @@
 
 MÓDULO 1 · PROYECTO INTEGRADOR & HACKATHON DE INGENIERÍA IA
 
-# Centro de Acompañamiento y Guía de Construcción: Proyecto Integrador
+# Guía Paso a Paso del Proyecto Integrador: Construye tu Sistema de IA
 
-**Guía técnica activa para participantes y estudiantes**. Esta guía no es la presentación de un proyecto terminado, sino una **mesa de trabajo y asesoría técnica paso a paso** diseñada para orientarte en la concepción, selección de arquitectura, dimensionamiento de hardware (VRAM), integración de código y resolución de errores para construir tu propio sistema de IA antes de pasar al Módulo 2.
+**Centro de Acompañamiento, Plantillas y Mentoría para Participantes**. Esta guía está diseñada para que cualquier persona, sin importar su nivel de experiencia previa, pueda concebir, armar y probar su propia solución de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
 
 ---
 
-## 1. De la Idea a la Arquitectura: Las 4 Capas del Sistema
+## 🍽️ 1. ¿Cómo Funciona tu Sistema de IA? La Analogía del Restaurante
 
-Cualquier sistema de IA aplicada de nivel industrial se compone de 4 capas modulares desacopladas:
+Para construir tu proyecto no necesitas memorizar fórmulas matemáticas complejas. Imagina que tu sistema inteligente es como un **Restaurante Gourmet**:
 
 ```mermaid
 graph TD
-    User["Usuario / Cliente"] --> Layer1["1. Enrutador Inteligente (Router)<br>Clasificación de complejidad (Groq LPU / Heurística)"]
-    Layer1 -->|"Consulta Simple"| DirectLLM["Modelo Rápido (Llama 8B / 20B)<br>Latencia < 0.8 s"]
-    Layer1 -->|"Consulta de Documentos"| Layer2["2. Motor RAG Vectorial<br>Embeddings R^384 + Similitud Coseno"]
-    Layer1 -->|"Jerga o Formato Rígido"| Layer3["3. Adaptador LoRA / Prompting<br>Pesos entrenados PEFT o JSON Schema"]
-    Layer2 --> Layer4["4. Microservicio API (FastAPI)<br>Endpoints tipados + Streaming SSE"]
-    Layer3 --> Layer4
-    DirectLLM --> Layer4
-    Layer4 --> Response["Respuesta Final Auditada"]
+    User["👤 Cliente / Usuario"] --> Router["1. El Mesero Amable (router.py)<br>Escucha la pregunta y decide a dónde dirigirla"]
+    Router -->|"Saludo o Pregunta Simple"| FastLLM["Respuesta Inmediata (< 0.5s)<br>Modelo Ligero (Llama 8B / 20B)"]
+    Router -->|"Pregunta sobre Documentos"| RAG["2. El Recetario Oficial (rag_engine.py)<br>Busca el párrafo exacto de las políticas (Cero Alucinación)"]
+    Router -->|"Petición en Formato Fijo"| LoRA["3. La Escuela de Cocina (lora_adapter.py)<br>Aplica el formato estricto JSON o tono de la empresa"]
+    RAG --> API["4. La Ventana de Entrega (api_server.py)<br>Entrega la respuesta lista para la Web o WhatsApp"]
+    LoRA --> API
+    FastLLM --> API
+    API --> Final["✨ Respuesta Final al Usuario"]
 ```
+
+1. **El Mesero (`router.py`):** Escucha la frase del usuario. Si es un saludo común, responde de inmediato. Si preguntan por una política o garantía, va a consultar la libreta de la empresa.
+2. **El Menú y Recetario (`rag_engine.py`):** Es la libreta con las políticas oficiales. Se consulta la información real antes de responder para **evitar inventar datos**.
+3. **La Escuela de Cocina (`lora_adapter.py`):** El entrenamiento especial para que el modelo siempre entregue respuestas con el estilo de la marca o en formato estructurado (JSON).
+4. **La Ventana de Servicio (`api_server.py`):** El mostrador donde WhatsApp o cualquier página web pide y recibe la respuesta terminada.
 
 ---
 
-## 2. Árbol de Decisiones: ¿Qué Tecnología Elegir para tu Idea?
+## 📚 2. Glosario Fácil: La IA Explicada con Peras y Manzanas
 
-| Si tu proyecto requiere... | Técnica Recomendada | Stack Tecnológico Sugerido | Bloque de Código |
+* **Prompt:** La instrucción o pregunta que le escribes a la IA.
+* **Token:** Los fragmentos en los que la IA divide las palabras (como sílabas). 100 palabras $\approx$ 130 tokens.
+* **Embedding:** La "huella digital" del significado de una frase para buscar ideas similares.
+* **RAG (Recuperación):** Hacer un **examen a libro abierto**: la IA lee tus documentos antes de responder.
+* **LoRA (Adaptación):** Ponerle unas gafas especializadas a la IA para que aprenda un formato sin reescribir todo su cerebro.
+* **VRAM:** La memoria rápida de la tarjeta de video (GPU). En Google Colab tienes 15 GB gratis.
+
+---
+
+## 🚀 3. Cuatro Plantillas de Proyectos Listas para Elegir
+
+Elige la que más te guste para tu entrega:
+
+### 🛍️ Plantilla A: Asistente de Atención al Cliente & Devoluciones (E-Commerce)
+* **Objetivo:** Responder dudas sobre garantías, tiempos de entrega y cambios de productos sin inventar información.
+* **Archivos a usar:** `rag_engine.py` + `api_server.py`.
+* **Datos de prueba:**
+  ```python
+  politicas_tienda = [
+      "Los reembolsos se procesan en un maximo de 30 dias con ticket de compra original.",
+      "Los envios a todo el pais tardan de 2 a 4 dias habiles en llegar a tu domicilio.",
+      "Todos los productos electronicos tienen 1 ano de garantia ante fallas de fabrica."
+  ]
+  ```
+
+### ⚖️ Plantilla B: Asesor de Reglamentos y Trámites (Escuelas / Empresas)
+* **Objetivo:** Resolver dudas sobre trámites de titulación, solicitudes de vacaciones o estatutos institucionales citando el número de artículo.
+* **Archivos a usar:** `rag_engine.py` + `router.py`.
+
+### 📊 Plantilla C: Clasificador de Soporte y Generador de JSON
+* **Objetivo:** Recibir quejas de usuarios y convertirlas automáticamente en fichas estructuradas en JSON (categoría, urgencia y resumen).
+* **Archivos a usar:** `lora_adapter.py` / Prompt Few-Shot + `api_server.py`.
+
+### 🎓 Plantilla D: Tutor de Estudio Personalizado
+* **Objetivo:** Explicar temas difíciles de manera sencilla y hacer preguntas de opción múltiple al estudiante para evaluar su aprendizaje.
+* **Archivos a usar:** `rag_engine.py` + Prompt de Profesor Paciente.
+
+---
+
+## 🚦 4. Semáforo de Hardware & Google Colab Gratuito
+
+| Modelo de IA | Memoria Requerida | Estado en Google Colab T4 (15 GB) | Recomendación |
 | :--- | :--- | :--- | :--- |
-| **Conocimiento dinámico**, políticas cambiantes o citas de manuales | **RAG Semántico** | `sentence-transformers`, Similitud Coseno, SQLite/Memoria | `rag_engine.py` |
-| **Formato de salida estricto** (JSON Schema/SQL) o jerga médica/legal | **Fine-Tuning LoRA (PEFT)** | `peft`, `trl` (`SFTTrainer`), TinyLlama / Llama 3.2 1B | `lora_adapter.py` |
-| **Ambos:** Políticas dinámicas + Formato estricto | **Arquitectura Híbrida (RAG + LoRA)** | RAG para hechos + LoRA para estructura | `rag_engine.py` + `lora_adapter.py` |
-| **Gran volumen de preguntas simples** con algunas analíticas | **Model Router** | Groq LPU API + Llama 8B / 70B | `router.py` |
+| **TinyLlama 1.1B** | $\sim 4.2\text{ GB}$ | 🟢 **100% Viable y Súper Ligero** | Ideal para computadoras portátiles y pruebas rápidas. |
+| **Meta Llama 3.2 1B** | $\sim 5.1\text{ GB}$ | 🟢 **Excelente Rendimiento** | La opción recomendada para el Hackathon. |
+| **Meta Llama 3.2 3B** | $\sim 8.4\text{ GB}$ | 🟢 **Gran Capacidad Analítica** | Muy fluido en la GPU T4 de Colab. |
+| **Meta Llama 3.1 8B** | $\sim 11.8\text{ GB}$ | 🟡 **Viable con QLoRA 4-bit** | Usar `BitsAndBytes` 4-bit y Batch Size = 1. |
 
 ---
 
-## 3. Dimensionamiento de Hardware & Memoria VRAM
+## 🛠️ 5. Starter Kit: Código Modular Listo para Probar
 
-Para ejecutar tu solución en **Google Colab Gratuito (1x GPU Tesla T4 de 15 GB VRAM)**:
-
-1. **TinyLlama 1.1B / Llama 3.2 1B en FP16:**
-   - Pesos base: $\sim 2.2\text{ GB}$.
-   - Optimizador LoRA ($r=8, \alpha=16$): $\sim 9\text{ MB}$.
-   - Memoria total requerida: **$\sim 4.5\text{ GB}$ (100% Viable en Colab y laptops con 8GB RAM)**.
-2. **Meta Llama 3.1 8B con QLoRA 4-bit (NF4):**
-   - Pesos cuantizados: $\sim 5.5\text{ GB}$.
-   - Optimizador LoRA ($r=16$): $\sim 65\text{ MB}$.
-   - Memoria total requerida: **$\sim 8.5\text{ GB}$ (Totalmente viable en Colab T4)**.
-3. **Hiperparámetros Recomendados para Colab:**
-   - `per_device_train_batch_size = 1` o `2`.
-   - `gradient_accumulation_steps = 4`.
-   - `learning_rate = 2e-4`.
-   - `fp16 = True`.
-
----
-
-## 4. Starter Kit Oficial: Bloques Aceleradores de Código
-
-### Bloque 1: Enrutador de Consultas (`router.py`)
-```python
-class ModelRouter:
-    """Clasifica la intencion de la consulta para optimizar latencia y costo."""
-    def __init__(self):
-        self.keywords_rag = ["politica", "reembolso", "garantia", "manual", "horario", "precio"]
-        self.keywords_lora = ["json", "esquema", "diagnostico", "sql", "codigo"]
-
-    def route(self, query: str) -> str:
-        text = query.lower()
-        if any(k in text for k in self.keywords_rag):
-            return "RAG_PIPELINE"
-        if any(k in text for k in self.keywords_lora):
-            return "LORA_ADAPTER"
-        return "FAST_LLM"
-```
-
-### Bloque 2: Motor RAG Vectorial (`rag_engine.py`)
+### 1. El Buscador RAG (`rag_engine.py`)
 ```python
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -97,108 +106,90 @@ class VectorRAGEngine:
         self.documents = docs
         self.embeddings = self.embedder.encode(docs, normalize_embeddings=True)
 
-    def search(self, query: str, top_k=2, threshold=0.40):
-        q_emb = self.embedder.encode([query], normalize_embeddings=True)[0]
+    def search(self, pregunta: str, top_k=2, umbral=0.40):
+        q_emb = self.embedder.encode([pregunta], normalize_embeddings=True)[0]
         scores = np.dot(self.embeddings, q_emb)
         indices = np.argsort(scores)[::-1][:top_k]
         
-        results = []
+        resultados = []
         for idx in indices:
-            if scores[idx] >= threshold:
-                results.append({"text": self.documents[idx], "score": float(scores[idx])})
-        return results
+            if scores[idx] >= umbral:
+                resultados.append({"texto": self.documents[idx], "confianza": float(scores[idx])})
+        return resultados
 ```
 
-### Bloque 3: Adaptador LoRA (`lora_adapter.py`)
+### 2. El Mesero Inteligente (`router.py`)
 ```python
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from peft import PeftModel
+class ModelRouter:
+    def __init__(self):
+        self.keywords_doc = ["politica", "reembolso", "devolucion", "garantia", "envio", "precio"]
+        self.keywords_json = ["json", "esquema", "ticket", "ficha"]
 
-class LoRAInferenceEngine:
-    def __init__(self, base_model_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0", adapter_path="./lora_checkpoint"):
-        self.tokenizer = AutoTokenizer.from_pretrained(base_model_id)
-        self.base_model = AutoModelForCausalLM.from_pretrained(
-            base_model_id, 
-            dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-            device_map="auto"
-        )
-        try:
-            self.model = PeftModel.from_pretrained(self.base_model, adapter_path)
-        except Exception:
-            self.model = self.base_model
-
-    def generate(self, prompt: str, max_new_tokens=80) -> str:
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
-        with torch.no_grad():
-            outputs = self.model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample=False)
-        new_tokens = outputs[0][inputs["input_ids"].shape[1]:]
-        return self.tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+    def route(self, query: str) -> str:
+        text = query.lower()
+        if any(k in text for k in self.keywords_doc):
+            return "RAG_PIPELINE"
+        if any(k in text for k in self.keywords_json):
+            return "LORA_ADAPTER"
+        return "FAST_LLM"
 ```
 
-### Bloque 4: Servidor FastAPI (`api_server.py`)
+### 3. El Servidor Web (`api_server.py`)
 ```python
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import time
 
-app = FastAPI(title="Motor de Asistencia IA Hackathon", version="1.0.0")
+app = FastAPI(title="Mi Asistente de IA - Hackathon", version="1.0.0")
 
-class ChatRequest(BaseModel):
+class MensajeEntrada(BaseModel):
     mensaje: str
-    usuario_id: str = "usr_demo"
+    usuario: str = "invitado"
 
-class ChatResponse(BaseModel):
+class RespuestaSalida(BaseModel):
     respuesta: str
-    ruta_usada: str
-    latencia_ms: float
-    fuentes: list[str] = []
+    tiempo_ms: float
+    fuente: str
 
-@app.post("/v1/chat", response_model=ChatResponse)
-async def procesar_mensaje(req: ChatRequest):
+@app.post("/v1/chat", response_model=RespuestaSalida)
+async def chatear(entrada: MensajeEntrada):
     t0 = time.perf_counter()
-    if not req.mensaje.strip():
-        raise HTTPException(status_code=400, detail="El mensaje no puede estar vacio.")
+    if not entrada.mensaje.strip():
+        raise HTTPException(status_code=400, detail="Escribe un mensaje valido.")
     
-    # Enrutamiento y procesamiento
-    latencia = (time.perf_counter() - t0) * 1000
-    return ChatResponse(
-        respuesta="Respuesta procesada exitosamente.",
-        ruta_usada="RAG_PIPELINE",
-        latencia_ms=round(latencia, 2),
-        fuentes=["Doc_Seccion_1"]
+    # Procesamiento con RAG o LLM
+    duracion = (time.perf_counter() - t0) * 1000
+    return RespuestaSalida(
+        respuesta="Segun nuestras politicas oficiales: los reembolsos demoran 30 dias con ticket.",
+        tiempo_ms=round(duracion, 2),
+        fuente="Politicas_Oficiales_Art4"
     )
 ```
 
 ---
 
-## 5. Centro de Diagnóstico Técnico & Resolución de Bloqueos (FAQ)
+## 🩹 6. Primeros Auxilios: Solución a Tropiezos Frecuentes
 
-### 1. ¿Cómo evitar alucinaciones en RAG?
-Aplica un **umbral de similitud coseno $\ge 0.40$** sobre vectores normalizados con norma $L_2$. Si ningún documento supera el umbral, indica al modelo en el prompt: *"Si la evidencia no contiene la respuesta, responde estrictamente: 'No dispongo de información sobre este tema en mis manuales oficiales'"*.
-
-### 2. ¿Cómo solucionar `CUDA Out of Memory (OOM)`?
-- Usa `per_device_train_batch_size = 1` y `gradient_accumulation_steps = 4`.
-- Inyecta LoRA únicamente en proyecciones Query y Value: `target_modules = ["q_proj", "v_proj"]`.
-- Libera tensores huérfanos con `torch.cuda.empty_cache()` e `import gc; gc.collect()`.
-
-### 3. ¿Cómo forzar respuestas en JSON válido?
-- Usa `response_format={"type": "json_object"}` si usas la API de Groq / OpenAI.
-- Agrega 2 ejemplos Few-Shot en el System Prompt delimitando el JSON.
-- Valida la salida con `pydantic.parse_raw_as` o `json.loads` en un bloque `try/except`.
+1. **¿Cómo evito que la IA invente datos?**
+   - Agrega en tu prompt: *"Responde únicamente con el texto del Contexto. Si no está en el Contexto, di 'No cuento con información oficial sobre este tema'."*
+   - Fija `umbral = 0.40` en tu RAG.
+2. **Error `CUDA Out of Memory` en Colab:**
+   - Usa un modelo de 1B (ej. `TinyLlama-1.1B` o `Llama-3.2-1B`) o fija `per_device_train_batch_size = 1`.
+3. **¿Cómo subir mis propios archivos?**
+   - En Google Colab, arrastra tu archivo `.txt` al panel de archivos y léelo con `open("mi_archivo.txt").readlines()`.
+4. **¿Cómo probar la API en el navegador?**
+   - Inicia con `uvicorn api_server:app --reload` y abre `http://localhost:8000/docs` para ver Swagger UI.
 
 ---
 
-## 6. Checklist de Autoevaluación Pre-Entrega
+## ✅ 7. Lista de Autoevaluación Pre-Entrega
 
-- [ ] **Desacoplamiento:** Los datos no están hardcodeados en el texto del prompt.
-- [ ] **Seguridad:** Los tokens secretos se leen desde variables de entorno.
-- [ ] **Latencia:** Inferencia estándar menor a 2 segundos.
-- [ ] **Prevención de Alucinaciones:** Umbral de similitud coseno en RAG.
-- [ ] **Esquemas HTTP:** Endpoints tipados con Pydantic en FastAPI.
-- [ ] **Manejo de Errores:** Bloques `try/except` ante entradas vacías o fallas de red.
-- [ ] **Reproducibilidad:** Archivo `requirements.txt` con librerías fijadas.
-- [ ] **Documentación:** `README.md` con instrucciones de instalación y uso.
+- [ ] **Tema Elegido:** Seleccioné una plantilla o tema propio y redacté mis textos.
+- [ ] **RAG Conectado:** Mis textos están indexados en `rag_engine.py`.
+- [ ] **Sin Alucinaciones:** El modelo admite cuando no tiene la información.
+- [ ] **Probado en Colab:** Corrí el cuaderno de Google Colab sin errores.
+- [ ] **Servidor Listo:** `api_server.py` responde consultas en formato JSON.
+- [ ] **Seguridad:** Los tokens se leen desde variables de entorno.
 
 ---
 
