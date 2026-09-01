@@ -1,6 +1,6 @@
 <div align="center">
 
-[🏠 Inicio](../../README.md) • [📁 Módulo 1](README.md) • [⬅️ Anterior (Challenge 3)](challenge-3-fine-tuning-lora.md) • [Siguiente ➡️](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
+[Inicio](../../README.md) • [Módulo 1](README.md) • [Anterior: Challenge 3](challenge-3-fine-tuning-lora.md) • [Siguiente: Módulo 2](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
 
 </div>
 
@@ -8,90 +8,88 @@
 
 MÓDULO 1 · PROYECTO INTEGRADOR & HACKATHON DE INGENIERÍA IA
 
-# Guía Paso a Paso del Proyecto Integrador: Construye tu Sistema de IA
+# Guía de Construcción y Mentoría Técnica: Diseña y Despliega tu Sistema de IA con Meta Llama
 
-**Centro de Acompañamiento, Plantillas y Mentoría para Participantes**. Esta guía está diseñada para que cualquier persona, sin importar su nivel de experiencia previa, pueda concebir, armar y probar su propia solución de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
+**Centro de Acompañamiento, Plantillas y Mentoría para Participantes**. Esta guía técnica está diseñada para orientar a los desarrolladores y participantes en el diseño, estructuración de datos, dimensionamiento de memoria (VRAM), integración de código modular y resolución de incidencias para construir su propia solución de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
 
 ---
 
-## 🍽️ 1. ¿Cómo Funciona tu Sistema de IA? La Analogía del Restaurante
+## 1. Arquitectura Modular de Cuatro Capas: De la Consulta a la Respuesta
 
-Para construir tu proyecto no necesitas memorizar fórmulas matemáticas complejas. Imagina que tu sistema inteligente es como un **Restaurante Gourmet**:
+En el desarrollo de sistemas de IA de grado industrial, la regla de oro consiste en **desacoplar el motor de razonamiento (LLM) del repositorio de datos fácticos (Base de Conocimiento)**:
 
 ```mermaid
 graph TD
-    User["👤 Cliente / Usuario"] --> Router["1. El Mesero Amable (router.py)<br>Escucha la pregunta y decide a dónde dirigirla"]
-    Router -->|"Saludo o Pregunta Simple"| FastLLM["Respuesta Inmediata (< 0.5s)<br>Modelo Ligero (Llama 8B / 20B)"]
-    Router -->|"Pregunta sobre Documentos"| RAG["2. El Recetario Oficial (rag_engine.py)<br>Busca el párrafo exacto de las políticas (Cero Alucinación)"]
-    Router -->|"Petición en Formato Fijo"| LoRA["3. La Escuela de Cocina (lora_adapter.py)<br>Aplica el formato estricto JSON o tono de la empresa"]
-    RAG --> API["4. La Ventana de Entrega (api_server.py)<br>Entrega la respuesta lista para la Web o WhatsApp"]
+    User["Usuario / Cliente"] --> Router["1. Enrutador de Complejidad (router.py)<br>Clasifica intencion y asigna la ruta optima"]
+    Router -->|"Consulta Directa o Saludo"| FastLLM["Inferencia Directa (< 0.5s)<br>Modelo Base Ligero (Llama 1B / 3B)"]
+    Router -->|"Consulta Factual de Negocio"| RAG["2. Base de Conocimiento (rag_engine.py)<br>Recupera evidencia vectorial (Similitud Coseno >= 0.40)"]
+    Router -->|"Salida Estructurada Tipada"| LoRA["3. Adaptador LoRA / Pydantic (lora_adapter.py)<br>Garantiza esquema JSON sin texto libre"]
+    RAG --> API["4. Servidor Web REST (api_server.py)<br>Entrega payload validado con Swagger UI"]
     LoRA --> API
     FastLLM --> API
-    API --> Final["✨ Respuesta Final al Usuario"]
+    API --> Final["Respuesta Final Auditada al Usuario"]
 ```
 
-1. **El Mesero (`router.py`):** Escucha la frase del usuario. Si es un saludo común, responde de inmediato. Si preguntan por una política o garantía, va a consultar la libreta de la empresa.
-2. **El Menú y Recetario (`rag_engine.py`):** Es la libreta con las políticas oficiales. Se consulta la información real antes de responder para **evitar inventar datos**.
-3. **La Escuela de Cocina (`lora_adapter.py`):** El entrenamiento especial para que el modelo siempre entregue respuestas con el estilo de la marca o en formato estructurado (JSON).
-4. **La Ventana de Servicio (`api_server.py`):** El mostrador donde WhatsApp o cualquier página web pide y recibe la respuesta terminada.
+1. **Enrutador de Complejidad (`router.py`):** Evalúa la consulta de entrada y decide en menos de 10 ms si puede resolverse directamente o si requiere consultar la base de conocimiento vectorial.
+2. **Base de Conocimiento Vectorial (`rag_engine.py`):** Indexa los documentos de la organización en $\mathbb{R}^{384}$, aplicando normalización $L_2$ para calcular similitud coseno antes de la llamada al modelo.
+3. **Adaptador LoRA / Tipado Pydantic (`lora_adapter.py`):** Fuerza al modelo a emitir exclusivamente estructuras JSON válidas.
+4. **Microservicio REST (`api_server.py`):** Expone endpoints asíncronos `/v1/chat` listos para integrarse con WhatsApp Cloud API o interfaces web.
 
 ---
 
-## 📚 2. Glosario Fácil: La IA Explicada con Peras y Manzanas
+## 2. Glosario Técnico de Términos Clave
 
-* **Prompt:** La instrucción o pregunta que le escribes a la IA.
-* **Token:** Los fragmentos en los que la IA divide las palabras (como sílabas). 100 palabras $\approx$ 130 tokens.
-* **Embedding:** La "huella digital" del significado de una frase para buscar ideas similares.
-* **RAG (Recuperación):** Hacer un **examen a libro abierto**: la IA lee tus documentos antes de responder.
-* **LoRA (Adaptación):** Ponerle unas gafas especializadas a la IA para que aprenda un formato sin reescribir todo su cerebro.
-* **VRAM:** La memoria rápida de la tarjeta de video (GPU). En Google Colab tienes 15 GB gratis.
+* **Prompt:** Conjunto de instrucciones estructuradas enviadas al modelo que definen su rol, restricciones y contexto documental.
+* **Token:** Unidad atómica textual procesada por el algoritmo BPE. 100 palabras en español equivalen aproximadamente a 130 tokens.
+* **Incrustación Densa (Embedding):** Vector numérico continuo en $\mathbb{R}^{384}$ que captura el significado semántico de una frase.
+* **RAG (Retrieval-Augmented Generation):** Técnica de recuperación previa de fragmentos de texto para alimentar al modelo con evidencia fáctica.
+* **LoRA (Low-Rank Adaptation):** Técnica PEFT que inyecta matrices de bajo rango $r \ll d$ en capas de atención congeladas.
+* **VRAM:** Memoria de acceso aleatorio de la tarjeta aceleradora gráfica (GPU). En Google Colab se dispone de 15 GB.
 
 ---
 
-## 🚀 3. Cuatro Plantillas de Proyectos Listas para Elegir
+## 3. Catálogo de Cuatro Plantillas de Proyectos
 
-Elige la que más te guste para tu entrega:
-
-### 🛍️ Plantilla A: Asistente de Atención al Cliente & Devoluciones (E-Commerce)
-* **Objetivo:** Responder dudas sobre garantías, tiempos de entrega y cambios de productos sin inventar información.
-* **Archivos a usar:** `rag_engine.py` + `api_server.py`.
-* **Datos de prueba:**
+### Plantilla 1: Asistente de Operaciones Comerciales, Envíos y Políticas de Devolución (E-Commerce)
+* **Objetivo:** Responder dudas sobre garantías, tiempos de entrega y procedimientos de cambio de productos sin incurrir en alucinaciones.
+* **Módulos:** `rag_engine.py` + `api_server.py`.
+* **Dataset de Ejemplo:**
   ```python
   politicas_tienda = [
-      "Los reembolsos se procesan en un maximo de 30 dias con ticket de compra original.",
-      "Los envios a todo el pais tardan de 2 a 4 dias habiles en llegar a tu domicilio.",
-      "Todos los productos electronicos tienen 1 ano de garantia ante fallas de fabrica."
+      "Politica de Reembolsos (Art. 4): Las solicitudes aplican dentro de los primeros 30 dias naturales con ticket y empaque integro.",
+      "Tiempos de Entrega (Art. 2): Los envios estandar demoran de 2 a 4 dias habiles en cobertura nacional.",
+      "Garantia de Hardware (Art. 7): Los articulos cuentan con 12 meses de garantia directa ante defectos de manufactura."
   ]
   ```
 
-### ⚖️ Plantilla B: Asesor de Reglamentos y Trámites (Escuelas / Empresas)
-* **Objetivo:** Resolver dudas sobre trámites de titulación, solicitudes de vacaciones o estatutos institucionales citando el número de artículo.
-* **Archivos a usar:** `rag_engine.py` + `router.py`.
+### Plantilla 2: Asesor Normativo Institucional y Trámites Regulatorios (Legal / Académico)
+* **Objetivo:** Resolver consultas sobre trámites de titulación, solicitudes laborales o normativas institucionales citando el artículo exacto.
+* **Módulos:** `rag_engine.py` + `router.py`.
 
-### 📊 Plantilla C: Clasificador de Soporte y Generador de JSON
-* **Objetivo:** Recibir quejas de usuarios y convertirlas automáticamente en fichas estructuradas en JSON (categoría, urgencia y resumen).
-* **Archivos a usar:** `lora_adapter.py` / Prompt Few-Shot + `api_server.py`.
+### Plantilla 3: Clasificador de Incidencias y Generador Estructurado JSON
+* **Objetivo:** Transformar reportes de soporte en lenguaje natural en objetos JSON con tipado estricto (categoría, severidad, acción sugerida).
+* **Módulos:** `lora_adapter.py` / Prompt Few-Shot + `api_server.py`.
 
-### 🎓 Plantilla D: Tutor de Estudio Personalizado
-* **Objetivo:** Explicar temas difíciles de manera sencilla y hacer preguntas de opción múltiple al estudiante para evaluar su aprendizaje.
-* **Archivos a usar:** `rag_engine.py` + Prompt de Profesor Paciente.
+### Plantilla 4: Tutor Educativo Adaptativo y Evaluación Socrática
+* **Objetivo:** Desglosar conceptos de ingeniería de forma progresiva, aplicando preguntas formativas para evaluar el dominio del estudiante.
+* **Módulos:** `rag_engine.py` + Directivas Pedagógicas en Prompt.
 
 ---
 
-## 🚦 4. Semáforo de Hardware & Google Colab Gratuito
+## 4. Presupuesto de Memoria VRAM y Google Colab
 
-| Modelo de IA | Memoria Requerida | Estado en Google Colab T4 (15 GB) | Recomendación |
+| Modelo Fundacional | Consumo VRAM Estimado | Viabilidad en GPU Tesla T4 (15 GB) | Recomendación Técnica |
 | :--- | :--- | :--- | :--- |
-| **TinyLlama 1.1B** | $\sim 4.2\text{ GB}$ | 🟢 **100% Viable y Súper Ligero** | Ideal para computadoras portátiles y pruebas rápidas. |
-| **Meta Llama 3.2 1B** | $\sim 5.1\text{ GB}$ | 🟢 **Excelente Rendimiento** | La opción recomendada para el Hackathon. |
-| **Meta Llama 3.2 3B** | $\sim 8.4\text{ GB}$ | 🟢 **Gran Capacidad Analítica** | Muy fluido en la GPU T4 de Colab. |
-| **Meta Llama 3.1 8B** | $\sim 11.8\text{ GB}$ | 🟡 **Viable con QLoRA 4-bit** | Usar `BitsAndBytes` 4-bit y Batch Size = 1. |
+| **TinyLlama 1.1B** | $\sim 4.2\text{ GB}$ | Óptimo (100% Viable) | Excelente para computadoras personales y pruebas rápidas. |
+| **Meta Llama 3.2 1B** | $\sim 5.1\text{ GB}$ | Óptimo (Recomendado) | Modelo balanceado para el Hackathon. |
+| **Meta Llama 3.2 3B** | $\sim 8.4\text{ GB}$ | Óptimo (Alta Capacidad) | Recomendado para razonamiento avanzado. |
+| **Meta Llama 3.1 8B** | $\sim 11.8\text{ GB}$ | Viable con QLoRA 4-bit | Requiere `BitsAndBytes` 4-bit y Batch Size = 1. |
 
 ---
 
-## 🛠️ 5. Starter Kit: Código Modular Listo para Probar
+## 5. Código Modular del Starter Kit
 
-### 1. El Buscador RAG (`rag_engine.py`)
+### 1. Motor Vectorial RAG (`rag_engine.py`)
 ```python
 import numpy as np
 from sentence_transformers import SentenceTransformer
@@ -99,11 +97,11 @@ from sentence_transformers import SentenceTransformer
 class VectorRAGEngine:
     def __init__(self, model_name="all-MiniLM-L6-v2"):
         self.embedder = SentenceTransformer(model_name)
-        self.documents = []
+        self.documentos = []
         self.embeddings = None
 
     def index_documents(self, docs: list[str]):
-        self.documents = docs
+        self.documentos = docs
         self.embeddings = self.embedder.encode(docs, normalize_embeddings=True)
 
     def search(self, pregunta: str, top_k=2, umbral=0.40):
@@ -114,11 +112,11 @@ class VectorRAGEngine:
         resultados = []
         for idx in indices:
             if scores[idx] >= umbral:
-                resultados.append({"texto": self.documents[idx], "confianza": float(scores[idx])})
+                resultados.append({"texto": self.documentos[idx], "confianza": float(scores[idx])})
         return resultados
 ```
 
-### 2. El Mesero Inteligente (`router.py`)
+### 2. Enrutador de Complejidad (`router.py`)
 ```python
 class ModelRouter:
     def __init__(self):
@@ -134,13 +132,13 @@ class ModelRouter:
         return "FAST_LLM"
 ```
 
-### 3. El Servidor Web (`api_server.py`)
+### 3. Servidor Web REST (`api_server.py`)
 ```python
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import time
 
-app = FastAPI(title="Mi Asistente de IA - Hackathon", version="1.0.0")
+app = FastAPI(title="Motor de Asistencia IA - Hackathon Integrador", version="1.0.0")
 
 class MensajeEntrada(BaseModel):
     mensaje: str
@@ -149,52 +147,51 @@ class MensajeEntrada(BaseModel):
 class RespuestaSalida(BaseModel):
     respuesta: str
     tiempo_ms: float
-    fuente: str
+    ruta_usada: str
 
 @app.post("/v1/chat", response_model=RespuestaSalida)
 async def chatear(entrada: MensajeEntrada):
     t0 = time.perf_counter()
     if not entrada.mensaje.strip():
-        raise HTTPException(status_code=400, detail="Escribe un mensaje valido.")
+        raise HTTPException(status_code=400, detail="El mensaje no puede estar vacio.")
     
-    # Procesamiento con RAG o LLM
     duracion = (time.perf_counter() - t0) * 1000
     return RespuestaSalida(
-        respuesta="Segun nuestras politicas oficiales: los reembolsos demoran 30 dias con ticket.",
+        respuesta="Respuesta fundamentada en la documentacion oficial.",
         tiempo_ms=round(duracion, 2),
-        fuente="Politicas_Oficiales_Art4"
+        ruta_usada="RAG_PIPELINE"
     )
 ```
 
 ---
 
-## 🩹 6. Primeros Auxilios: Solución a Tropiezos Frecuentes
+## 6. Diagnóstico de Incidencias Técnicas
 
-1. **¿Cómo evito que la IA invente datos?**
-   - Agrega en tu prompt: *"Responde únicamente con el texto del Contexto. Si no está en el Contexto, di 'No cuento con información oficial sobre este tema'."*
-   - Fija `umbral = 0.40` en tu RAG.
-2. **Error `CUDA Out of Memory` en Colab:**
-   - Usa un modelo de 1B (ej. `TinyLlama-1.1B` o `Llama-3.2-1B`) o fija `per_device_train_batch_size = 1`.
-3. **¿Cómo subir mis propios archivos?**
-   - En Google Colab, arrastra tu archivo `.txt` al panel de archivos y léelo con `open("mi_archivo.txt").readlines()`.
-4. **¿Cómo probar la API en el navegador?**
-   - Inicia con `uvicorn api_server:app --reload` y abre `http://localhost:8000/docs` para ver Swagger UI.
+1. **Erradicación de Alucinaciones:**
+   - Incorporar directiva estricta: *"Responda únicamente usando la evidencia del Contexto. Si no está en el Contexto, admita que no cuenta con la información."*
+   - Fijar `umbral = 0.40` en la búsqueda vectorial.
+2. **Error `CUDA Out of Memory (OOM)`:**
+   - Utilizar modelos de 1B/3B o activar cuantización en 4-bit (QLoRA) con `per_device_train_batch_size = 1`.
+3. **Ingesta de Archivos Propios:**
+   - Cargar archivos en el panel de Colab y procesar con `open("archivo.txt").readlines()`.
+4. **Inspección de API en Navegador:**
+   - Iniciar con `uvicorn api_server:app --reload` y acceder a `http://localhost:8000/docs` para interactuar con Swagger UI.
 
 ---
 
-## ✅ 7. Lista de Autoevaluación Pre-Entrega
+## 7. Rúbrica Oficial de Evaluación y Checklist de Calidad
 
-- [ ] **Tema Elegido:** Seleccioné una plantilla o tema propio y redacté mis textos.
-- [ ] **RAG Conectado:** Mis textos están indexados en `rag_engine.py`.
-- [ ] **Sin Alucinaciones:** El modelo admite cuando no tiene la información.
-- [ ] **Probado en Colab:** Corrí el cuaderno de Google Colab sin errores.
-- [ ] **Servidor Listo:** `api_server.py` responde consultas en formato JSON.
-- [ ] **Seguridad:** Los tokens se leen desde variables de entorno.
+- [ ] **Desacoplamiento:** El conocimiento proviene de una base documental externa y no del prompt.
+- [ ] **RAG Operativo:** Los textos están indexados en `rag_engine.py` y la búsqueda responde con confianza cosenoidal.
+- [ ] **Control Fáctico:** El modelo no alucina ante preguntas fuera de dominio.
+- [ ] **Validación VRAM:** Ejecuta sin desbordamientos de memoria en Google Colab.
+- [ ] **API Tipada:** `api_server.py` responde validando esquemas Pydantic.
+- [ ] **Seguridad:** Las credenciales y claves se gestionan mediante variables de entorno.
 
 ---
 
 <div align="center">
 
-[⬅️ Volver a Challenge 3](challenge-3-fine-tuning-lora.md) • [Continuar al Módulo 2: WhatsApp & Agentes ➡️](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
+[Volver a Challenge 3](challenge-3-fine-tuning-lora.md) • [Continuar al Módulo 2: WhatsApp & Agentes](../modulo-2-automatizacion-agentes-whatsapp/01-whatsapp-cloud-api-arquitectura-webhooks.md)
 
 </div>
