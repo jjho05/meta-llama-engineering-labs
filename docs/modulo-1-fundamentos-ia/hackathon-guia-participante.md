@@ -206,14 +206,55 @@ graph TD
 
 ---
 
-## 13. Catálogo de Seis Plantillas de Proyectos
+## 13. Catálogo de Seis Plantillas de Proyectos (Homogeneizado)
 
-1. **Plantilla 1 (E-Commerce):** Asistente de Atención, Logística y Políticas de Devolución.
-2. **Plantilla 2 (Legal / Institucional):** Asesor Normativo y Trámites Regulatorios.
-3. **Plantilla 3 (Sistemas):** Clasificador de Incidencias Técnicas y Generador JSON.
-4. **Plantilla 4 (Educación):** Tutor Educativo Adaptativo con Método Socrático.
-5. **Plantilla 5 (Salud):** Asistente de Protocolos Clínicos y Triage Informativo (con advertencia estricta de no emisión de diagnóstico).
-6. **Plantilla 6 (RRHH):** Asistente de Onboarding Corporativo y Políticas Laborales.
+### 1. Plantilla 1: Comercio Electrónico & Logística
+* **Objetivo de Negocio:** Resolver dudas sobre cobertura de envíos, costos, garantías de hardware y políticas de devolución, sustentando las respuestas en el compendio normativo.
+* **Dataset Factual para `rag_engine.py`:**
+  - *"Política de Reembolsos (Art. 4): Las solicitudes de devolución aplican dentro de los primeros 30 días naturales posteriores a la entrega con comprobante fiscal y empaque íntegro."*
+  - *"Tiempos de Entrega (Art. 2): Los envíos estándar dentro de la república demoran entre 2 y 4 días hábiles. El servicio exprés garantiza entrega en 24 horas hábiles."*
+  - *"Garantía de Hardware (Art. 7): Los equipos electrónicos cuentan con 12 meses de garantía directa del fabricante ante defectos de manufactura comprobables."*
+* **Módulos Utilizados:** `rag_engine.py` + `router.py` + `api_server.py`.
+
+### 2. Plantilla 2: Normativa Institucional, Legal & Trámites
+* **Objetivo de Negocio:** Proveer asesoría regulatoria para estudiantes, docentes o colaboradores, citando explícitamente el artículo reglamentario correspondiente.
+* **Dataset Factual para `rag_engine.py`:**
+  - *"Reglamento de Titulación (Art. 12): Es requisito indispensable haber acreditado el 100% de créditos curriculares, liberación de servicio social e inglés B2."*
+  - *"Estatuto Laboral (Art. 24): Las solicitudes de vacaciones deberán registrarse con un mínimo de 10 días hábiles de anticipación a la fecha de inicio del periodo."*
+  - *"Código de Ética (Art. 3): El uso de credenciales ajenas constituye falta grave que amerita suspensión temporal inmediata."*
+* **Módulos Utilizados:** `rag_engine.py` (Búsqueda Coseno) + `router.py` + `api_server.py`.
+
+### 3. Plantilla 3: Soporte TI, Mesa de Ayuda & Extracción JSON (LoRA)
+* **Objetivo de Negocio:** Ingerir reportes de fallas o mensajes libres de usuarios y transformarlos automáticamente en objetos JSON validados por esquemas de Pydantic.
+* **Dataset Factual de Catálogo:**
+  - *"Mesa de Ayuda (Catálogo 1): Fallas de inicio de sesión o 2FA se clasifican como 'autenticacion' con severidad media."*
+  - *"Mesa de Ayuda (Catálogo 2): Caídas de bases de datos o pasarelas de pago se tipifican como 'infraestructura_critica' con severidad alta."*
+  - *"Mesa de Ayuda (Catálogo 3): Consultas de manuales o configuración se tipifican como 'consulta_general' con severidad baja."*
+* **Módulos Utilizados:** `lora_adapter.py` (LoRA PEFT $r=8$) + `api_server.py` (Validación Pydantic).
+
+### 4. Plantilla 4: Educación Superior, Tutor Socrático & Evaluación
+* **Objetivo de Negocio:** Desglosar conceptos de ingeniería o ciencias de forma progresiva, aplicando formulación de preguntas orientadas a evaluar y retroalimentar el dominio conceptual del alumno en tiempo real.
+* **Dataset Factual para `rag_engine.py`:**
+  - *"Mecanismo de Auto-Atención (Tema 3): La auto-atención calcula la relevancia de palabras mediante matrices Q (Query), K (Key) y V (Value)."*
+  - *"Complejidad de Transformers (Tema 4): La atención global estándar tiene una complejidad computacional cuadrática $O(N^2)$ respecto a la longitud de secuencia."*
+  - *"Función Softmax en LLMs: Transforma los logits en una distribución de probabilidades normalizada que suma 1.0."*
+* **Módulos Utilizados:** `rag_engine.py` (Temario) + Directivas Pedagógicas en Prompt + `api_server.py`.
+
+### 5. Plantilla 5: Salud Institucional, Triage & Protocolos Clínicos
+* **Objetivo de Negocio:** Orientar al personal administrativo o pacientes sobre requisitos de estudios de laboratorio, preparación para cirugías y guías de triage, incorporando siempre el aviso de que la IA no emite diagnósticos médicos vinculantes.
+* **Dataset Factual para `rag_engine.py`:**
+  - *"Protocolo de Química Sanguínea (Guía 3): Requiere ayuno estricto de 8 a 12 horas previas a la toma de muestra. Se permite ingesta moderada de agua simple."*
+  - *"Triage Respiratorio (Nivel 2): Pacientes con saturación < 90% o disnea súbita deben ingresar de inmediato al área de choque sin trámite previo."*
+  - *"Preparación de Ultrasonido Abdominal (Guía 6): Ingerir 1 litro de agua 45 minutos antes del estudio y retener orina."*
+* **Módulos Utilizados:** `rag_engine.py` + Directivas de Seguridad Médica + `api_server.py`.
+
+### 6. Plantilla 6: Recursos Humanos, Onboarding & Cultura Corporativa
+* **Objetivo de Negocio:** Acompañar a nuevos empleados en su proceso de bienvenida, respondiendo dudas sobre póliza de gastos médicos, solicitud de equipo, días económicos y código de ética.
+* **Dataset Factual para `rag_engine.py`:**
+  - *"Seguro de Gastos Médicos Mayores (Sección 5): La cobertura inicia desde el primer día laboral. La red de hospitales se consulta en el portal de nómina."*
+  - *"Vales de Despensa (Art. 8): Se abonan el día 15 de cada mes a la tarjeta electrónica empresarial."*
+  - *"Días Económicos (Art. 14): Los colaboradores cuentan con 3 días con goce de sueldo al año para asuntos personales imprevistos."*
+* **Módulos Utilizados:** `rag_engine.py` + `router.py` + `api_server.py`.
 
 ---
 
