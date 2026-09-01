@@ -10,7 +10,7 @@ MÓDULO 1 · PROYECTO INTEGRADOR & HACKATHON DE INGENIERÍA IA
 
 # Guía Maestra de Construcción y Mentoría: Diseña y Despliega tu Sistema de IA con Meta Llama
 
-**Centro de Acompañamiento, Plantillas y Mentoría Exhaustiva para Participantes**. Esta guía técnica orienta a los desarrolladores y participantes en la concepción del problema, la taxonomía de técnicas de IA, la curaduría de datos, las estrategias de segmentación (chunking), la ingeniería de prompts industrial, el dimensionamiento de hardware (VRAM), la integración de código modular, la ejecución de pruebas de Red Teaming y la resolución de bloqueos para construir su propio sistema de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
+**Centro de Acompañamiento, Plantillas y Mentoría Enciclopédica para Participantes**. Esta guía técnica orienta a los desarrolladores y participantes en la concepción del problema, la taxonomía de técnicas de IA, la ingeniería y sanitización de datos, las estrategias avanzadas de segmentación (chunking recursivo), las matemáticas de la búsqueda vectorial, la arquitectura de dos etapas con Reranking Cross-Encoder, la ingeniería de prompts industrial, el dimensionamiento de hardware (VRAM), la integración de código modular, el empaquetado en contenedores Docker, la ejecución de pruebas de Red Teaming y la resolución de bloqueos para construir su propio sistema de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
 
 ---
 
@@ -67,23 +67,58 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
 ---
 
-## 4. Consideraciones Críticas de Ingeniería (Datos & RAG)
+## 4. Ingeniería de Datos: Recolección y Sanitización
 
-1. **Calidad sobre Cantidad de Datos:** 15 fragmentos fácticos limpios, ordenados y sin contradicciones superan con creces a un PDF escaneado de 500 páginas lleno de tablas rotas o ruido OCR.
-2. **Estrategia de Chunking (Segmentación):**
-   * *Tamaño óptimo de fragmento:* $250 - 450$ caracteres ($\sim 60 - 90$ palabras).
-   * *Solapamiento (Overlap):* $10\% - 15\%$ para preservar el contexto entre límites de párrafo.
-3. **Calibración del Umbral Cosenoidal:** Fijar un umbral de corte mínimo en **$\ge 0.40$** en `rag_engine.py`:
-   $$\cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \|\mathbf{v}\|_2}$$
-   Si ningún documento supera este valor, el sistema debe admitir ignorancia de forma explícita.
-4. **Métricas de Éxito del Proyecto:**
-   * **Precisión fáctica:** $\ge 90\%$ en preguntas de prueba.
-   * **Latencia de inferencia:** $\le 1.5\text{ s}$.
-   * **Seguridad:** Cero credenciales expuestas en texto plano.
+El preprocesamiento de texto crudo previene la degradación semántica de los embeddings:
+
+```python
+import re
+
+def sanitizar_texto(texto_crudo: str) -> str:
+    """Elimina cabeceras repetitivas, saltos huérfanos y caracteres no válidos."""
+    t = texto_crudo.replace("\r\n", "\n").replace("\t", " ")
+    t = re.sub(r"P[aá]gina\s+\d+\s+de\s+\d+", "", t, flags=re.IGNORECASE)
+    t = re.sub(r"[ ]{2,}", " ", t)
+    t = re.sub(r"\n{3,}", "\n\n", t)
+    return t.strip()
+```
 
 ---
 
-## 5. Buenas Prácticas vs. Antipatrones de la Industria
+## 5. Estrategias Avanzadas de Chunking (Segmentación de Datos)
+
+* **Jerarquía Semántica:** Párrafos (`\n\n`) &rarr; Líneas (`\n`) &rarr; Oraciones (`. `) &rarr; Palabras (` `).
+* **Parámetros Estándar:** $250 - 450$ caracteres por chunk con $10\% - 15\%$ de solapamiento (overlap).
+* **Lost in the Middle:** Posicionar los fragmentos recuperados con mayor similitud al principio y al final del prompt.
+
+---
+
+## 6. Matemáticas de la Búsqueda Vectorial & Embeddings Densos
+
+$$\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}}{\|\mathbf{q}\|_2 \|\mathbf{d}\|_2} = \frac{\sum_{i=1}^{d} q_i d_i}{\sqrt{\sum_{i=1}^{d} q_i^2} \sqrt{\sum_{i=1}^{d} d_i^2}}$$
+
+Al usar vectores unitarios normalizados con $L_2$, $\cos(\theta) = \mathbf{q} \cdot \mathbf{d}$.
+
+---
+
+## 7. Modelos de Embeddings y Vector Stores
+
+| Motor / Vector Store | Tipo de Despliegue | Capacidad Máxima | Recomendación Hackathon |
+| :--- | :--- | :--- | :--- |
+| **NumPy (In-Memory)** | Memoria RAM local | < 50,000 vectores | Recomendado MVP (0 dependencias). |
+| **Meta FAISS (faiss-cpu)** | Índice persistido en disco | > 10,000,000 vectores | Excelente para escalabilidad. |
+| **ChromaDB / Qdrant** | Base de datos vectorial | Millones con metadatos | Opcional para Módulo 2. |
+
+---
+
+## 8. Estrategia de Reranking Cross-Encoder
+
+1. **Recuperación Densa (Bi-Encoder):** Extrae los $top\_k = 10$ candidatos más cercanos en microsegundos.
+2. **Reordenamiento (Cross-Encoder):** Evalúa el par $(Pregunta, Fragmento)$ de forma conjunta y extrae los 2 mejores con máxima precisión.
+
+---
+
+## 9. Buenas Prácticas vs. Antipatrones de la Industria
 
 | Dimensión Técnica | Lo que SÍ Sirve (Buena Práctica) | Lo que NO Sirve (Antipatrón) |
 | :--- | :--- | :--- |
@@ -95,7 +130,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
 ---
 
-## 6. Plan de Acción Operativo en Cinco Días
+## 10. Plan de Acción Operativo en Cinco Días
 
 ```mermaid
 graph TD
@@ -105,84 +140,55 @@ graph TD
     D4 --> D5["Día 5: Servidor REST con FastAPI<br>Endpoint /v1/chat y validación en Swagger UI (/docs)"]
 ```
 
-* **Día 1:** Definir la temática y redactar entre 10 y 15 párrafos fácticos en `documentos.txt`.
-* **Día 2:** Implementar `rag_engine.py` y validar la recuperación con confianza $\ge 0.40$.
-* **Día 3:** Redactar y auditar el System Prompt con pruebas fuera de dominio (cero alucinaciones).
-* **Día 4:** Conectar `router.py` para responder directamente a saludos y derivar consultas complejas.
-* **Día 5:** Exponer el servicio con `api_server.py`, probar en `/docs` y preparar el archivo `README.md`.
-
 ---
 
-## 7. Arquitectura Modular de Cuatro Capas
+## 11. Arquitectura Modular de Cuatro Capas
 
-| Criterio de Evaluación | Enfoque Monolítico (Prompt Relleno) | Arquitectura Modular (Router + RAG + LoRA + FastAPI) |
-| :--- | :--- | :--- |
-| **Control de Alucinaciones** | Bajo: El modelo inventa respuestas cuando la información no está explícita. | Máximo: Filtro de similitud coseno $\ge 0.40$ con admisión estricta de ignorancia. |
-| **Latencia por Consulta** | Alta ($3.0 - 8.0\text{ s}$ por procesar miles de tokens en cada turno). | Optimizada ($< 0.8\text{ s}$ en consultas directas mediante Router). |
-| **Actualización de Datos** | Manual y costosa (Reescribir prompts en cada modificación). | Instantánea (Actualizar archivos de texto en el índice vectorial). |
-| **Estructura de Salida** | Inconsistente (Agrega texto conversacional antes de JSON). | Garantizada mediante adaptadores LoRA y validación con Pydantic. |
-
-### Componentes del Sistema:
-1. **Capa 1 (`router.py`):** Enrutador heurístico de complejidad. Clasifica saludos para responder de inmediato ($< 0.5\text{ s}$) y deriva consultas documentales al pipeline RAG.
-2. **Capa 2 (`rag_engine.py`):** Motor vectorial. Segmenta documentos, calcula embeddings en $\mathbb{R}^{384}$ y recupera fragmentos mediante similitud coseno.
-3. **Capa 3 (`lora_adapter.py`):** Adaptador LoRA / Formateador JSON. Aplica pesos adaptativos PEFT o directivas estructuradas Few-Shot para generar JSON tipado.
+1. **Capa 1 (`router.py`):** Enrutador heurístico de complejidad para despachar saludos en $< 0.5\text{ s}$ y derivar preguntas a RAG.
+2. **Capa 2 (`rag_engine.py`):** Motor vectorial de incrustaciones en $\mathbb{R}^{384}$ con umbral $\ge 0.40$.
+3. **Capa 3 (`lora_adapter.py`):** Adaptador LoRA PEFT / Formateador estructurado JSON.
 4. **Capa 4 (`api_server.py`):** Microservicio REST asíncrono con FastAPI y esquemas Pydantic.
 
 ---
 
-## 8. Glosario Técnico de Ingeniería
+## 12. Glosario Técnico de Ingeniería
 
-1. **Prompt & System Directives:** Instrucciones estructuradas que definen el rol institucional, tono, restricciones operativas y contexto documental.
-2. **Tokens & Tokenización BPE:** Unidades de procesamiento textual generadas mediante Byte-Pair Encoding ($\sim 4$ caracteres por token en español).
-3. **Incrustaciones Densas (Embeddings):** Vectores numéricos en $\mathbb{R}^{384}$ que capturan la semántica profunda de un texto.
-4. **RAG & Similitud Coseno:** Técnica de recuperación fáctica basada en el producto punto de vectores normalizados ($L_2$).
-5. **LoRA (Low-Rank Adaptation):** Técnica PEFT que congela el modelo base e inyecta matrices de bajo rango $r \ll d$ en capas de atención.
-6. **Memoria VRAM:** Memoria de la GPU (15 GB en Tesla T4) que aloja pesos, optimizador AdamW, KV-Cache y activaciones.
-
----
-
-## 9. Catálogo de Cuatro Plantillas de Proyectos
-
-### Plantilla 1: Asistente de Operaciones Comerciales, Envíos y Políticas de Devolución (E-Commerce)
-* **Objetivo:** Resolver dudas sobre garantías, tiempos de entrega y procedimientos de cambio de productos sin incurrir en alucinaciones.
-* **Módulos:** `rag_engine.py` + `api_server.py`.
-* **Dataset de Ejemplo:**
-  ```python
-  politicas_tienda = [
-      "Politica de Reembolsos (Art. 4): Las solicitudes aplican dentro de los primeros 30 dias naturales con ticket y empaque integro.",
-      "Tiempos de Entrega (Art. 2): Los envios estandar demoran de 2 a 4 dias habiles en cobertura nacional.",
-      "Garantia de Hardware (Art. 7): Los articulos cuentan con 12 meses de garantia directa ante defectos de manufactura."
-  ]
-  ```
-
-### Plantilla 2: Asesor Normativo Institucional y Trámites Regulatorios (Legal / Académico)
-* **Objetivo:** Resolver consultas sobre trámites de titulación, solicitudes laborales o normativas institucionales citando el artículo exacto.
-* **Módulos:** `rag_engine.py` + `router.py`.
-
-### Plantilla 3: Clasificador de Incidencias y Generador Estructurado JSON
-* **Objetivo:** Transformar reportes de soporte en lenguaje natural en objetos JSON con tipado estricto (categoría, severidad, acción sugerida).
-* **Módulos:** `lora_adapter.py` / Prompt Few-Shot + `api_server.py`.
-
-### Plantilla 4: Tutor Educativo Adaptativo y Evaluación Socrática
-* **Objetivo:** Desglosar conceptos de ingeniería de forma progresiva, aplicando preguntas formativas para evaluar el dominio del estudiante.
-* **Módulos:** `rag_engine.py` + Directivas Pedagógicas en Prompt.
+1. **Prompt Directives:** Instrucciones que delimitan rol, contexto y restricciones.
+2. **Tokens BPE:** Unidades de predicción probabilística ($\sim 4$ caracteres).
+3. **Embeddings:** Vectores numéricos continuos en $\mathbb{R}^{384}$.
+4. **RAG & Coseno:** Recuperación de contexto basada en distancia angular de vectores normalizados.
+5. **LoRA (Low-Rank Adaptation):** Inyección de matrices de bajo rango $r \ll d$ en capas de atención.
+6. **VRAM:** Memoria de GPU (15 GB en Tesla T4) para pesos, activaciones y KV-Cache.
+7. **Cross-Encoder:** Modelo conjunto para reranking contextual.
+8. **NF4 (NormalFloat4):** Cuantización de 4-bits optimizada para pesos gaussianos.
 
 ---
 
-## 10. Presupuesto de Memoria VRAM y Google Colab
+## 13. Catálogo de Seis Plantillas de Proyectos
+
+1. **Plantilla 1 (E-Commerce):** Asistente de Atención, Logística y Políticas de Devolución.
+2. **Plantilla 2 (Legal / Institucional):** Asesor Normativo y Trámites Regulatorios.
+3. **Plantilla 3 (Sistemas):** Clasificador de Incidencias Técnicas y Generador JSON.
+4. **Plantilla 4 (Educación):** Tutor Educativo Adaptativo con Método Socrático.
+5. **Plantilla 5 (Salud):** Asistente de Protocolos Clínicos y Triage Informativo (con advertencia estricta de no emisión de diagnóstico).
+6. **Plantilla 6 (RRHH):** Asistente de Onboarding Corporativo y Políticas Laborales.
+
+---
+
+## 14. Presupuesto de Memoria VRAM y Cuantización
 
 $$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
 
-| Modelo Fundacional | Consumo VRAM Estimado | Viabilidad en GPU Tesla T4 (15 GB) | Recomendación Técnica |
+| Formato | Bits por Peso | VRAM Llama-3-8B | Entorno Óptimo |
 | :--- | :--- | :--- | :--- |
-| **TinyLlama 1.1B** | $\sim 4.2\text{ GB}$ | Óptimo (100% Viable) | Excelente para computadoras personales y pruebas rápidas. |
-| **Meta Llama 3.2 1B** | $\sim 5.1\text{ GB}$ | Óptimo (Recomendado) | Modelo balanceado para el Hackathon. |
-| **Meta Llama 3.2 3B** | $\sim 8.4\text{ GB}$ | Óptimo (Alta Capacidad) | Recomendado para razonamiento avanzado. |
-| **Meta Llama 3.1 8B** | $\sim 11.8\text{ GB}$ | Viable con QLoRA 4-bit | Requiere `BitsAndBytes` 4-bit y Batch Size = 1. |
+| **FP16 / BF16** | 16 bits | ~16.0 GB | GPU A100 / H100 |
+| **INT8** | 8 bits | ~8.5 GB | GPU RTX 3080 / 4080 |
+| **NF4 (QLoRA)** | 4 bits | ~5.5 GB | GPU Tesla T4 (Colab Gratuito) |
+| **GGUF (Q4_K_M)** | 4 bits | ~5.0 GB | CPU / Apple Silicon |
 
 ---
 
-## 11. Código Modular del Starter Kit
+## 15. Código Modular del Starter Kit
 
 ### 1. Motor Vectorial RAG (`rag_engine.py`)
 ```python
@@ -271,7 +277,22 @@ async def chatear(entrada: MensajeEntrada):
 
 ---
 
-## 12. Matriz de Pruebas de Calidad & Red Teaming
+## 16. Despliegue con Docker
+
+```dockerfile
+FROM python:3.11-slim
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+EXPOSE 8000
+CMD ["uvicorn", "api_server:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+```
+
+---
+
+## 17. Matriz de Pruebas de Calidad & Red Teaming
 
 | Tipo de Prueba | Payload de Entrada | Comportamiento Esperado | Criterio de Aprobación |
 | :--- | :--- | :--- | :--- |
@@ -283,21 +304,16 @@ async def chatear(entrada: MensajeEntrada):
 
 ---
 
-## 13. Diagnóstico de Incidencias Técnicas
+## 18. Diagnóstico de Incidencias Técnicas
 
-1. **Erradicación de Alucinaciones:**
-   * Incorporar directiva estricta: *"Responda únicamente usando la evidencia del Contexto. Si no está en el Contexto, admita que no cuenta con la información."*
-   * Fijar `umbral = 0.40` en la búsqueda vectorial.
-2. **Error `CUDA Out of Memory (OOM)`:**
-   * Utilizar modelos de 1B/3B o activar cuantización en 4-bit (QLoRA) con `per_device_train_batch_size = 1`.
-3. **Ingesta de Archivos Propios:**
-   * Cargar archivos en el panel de Colab y procesar con `open("archivo.txt").readlines()`.
-4. **Inspección de API en Navegador:**
-   * Iniciar con `uvicorn api_server:app --reload` y acceder a `http://localhost:8000/docs` para interactuar con Swagger UI.
+1. **Erradicación de Alucinaciones:** Directiva estricta en el System Prompt + umbral $\ge 0.40$ en `rag_engine.py`.
+2. **Error `CUDA Out of Memory`:** Reducir batch size a 1, activar `gradient_accumulation_steps = 4` y usar modelos 1B/3B o NF4.
+3. **Ingesta de Archivos Propios:** Cargar archivos y procesar con `open("doc.txt").readlines()`.
+4. **Inspección de Swagger UI:** Iniciar con `uvicorn api_server:app --reload` y acceder a `http://localhost:8000/docs`.
 
 ---
 
-## 14. Rúbrica Oficial de Evaluación y Checklist de Calidad
+## 19. Rúbrica Oficial de Evaluación y Checklist de Calidad
 
 - [ ] **Desacoplamiento:** El conocimiento proviene de una base documental externa y no del prompt.
 - [ ] **RAG Operativo:** Los textos están indexados en `rag_engine.py` y la búsqueda responde con confianza cosenoidal.
@@ -308,7 +324,7 @@ async def chatear(entrada: MensajeEntrada):
 
 ---
 
-## 15. Hoja de Ruta: Hacia el Módulo 2 (WhatsApp Cloud API)
+## 20. Hoja de Ruta: Hacia el Módulo 2 (WhatsApp Cloud API)
 
 En el **Módulo 2** conectarás este servidor FastAPI directamente con los Webhooks de Meta:
 1. **Webhook Validation:** Validar tokens de verificación (`hub.verify_token`) y firmas HMAC SHA-256.
