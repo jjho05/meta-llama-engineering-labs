@@ -6,17 +6,38 @@
 
 ---
 
-MÓDULO 1 · PROYECTO INTEGRADOR & HACKATHON DE INGENIERÍA IA
+MÓDULO 1 · PROYECTO INTEGRADOR · CIERRE PRÁCTICO DEL MÓDULO 1
 
-# Guía Maestra de Construcción: Diseña y Despliega tu Sistema de IA con Meta Llama
+# Hackathon 1: Construir un Asistente Inteligente con Llama — El Cierre del Módulo 1
 
-Esta guía técnica orienta a los desarrolladores y participantes en la concepción del problema, la taxonomía de técnicas de IA, la ingeniería y sanitización de datos, las estrategias avanzadas de segmentación (chunking recursivo), las matemáticas de la búsqueda vectorial, la arquitectura de dos etapas con Reranking Cross-Encoder, la ingeniería de prompts industrial, el dimensionamiento de hardware (VRAM), la integración de código modular, el empaquetado en contenedores Docker, la ejecución de pruebas de Red Teaming y la resolución de bloqueos para construir su propio sistema de Inteligencia Artificial utilizando **Meta Llama 3**, **Búsqueda Vectorial RAG**, **Model Routing** y **FastAPI**.
+### ¿Qué es este Hackathon?
+Este Hackathon es una **sesión de trabajo intensivo y presencial** donde construyes, en equipo, un asistente funcional basado en Llama que resuelva un problema real. No es un examen de conocimientos teóricos: es la demostración de que puedes aplicar lo aprendido en las tres masterclasses en vivo del Módulo 1, sin que el sensei enseñe contenido nuevo ese día.
+
+En este Hackathon, cada equipo trabaja con un problema que ellos mismos definen y debe entregar un asistente funcional, probado y presentable ante el grupo. La diferencia con las masterclasses anteriores es que aquí **el sensei es tu consultor de dudas técnicas, no tu instructor**: tú defines el problema, tú construyes la solución y tú la presentas.
+
+### ¿De dónde viene este Hackathon?
+Este Hackathon es el **punto de convergencia de las tres masterclasses en vivo y el contenido de e-learning del Módulo 1**:
+- **Masterclass 1:** Fundamentos de los LLMs y arquitectura Transformer de Llama.
+- **Masterclass 2:** Prompt engineering y RAG para responder con información real.
+- **Masterclass 3:** Fine-tuning con LoRA y cómo evaluar si un ajuste funciona.
+- **E-Learning:** Pipeline completo, de datos a modelo desplegado en un endpoint REST.
+
+El Hackathon te pide combinar esas cuatro piezas en un asistente funcional.
+
+### ¿Qué debes resolver?
+**El reto es abierto:** Tu equipo elige un problema real, de su propio contexto o propuesto por el sensei, que un asistente basado en Llama pueda resolver. Algunos ejemplos válidos:
+1. Un asistente que responda preguntas frecuentes usando **RAG** sobre un documento real.
+2. Un asistente ajustado con **LoRA** para responder en un tono o formato JSON estructurado específico.
+3. Un asistente que combine **RAG y fine-tuning** para un caso de uso integral.
 
 ---
 
 ## 0. Mapa de Integración: Cómo Confluyen los 4 Temas y 3 Challenges en tu Proyecto
 
-El Hackathon Integrador es la **síntesis arquitectónica de todo el Módulo 1**. Cada lección previa aporta una pieza crítica:
+### Estructura del Trabajo: Las Tres Fases de la Sesión
+* **Fase 1: Kick-off:** El sensei presenta el reto, los criterios de evaluación y resuelve dudas de última hora sobre herramientas (Google Colab, Groq, librerías). No hay contenido teórico nuevo, solo lineamientos para arrancar.
+* **Fase 2: Construcción:** Los equipos trabajan en su asistente durante el resto de la sesión, con el sensei disponible para dudas técnicas puntuales, no para enseñar contenido nuevo.
+* **Fase 3: Presentaciones Finales:** Cada equipo muestra su asistente funcionando, explica las decisiones técnicas que tomó (qué estrategia de prompting usó, si aplicó RAG, si hizo fine-tuning) y recibe retroalimentación del grupo.
 
 ```mermaid
 graph TD
@@ -193,16 +214,18 @@ graph TD
 
 ---
 
-## 12. Glosario Técnico de Ingeniería
+## 12. Glosario Técnico y Definiciones Oficiales
 
-1. **Prompt Directives:** Instrucciones que delimitan rol, contexto y restricciones.
-2. **Tokens BPE:** Unidades de predicción probabilística ($\sim 4$ caracteres).
-3. **Embeddings:** Vectores numéricos continuos en $\mathbb{R}^{384}$.
-4. **RAG & Coseno:** Recuperación de contexto basada en distancia angular de vectores normalizados.
-5. **LoRA (Low-Rank Adaptation):** Inyección de matrices de bajo rango $r \ll d$ en capas de atención.
-6. **VRAM:** Memoria de GPU (15 GB en Tesla T4) para pesos, activaciones y KV-Cache.
-7. **Cross-Encoder:** Modelo conjunto para reranking contextual.
-8. **NF4 (NormalFloat4):** Cuantización de 4-bits optimizada para pesos gaussianos.
+1. **Hackathon:** Sesión de trabajo intensivo y presencial donde se resuelve un problema real en equipo con las herramientas del curso, sin instrucción de contenido nuevo ese día.
+2. **Kick-off:** Apertura formal del Hackathon donde el sensei presenta el reto, los lineamientos técnicos y los criterios de evaluación antes de arrancar la construcción.
+3. **Entregable Mínimo:** El conjunto mínimo de evidencia técnica que un equipo debe presentar ante el grupo para acreditar el Hackathon (asistente funcional, probado y demostrable).
+4. **Fine-Tuning (PEFT/LoRA):** Ajuste de los parámetros de un modelo ya entrenado usando datos nuevos y específicos para controlar tono, estilo o generar salidas estructuradas JSON (visto en Masterclass 3).
+5. **RAG (Retrieval-Augmented Generation):** Técnica que combina búsqueda y recuperación de documentos vectoriales con generación de texto para responder con información factual real y sin alucinaciones (visto en Masterclass 2).
+6. **Prompt Directives:** Instrucciones que delimitan rol institucional, delimitadores semánticos (`<|start_header_id|>`) y restricciones negativas.
+7. **Tokens BPE:** Unidades de predicción probabilística ($\sim 4$ caracteres en español).
+8. **Embeddings:** Vectores numéricos continuos en $\mathbb{R}^{384}$ para representar similitud semántica.
+9. **VRAM (Video RAM):** Memoria dedicada de GPU (15 GB en Tesla T4) requerida para pesos del modelo, activaciones y KV-Cache.
+10. **NF4 (NormalFloat4):** Cuantización de 4-bits optimizada para pesos gaussianos que permite ejecutar Llama 3B en 4.5 GB de VRAM.
 
 ---
 
