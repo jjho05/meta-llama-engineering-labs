@@ -233,7 +233,7 @@ class VectorRAGEngine:
 class ModelRouter:
     def __init__(self):
         self.keywords_doc = ["politica", "reembolso", "devolucion", "garantia", "envio", "precio"]
-        self.keywords_json = ["json", "esquema", "ticket", "ficha"]
+        self.keywords_json = ["json", "esquema", "ticket", "ficha", "incidencia"]
 
     def route(self, query: str) -> str:
         text = query.lower()
@@ -244,7 +244,35 @@ class ModelRouter:
         return "FAST_LLM"
 ```
 
-### 3. Servidor Web REST con CORS (`api_server.py`)
+### 3. Adaptador LoRA PEFT (`lora_adapter.py`)
+```python
+from peft import LoraConfig, TaskType
+import json
+
+lora_config = LoraConfig(
+    r=8,
+    lora_alpha=16,
+    target_modules=["q_proj", "v_proj"],
+    lora_dropout=0.05,
+    bias="none",
+    task_type=TaskType.CAUSAL_LM
+)
+
+class LoRAStructuredAdapter:
+    def __init__(self, pipeline_ref):
+        self.pipe = pipeline_ref
+
+    def extract_structured_json(self, texto_usuario: str) -> dict:
+        prompt = f"<|system|>\nEres un clasificador JSON.\n<|user|>\nClasifica: {texto_usuario}\n<|assistant|>\n{{"
+        salida = self.pipe(prompt, max_new_tokens=120)[0]["generated_text"]
+        json_raw = "{" + salida.split("<|assistant|>\n{")[-1].strip()
+        try:
+            return json.loads(json_raw)
+        except Exception:
+            return {"categoria": "soporte", "severidad": "media", "accion": "revisar"}
+```
+
+### 4. Servidor Web REST con CORS (`api_server.py`)
 ```python
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
